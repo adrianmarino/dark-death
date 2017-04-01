@@ -7,9 +7,14 @@ public class PlayerController : MonoBehaviour
 	// Engine Methods
 	//-----------------------------------------------------------------------------
 
+	void Start ()
+	{
+		motor = GetComponent <PlayerMotor> ();
+		motor.Reset ();
+	}
+
 	void Update ()
 	{
-		HideCursor ();
 		UpdateLookRotation ();
 		UpdatePosition ();
 	}
@@ -26,12 +31,6 @@ public class PlayerController : MonoBehaviour
 			                   speed
 		                   );
 		motor.Move (velocity);
-	}
-
-	static void HideCursor ()
-	{
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
 	}
 
 	void UpdateLookRotation ()
@@ -51,15 +50,6 @@ public class PlayerController : MonoBehaviour
 	Vector2 MouseMovementVariation ()
 	{
 		return Util.Input.NextMouseHorVerMovementVariation ();
-	}
-
-	//-----------------------------------------------------------------------------
-	// Initialization
-	//-----------------------------------------------------------------------------
-
-	void Start ()
-	{
-		motor = GetComponent <PlayerMotor> ();
 	}
 
 	//-----------------------------------------------------------------------------

@@ -9,12 +9,14 @@ public class PlayerMotor : MonoBehaviour
 
 	void Start ()
 	{
+		HideCursor ();
 		rigidbody = GetComponent<Rigidbody> ();
 		velocity = rotation = cameraRotation = Vector3.zero;
 	}
 
 	void FixedUpdate ()
 	{
+		HideCursor ();
 		UpdatePosition ();
 		UpdateRotation ();
 	}
@@ -22,6 +24,20 @@ public class PlayerMotor : MonoBehaviour
 	//-----------------------------------------------------------------------------
 	// Public Methods
 	//-----------------------------------------------------------------------------
+
+	public void HideCursor ()
+	{
+		Cursor.visible = false;
+		Cursor.lockState = CursorLockMode.Locked;
+	}
+
+
+	public void Reset ()
+	{
+		Move (Vector3.zero);
+		Rotate (Vector3.zero);
+		RotateCamera (Vector3.zero);
+	}
 
 	public void Move (Vector3 velocity)
 	{
