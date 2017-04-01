@@ -38,8 +38,7 @@ public class PlayerController : MonoBehaviour
 		Vector3 rotation = new Vector3 (0f, MouseMovementVariation ().x, 0f) * lookSensibility;
 		motor.Rotate (rotation);
 
-		Vector3 rorateCamera = new Vector3 (MouseMovementVariation ().y, 0f, 0f) * lookSensibility;
-		motor.RotateCamera (rorateCamera);
+		motor.RotateCamera (MouseMovementVariation ().y * lookSensibility);
 	}
 
 	Vector2 KeyboardMovementVariation ()

@@ -11,7 +11,8 @@ public class PlayerMotor : MonoBehaviour
 	{
 		HideCursor ();
 		rigidbody = GetComponent<Rigidbody> ();
-		velocity = rotation = cameraRotation = Vector3.zero;
+		velocity = rotation = Vector3.zero;
+		cameraRotation = 0f;
 	}
 
 	void FixedUpdate ()
@@ -36,7 +37,8 @@ public class PlayerMotor : MonoBehaviour
 	{
 		Move (Vector3.zero);
 		Rotate (Vector3.zero);
-		RotateCamera (Vector3.zero);
+		if (camera != null)
+			camera.transform.Rotate (Vector3.zero);
 	}
 
 	public void Move (Vector3 velocity)
@@ -49,7 +51,7 @@ public class PlayerMotor : MonoBehaviour
 		this.rotation = rotation;
 	}
 
-	public void RotateCamera (Vector3 cameraRotation)
+	public void RotateCamera (float cameraRotation)
 	{
 		this.cameraRotation = cameraRotation;
 	}
@@ -66,8 +68,13 @@ public class PlayerMotor : MonoBehaviour
 	void UpdateRotation ()
 	{
 		Util.Rigidbody.Rotate (rigidbody, rotation);
+		SetCameraRotation (cameraRotation);
+	}
+
+	void SetCameraRotation (float xRotation)
+	{
 		if (camera != null)
-			camera.transform.Rotate (-cameraRotation);
+			camera.transform.Rotate (new Vector3 (-xRotation, 0f, 0f));		
 	}
 
 	//-----------------------------------------------------------------------------
@@ -79,5 +86,7 @@ public class PlayerMotor : MonoBehaviour
 
 	private Rigidbody rigidbody;
 
-	private Vector3 velocity, rotation, cameraRotation;
+	private Vector3 velocity, rotation;
+
+	private float cameraRotation;
 }
