@@ -10,7 +10,7 @@ public class PlayerMotor : MonoBehaviour
 	void Start ()
 	{
 		HideCursor ();
-		rigidbody = GetComponent<Rigidbody> ();
+		_rigidbody = GetComponent<Rigidbody> ();
 		velocity = rotation = Vector3.zero;
 		cameraRotation = 0f;
 	}
@@ -37,8 +37,8 @@ public class PlayerMotor : MonoBehaviour
 	{
 		Move (Vector3.zero);
 		Rotate (Vector3.zero);
-		if (camera != null)
-			camera.transform.Rotate (Vector3.zero);
+		if (_camera != null)
+			_camera.transform.Rotate (Vector3.zero);
 	}
 
 	public void Move (Vector3 velocity)
@@ -62,19 +62,19 @@ public class PlayerMotor : MonoBehaviour
 
 	void UpdatePosition ()
 	{
-		Util.Rigidbody.Move (rigidbody, velocity);
+		Util.Rigidbody.Move (_rigidbody, velocity);
 	}
 
 	void UpdateRotation ()
 	{
-		Util.Rigidbody.Rotate (rigidbody, rotation);
+		Util.Rigidbody.Rotate (_rigidbody, rotation);
 		SetCameraRotation (cameraRotation);
 	}
 
 	void SetCameraRotation (float xRotation)
 	{
-		if (camera != null)
-			camera.transform.Rotate (new Vector3 (-xRotation, 0f, 0f));		
+		if (_camera != null)
+			_camera.transform.Rotate (new Vector3 (-xRotation, 0f, 0f));		
 	}
 
 	//-----------------------------------------------------------------------------
@@ -82,9 +82,9 @@ public class PlayerMotor : MonoBehaviour
 	//-----------------------------------------------------------------------------
 
 	[SerializeField]
-	private Camera camera;
+	private Camera _camera;
 
-	private Rigidbody rigidbody;
+	private Rigidbody _rigidbody;
 
 	private Vector3 velocity, rotation;
 
