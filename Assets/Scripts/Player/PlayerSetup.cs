@@ -19,6 +19,16 @@ public class PlayerSetup : NetworkBehaviour
 				.ForEach (it => it.enabled = false);
 	}
 
+	void OnDisable ()
+	{
+		Util.Input.ShowCursor ();
+	}
+
+	void OnDestroy ()
+	{
+		Util.Input.ShowCursor ();
+	}
+
 	//-----------------------------------------------------------------------------
 	// Attributes
 	//-----------------------------------------------------------------------------

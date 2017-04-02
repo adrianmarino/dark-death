@@ -1,10 +1,22 @@
 ﻿using UnityEngine;
-using System;
 
 namespace Util
 {
 	public class Input
 	{
+		public static void HideCursor ()
+		{
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
+		}
+
+
+		public static void ShowCursor ()
+		{
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
+		}
+
 		public static Vector2 NextKeyboardHorVerMovementVariation ()
 		{
 			return new Vector2 (
