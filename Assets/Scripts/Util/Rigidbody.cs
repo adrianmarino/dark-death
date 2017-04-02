@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
-using UnityStandardAssets.Utility;
 
 namespace Util
 {
 	public class Rigidbody
 	{
+		public static void AddForce (UnityEngine.Rigidbody rigidbody, Vector3 force, ForceMode forceMode)
+		{
+			if (force == Vector3.zero)
+				return;
+			rigidbody.AddForce (force * Time.fixedDeltaTime, forceMode);
+		}
+
 		public static void Move (UnityEngine.Rigidbody rigidbody, Vector3 velocity)
 		{
 			if (velocity == Vector3.zero)

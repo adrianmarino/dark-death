@@ -9,15 +9,15 @@ public class PlayerMotor : MonoBehaviour
 
 	void Start ()
 	{
-		Util.Input.HideCursor ();
+		ShowHideCursor ();
 		_rigidbody = GetComponent<Rigidbody> ();
-		velocity = rotation = Vector3.zero;
+		velocity = rotation = thrusterForce = Vector3.zero;
 		cameraRotation = 0f;
 	}
 
 	void FixedUpdate ()
 	{
-		Util.Input.HideCursor ();
+		ShowHideCursor ();
 		UpdatePosition ();
 		UpdateRotation ();
 	}
@@ -32,6 +32,11 @@ public class PlayerMotor : MonoBehaviour
 		Rotate (Vector3.zero);
 		if (_camera != null)
 			_camera.transform.Rotate (Vector3.zero);
+	}
+
+	public void ApplyTrusterForce (Vector3 thrusterForce)
+	{
+		this.thrusterForce = thrusterForce;
 	}
 
 	public void Move (Vector3 velocity)
@@ -53,9 +58,15 @@ public class PlayerMotor : MonoBehaviour
 	// Private Methods
 	//-----------------------------------------------------------------------------
 
+	void ShowHideCursor ()
+	{
+		Util.Input.HideCursor (hideCursor);
+	}
+
 	void UpdatePosition ()
 	{
 		Util.Rigidbody.Move (_rigidbody, velocity);
+		Util.Rigidbody.AddForce (_rigidbody, thrusterForce, ForceMode.Acceleration);
 	}
 
 	void UpdateRotation ()
@@ -66,8 +77,16 @@ public class PlayerMotor : MonoBehaviour
 
 	void SetCameraRotation (float xRotation)
 	{
-		if (_camera != null)
-			_camera.transform.Rotate (new Vector3 (-xRotation, 0f, 0f));		
+		if (_camera == null)
+			return;
+
+		currentCameraRotation -= xRotation;
+		currentCameraRotation = Mathf.Clamp (
+			currentCameraRotation,
+			-cameraRotationLimit,
+			cameraRotationLimit
+		);
+		_camera.transform.localEulerAngles = new Vector3 (currentCameraRotation, 0f, 0f);		
 	}
 
 	//-----------------------------------------------------------------------------
@@ -77,9 +96,16 @@ public class PlayerMotor : MonoBehaviour
 	[SerializeField]
 	private Camera _camera;
 
+	[SerializeField]
+	private float cameraRotationLimit = 85f;
+
+	[SerializeField]
+	private bool hideCursor = true;
+
 	private Rigidbody _rigidbody;
 
-	private Vector3 velocity, rotation;
+	private Vector3 velocity, rotation, thrusterForce;
 
-	private float cameraRotation;
+	private float cameraRotation, currentCameraRotation;
+
 }

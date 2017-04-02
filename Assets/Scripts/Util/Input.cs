@@ -4,6 +4,14 @@ namespace Util
 {
 	public class Input
 	{
+		public static void HideCursor (bool value)
+		{
+			if (value)
+				HideCursor ();
+			else
+				ShowCursor ();
+		}
+
 		public static void HideCursor ()
 		{
 			Cursor.visible = false;
@@ -53,10 +61,14 @@ namespace Util
 			return NextMovementVariation ("Vertical");
 		}
 
-
 		public static float NextMovementVariation (string axisName)
 		{
 			return UnityEngine.Input.GetAxisRaw (axisName);
+		}
+
+		public static bool GetJumpButton ()
+		{
+			return UnityEngine.Input.GetButton ("Jump");
 		}
 
 		//-----------------------------------------------------------------------------
