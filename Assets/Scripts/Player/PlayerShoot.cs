@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -15,9 +16,10 @@ public class PlayerShoot : MonoBehaviour
 	void Shoot ()
 	{
 		RaycastHit hit;
-		if (Physics.Raycast (CameraPosition (), CameraDirection (), out hit, oponentMask)) {
-			Debug.Log ("Inpact to " + hit.collider.gameObject.tag);
-		}
+		bool intersect = Physics.Raycast (CameraPosition (), CameraDirection (), out hit, oponentMask);
+
+		if (intersect && hit.collider.tag == PLAYER_TAG)
+			Debug.Log (hit.collider.name + " has been shot!");
 	}
 
 	Vector3 CameraPosition ()
@@ -31,6 +33,12 @@ public class PlayerShoot : MonoBehaviour
 	}
 
 	//-----------------------------------------------------------------------------
+	// Constants
+	//-----------------------------------------------------------------------------
+
+	private const string PLAYER_TAG = "Player";
+
+	//-----------------------------------------------------------------------------
 	// Attributes
 	//-----------------------------------------------------------------------------
 
@@ -41,5 +49,4 @@ public class PlayerShoot : MonoBehaviour
 	private Camera _camera;
 
 	private PlayerWeapon weapon;
-
 }

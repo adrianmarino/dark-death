@@ -13,11 +13,8 @@ public class PlayerSetup : NetworkBehaviour
 	void Start ()
 	{
 		if (!isLocalPlayer)
-			components
-				.Where ((it) => it != null)
-				.ToList<Behaviour> ()
-				.ForEach (it => it.enabled = false);
-		Util.Console.Clean ();
+			DisableAll (components);
+		SetupNetID ();
 	}
 
 	void OnDisable ()
@@ -28,6 +25,25 @@ public class PlayerSetup : NetworkBehaviour
 	void OnDestroy ()
 	{
 		Util.Input.ShowCursor ();
+	}
+
+	//-----------------------------------------------------------------------------
+	// Private Methods
+	//-----------------------------------------------------------------------------
+
+	string GetNetId ()
+	{
+		return "Player " + GetComponent<NetworkIdentity> ().netId;
+	}
+
+	static void DisableAll (List<Behaviour> components)
+	{
+		components.Where (it => it != null).ToList<Behaviour> ().ForEach (it => it.enabled = false);
+	}
+
+	void SetupNetID ()
+	{
+		transform.name = GetNetId ();
 	}
 
 	//-----------------------------------------------------------------------------
