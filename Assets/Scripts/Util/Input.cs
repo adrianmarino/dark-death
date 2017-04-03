@@ -71,6 +71,11 @@ namespace Util
 			return UnityEngine.Input.GetButton ("Jump");
 		}
 
+		public static bool GetFireButton ()
+		{
+			return UnityEngine.Input.GetButton ("Fire1");
+		}
+
 		//-----------------------------------------------------------------------------
 		// Constructors
 		//-----------------------------------------------------------------------------

@@ -17,6 +17,7 @@ public class PlayerSetup : NetworkBehaviour
 				.Where ((it) => it != null)
 				.ToList<Behaviour> ()
 				.ForEach (it => it.enabled = false);
+		Util.Console.Clean ();
 	}
 
 	void OnDisable ()
