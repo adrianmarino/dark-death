@@ -66,9 +66,14 @@ namespace Util
 			return UnityEngine.Input.GetAxisRaw (axisName);
 		}
 
-		public static bool GetJumpButton ()
+		public static bool GetJumpButtonDown ()
 		{
-			return UnityEngine.Input.GetButton ("Jump");
+			return UnityEngine.Input.GetButtonDown ("Jump");
+		}
+
+		public static bool GetJumpButtonUp ()
+		{
+			return UnityEngine.Input.GetButtonUp ("Jump");
 		}
 
 		public static bool GetFireButton ()

@@ -4,40 +4,38 @@ using AClockworkBerry;
 
 public class Test : MonoBehaviour
 {
-    float timeout = 5, lasttime = -1;
-    int i = 0;
+	float timeout = 5, lasttime = -1;
 
-    void Start()
-    {
-        ScreenLogger.Instance.ShowLog = true;
+	void Start ()
+	{
+		ScreenLogger.Instance.ShowLog = true;
 
-        TestMessageTypes();
-    }
+		TestMessageTypes ();
+	}
 
-    void Update()
-    {
-        if (timeout > 0)
-            timeout -= Time.deltaTime;
+	void Update ()
+	{
+		if (timeout > 0)
+			timeout -= Time.deltaTime;
 
-        if ((int)lasttime != (int)timeout && timeout > 0)
-            Debug.Log("-" + ((int)timeout + 1));
+		if ((int)lasttime != (int)timeout && timeout > 0)
+			Debug.Log ("-" + ((int)timeout + 1));
 
-        lasttime = timeout;
+		lasttime = timeout;
 
-        if (timeout <= 0 && timeout != -1)
-        {
-            timeout = -1;
-            Debug.Log("Loading new scene...");
-            Application.LoadLevel("ExampleScene");
-        }
-    }
+		if (timeout <= 0 && timeout != -1) {
+			timeout = -1;
+			Debug.Log ("Loading new scene...");
+			Application.LoadLevel ("ExampleScene");
+		}
+	}
 
-    void TestMessageTypes()
-    {
-        Debug.Log("Log message...");
-        Debug.LogWarning("Warning message...");
-        Debug.LogError("Error message...");
-    }
+	void TestMessageTypes ()
+	{
+		Debug.Log ("Log message...");
+		Debug.LogWarning ("Warning message...");
+		Debug.LogError ("Error message...");
+	}
 }
 
 /*

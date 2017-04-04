@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
 	{
 		motor = GetComponent <PlayerMotor> ();
 		joint = GetComponent <ConfigurableJoint> ();
+		audioSource = GetComponent<AudioSource> ();
+		audioSource.Play ();
+		Debug.Log ("Start Music");
 		SetJointSettings (jointSpring);
 		motor.Reset ();
 	}
@@ -22,25 +25,39 @@ public class PlayerController : MonoBehaviour
 		UpdatePosition ();
 	}
 
+	void OnDisable ()
+	{
+		audioSource.Stop ();
+		Debug.Log ("Stop Music");
+	}
+
 	//-----------------------------------------------------------------------------
 	// Private Methods
 	//-----------------------------------------------------------------------------
 
 	void UpdatePosition ()
 	{
-		Vector3 velocity = Util.VelocityVector.create (
-			                   transform, 
-			                   KeyboardMovementVariation (), 
-			                   speed
-		                   );
-		motor.Move (velocity);
+		UpdateMovement ();
+		UpdateJump ();
+	}
 
+	void UpdateMovement ()
+	{
+		Vector3 velocity = Util.VelocityVector.create (transform, KeyboardMovementVariation (), speed);
+		motor.Move (velocity);
+	}
+
+	void UpdateJump ()
+	{
+		if (!grounded) {
+			grounded = Util.ObjectElement.Grounded (this, floorDistance);
+			SetJointSettings (jointSpring);
+		}
 		Vector3 thruterForceVector = Vector4.zero;
-		if (Util.Input.GetJumpButton ()) {
+		if (Util.Input.GetJumpButtonDown () && grounded) {
 			thruterForceVector = Vector3.up * thrusterForce;
 			SetJointSettings (0f);
-		} else {
-			SetJointSettings (jointSpring);
+			grounded = false;
 		}
 		motor.ApplyTrusterForce (thruterForceVector);
 	}
@@ -88,6 +105,14 @@ public class PlayerController : MonoBehaviour
 	[SerializeField]
 	private float jointMaxForce = 40f;
 
+	[SerializeField]
+	private float floorDistance = 2f;
+
 	private PlayerMotor motor;
+
 	private ConfigurableJoint joint;
+
+	private AudioSource audioSource;
+
+	private bool grounded = true;
 }

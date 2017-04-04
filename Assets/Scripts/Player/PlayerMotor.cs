@@ -66,7 +66,7 @@ public class PlayerMotor : MonoBehaviour
 	void UpdatePosition ()
 	{
 		Util.Rigidbody.Move (_rigidbody, velocity);
-		Util.Rigidbody.AddForce (_rigidbody, thrusterForce, ForceMode.Acceleration);
+		Util.Rigidbody.AddForce (_rigidbody, thrusterForce, ForceMode.Impulse);
 	}
 
 	void UpdateRotation ()
