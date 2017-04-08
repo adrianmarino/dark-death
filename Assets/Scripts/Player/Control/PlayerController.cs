@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
 
 	void OnDisable ()
 	{
-		audioSource.Stop ();
+		if (audioSource != null)
+			audioSource.Stop ();
 		Debug.Log ("Stop Music");
 	}
 
