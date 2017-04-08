@@ -13,23 +13,20 @@ public class PlayerSetup : NetworkBehaviour
 	void Start ()
 	{
 		if (!isLocalPlayer)
-			DisableAll (components);
+			Util.Behaviour.DisableAll (components);
+		else
+			Player ().Setup ();
 	}
 
 	public override void OnStartClient ()
 	{
-		GameManager.RegisterPlayer (NetId (), GetComponent<Player> ());
+		GameManager.RegisterPlayer (NetId (), Player ());
 	}
 
 	void OnDisable ()
 	{
 		Util.Input.ShowCursor ();
 		GameManager.UnregisterPlayer (NetId ());
-	}
-
-	void OnDestroy ()
-	{
-		Util.Input.ShowCursor ();
 	}
 
 	//-----------------------------------------------------------------------------
@@ -41,9 +38,9 @@ public class PlayerSetup : NetworkBehaviour
 		return GetComponent<NetworkIdentity> ().netId.ToString ();
 	}
 
-	static void DisableAll (List<Behaviour> components)
+	Player Player ()
 	{
-		components.Where (it => it != null).ToList<Behaviour> ().ForEach (it => it.enabled = false);
+		return GetComponent<Player> ();
 	}
 
 	//-----------------------------------------------------------------------------

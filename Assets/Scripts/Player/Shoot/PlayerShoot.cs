@@ -33,7 +33,7 @@ namespace Fps
 			Debug.Log (playerId + " has been shot!");
 			Player oponentPlayer = GameManager.GetPlayer (playerId);
 
-			oponentPlayer.TakeDamage (damage);
+			oponentPlayer.RpcTakeDamage (damage);
 		}
 
 		Vector3 CameraPosition ()
