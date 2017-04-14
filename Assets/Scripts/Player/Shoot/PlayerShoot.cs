@@ -11,6 +11,11 @@ namespace Fps
 				Shoot ();
 		}
 
+		void Start ()
+		{
+			weaponGFX.layer = LayerMask.NameToLayer (weaponLayerName);
+		}
+
 		//-----------------------------------------------------------------------------
 		// Private Methods
 		//-----------------------------------------------------------------------------
@@ -23,7 +28,7 @@ namespace Fps
 			bool intersect = Physics.Raycast (CameraPosition (), CameraDirection (), out hit, oponentMask);
 
 			if (intersect && hit.collider.tag == PLAYER_TAG)
-				CmdDamageToOponent (hit.collider.name, currentWeapon.damage);
+				CmdDamageToOponent (hit.collider.name, weapon.damage);
 		}
 
 		// On server side
@@ -63,6 +68,13 @@ namespace Fps
 		private Camera _camera;
 
 		[SerializeField]
-		private PlayerWeapon currentWeapon;
+		private PlayerWeapon weapon;
+
+
+		[SerializeField]
+		private GameObject weaponGFX;
+
+		[SerializeField]
+		private string weaponLayerName;
 	}
 }
