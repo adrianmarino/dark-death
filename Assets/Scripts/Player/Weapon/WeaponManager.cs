@@ -35,8 +35,13 @@ public class WeaponManager : NetworkBehaviour
 			                      weaponHolder.rotation
 		                      );
 		instance.transform.SetParent (weaponHolder);
+
 		if (isLocalPlayer)
-			instance.layer = LayerMask.NameToLayer (weaponLayerName);
+			Util.Layer.SetLayerRecursively (
+				instance, 
+				LayerMask.NameToLayer (weaponLayerName)
+			);
+
 		return instance;
 	}
 
