@@ -8,6 +8,7 @@ namespace Fps
 		void Awake ()
 		{
 			singleton = this;
+			sceneCamera.GetComponent<Camera> ().depth = sceneCameraDepth;
 		}
 
 		//-----------------------------------------------------------------------------
@@ -55,6 +56,10 @@ namespace Fps
 
 		[SerializeField]
 		private GameObject sceneCamera;
+
+
+		[SerializeField]
+		private int sceneCameraDepth = 1;
 
 		private Dictionary<string, Player> players = new Dictionary <string, Player> ();
 
