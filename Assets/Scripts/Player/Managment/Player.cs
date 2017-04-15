@@ -46,11 +46,12 @@ namespace Fps
 		//-----------------------------------------------------------------------------
 
 		public void Setup ()
-		{	
+		{
 			Dead = false;
 			currentHealth = maxHealth;
 			LoadComponentsEnableState ();
-			SetEnableCollider (true);
+			// Rigidbody ().useGravity = true;
+			// SetEnableCollider (true);
 		}
 
 		//-----------------------------------------------------------------------------
@@ -83,9 +84,14 @@ namespace Fps
 
 		void SetEnableCollider (bool value)
 		{
-			Collider colliderComponent = GetComponent<Collider> ();
-			if (colliderComponent != null)
-				colliderComponent.enabled = value;
+			Collider component = GetComponent<Collider> ();
+			if (component != null)
+				component.enabled = value;
+		}
+
+		Rigidbody Rigidbody ()
+		{
+			return GetComponent<Rigidbody> ();
 		}
 
 		void Die ()
@@ -93,7 +99,8 @@ namespace Fps
 			Dead = true;
 			SaveComponentsEnableState ();
 			Util.Behaviour.DisableAll (disableOnDeath);
-			SetEnableCollider (false);
+			// Rigidbody ().useGravity = false;
+			// SetEnableCollider (false);
 			Debug.Log (this.name + " is dead!");
 		}
 
