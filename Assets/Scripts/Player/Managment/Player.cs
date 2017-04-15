@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System;
 using System.Collections;
 
 namespace Fps
@@ -12,6 +11,11 @@ namespace Fps
 		//-----------------------------------------------------------------------------
 		// Engine Methods
 		//-----------------------------------------------------------------------------
+
+		void Start ()
+		{
+			Setup ();
+		}
 
 		[ClientRpc]
 		public void RpcTakeDamage (float damage)
@@ -31,11 +35,7 @@ namespace Fps
 		{
 			if (!isLocalPlayer)
 				return;
-
 			ShowCurrentHealth ();
-
-			if (Input.GetKeyDown (KeyCode.K))
-				RpcTakeDamage (99999);
 		}
 
 		//-----------------------------------------------------------------------------

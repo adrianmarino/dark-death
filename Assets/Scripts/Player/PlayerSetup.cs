@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
-using System.Linq;
 using Fps;
 
 public class PlayerSetup : NetworkBehaviour
@@ -12,10 +11,10 @@ public class PlayerSetup : NetworkBehaviour
 
 	void Start ()
 	{
-		if (!isLocalPlayer)
-			Util.Behaviour.DisableAll (components);
-		else
+		if (isLocalPlayer)
 			Player ().Setup ();
+		else
+			Util.Behaviour.DisableAll (components);
 	}
 
 	public override void OnStartClient ()
