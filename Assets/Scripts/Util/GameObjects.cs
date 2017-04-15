@@ -19,6 +19,11 @@ namespace Util
 		{
 			return Instances (name) [0].GetComponent <ELEMENT> ();
 		}
+
+		public static ELEMENT Instance<ELEMENT> (string name, GameObject from)
+		{
+			return Instances (name) [0].GetComponent <ELEMENT> ();
+		}
 	}
 
 }

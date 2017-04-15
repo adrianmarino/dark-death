@@ -61,7 +61,7 @@ namespace Fps
 		void CmdDamageToOponent (string playerId, float damage)
 		{
 			Debug.Log (playerId + " has been shot!");
-			Player oponentPlayer = GameManager.GetPlayer (playerId);
+			Player oponentPlayer = GameManager.singleton.GetPlayer (playerId);
 
 			oponentPlayer.RpcTakeDamage (damage);
 		}

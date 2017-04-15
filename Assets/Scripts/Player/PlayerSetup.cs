@@ -19,13 +19,14 @@ public class PlayerSetup : NetworkBehaviour
 
 	public override void OnStartClient ()
 	{
-		GameManager.RegisterPlayer (NetId (), Player ());
+		base.OnStartClient ();
+		GameManager.singleton.RegisterPlayer (NetId (), Player ());
 	}
 
 	void OnDisable ()
 	{
 		Util.Input.ShowCursor ();
-		GameManager.UnregisterPlayer (NetId ());
+		GameManager.singleton.UnregisterPlayer (NetId ());
 	}
 
 	//-----------------------------------------------------------------------------

@@ -1,8 +1,14 @@
 ﻿using UnityEngine.Networking;
 using UnityEngine;
+using Fps;
 
 public class WeaponManager : NetworkBehaviour
 {
+	void Awake ()
+	{
+		currentWeapon = primaryWeapon;
+	}
+
 	void Start ()
 	{
 		EquipWeapon (primaryWeapon);

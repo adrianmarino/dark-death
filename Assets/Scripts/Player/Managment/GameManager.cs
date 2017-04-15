@@ -5,29 +5,27 @@ namespace Fps
 {
 	public class GameManager : MonoBehaviour
 	{
-		void OnGU_I ()
+		void Awake ()
 		{
-			GUILayout.BeginArea (new Rect (200, 200, 200, 200));
-			GUILayout.BeginVertical ();
-
-			foreach (string playerID in players.Keys)
-				GUILayout.Label (playerID + "  -  " + players [playerID].transform.name);
-
-			GUILayout.EndVertical ();
-			GUILayout.EndArea ();
+			singleton = this;
 		}
 
 		//-----------------------------------------------------------------------------
 		// Public Methods
 		//-----------------------------------------------------------------------------
 
-		public static Player GetPlayer (string playerId)
+		public Player GetPlayer (string playerId)
 		{
 			return players [playerId];
 		}
 
-		public static void RegisterPlayer (string netId, Player player)
+		public void RegisterPlayer (string netId, Player player)
 		{
+			if (player == null) {
+				Debug.Log ("Does not register a null player!");
+				return;
+			}
+
 			string playerId = ID_PREFIX + netId;
 			player.transform.name = playerId;
 
@@ -35,7 +33,7 @@ namespace Fps
 			Debug.Log (playerId + " Registered!");
 		}
 
-		public static void UnregisterPlayer (string playerId)
+		public void UnregisterPlayer (string playerId)
 		{
 			players.Remove (playerId);
 		}
@@ -50,6 +48,17 @@ namespace Fps
 		// Attributes
 		//-----------------------------------------------------------------------------
 
-		private static Dictionary<string, Player> players = new Dictionary <string, Player> ();
+		private Dictionary<string, Player> players = new Dictionary <string, Player> ();
+
+		public static GameManager singleton = null;
+
+		//-----------------------------------------------------------------------------
+		// Constructors
+		//-----------------------------------------------------------------------------
+
+		public GameManager ()
+		{
+			players = new Dictionary <string, Player> ();
+		}
 	}
 }
