@@ -11,10 +11,12 @@ public class PlayerSetup : NetworkBehaviour
 
 	void Start ()
 	{
-		if (isLocalPlayer)
+		if (isLocalPlayer) {
 			Player ().Setup ();
-		else
+		} else
 			Util.Behaviour.DisableAll (components);
+
+		GameManager.singleton.SetEnableScenCameraListener (false);
 	}
 
 	public override void OnStartClient ()
@@ -27,6 +29,7 @@ public class PlayerSetup : NetworkBehaviour
 	{
 		Util.Input.ShowCursor ();
 		GameManager.singleton.UnregisterPlayer (NetId ());
+		GameManager.singleton.SetEnableScenCameraListener (true);
 	}
 
 	//-----------------------------------------------------------------------------

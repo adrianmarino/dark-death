@@ -38,6 +38,11 @@ namespace Fps
 			players.Remove (playerId);
 		}
 
+		public void SetEnableScenCameraListener (bool value)
+		{
+			sceneCamera.GetComponent<AudioListener> ().enabled = value;
+		}
+
 		//-----------------------------------------------------------------------------
 		// Constants
 		//-----------------------------------------------------------------------------
@@ -47,6 +52,9 @@ namespace Fps
 		//-----------------------------------------------------------------------------
 		// Attributes
 		//-----------------------------------------------------------------------------
+
+		[SerializeField]
+		private GameObject sceneCamera;
 
 		private Dictionary<string, Player> players = new Dictionary <string, Player> ();
 

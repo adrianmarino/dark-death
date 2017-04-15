@@ -12,9 +12,6 @@ public class PlayerController : MonoBehaviour
 	{
 		motor = GetComponent <PlayerMotor> ();
 		joint = GetComponent <ConfigurableJoint> ();
-		audioSource = GetComponent<AudioSource> ();
-		audioSource.Play ();
-		Debug.Log ("Start Music");
 		SetJointSettings (jointSpring);
 		motor.Reset ();
 	}
@@ -23,13 +20,6 @@ public class PlayerController : MonoBehaviour
 	{
 		UpdateLookRotation ();
 		UpdatePosition ();
-	}
-
-	void OnDisable ()
-	{
-		if (audioSource != null)
-			audioSource.Stop ();
-		Debug.Log ("Stop Music");
 	}
 
 	//-----------------------------------------------------------------------------
