@@ -14,7 +14,7 @@ public class PlayerSetup : NetworkBehaviour
 		if (isLocalPlayer) {
 			Player ().Setup ();
 		} else
-			Util.Behaviour.DisableAll (components);
+			Util.Behaviours.DisableAll (components);
 
 		GameManager.singleton.SetEnableScenCameraListener (false);
 	}
