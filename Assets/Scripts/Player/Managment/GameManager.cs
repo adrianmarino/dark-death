@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityStandardAssets.ImageEffects;
 
 namespace Fps
 {
@@ -8,7 +9,7 @@ namespace Fps
 		void Awake ()
 		{
 			singleton = this;
-			sceneCamera.GetComponent<Camera> ().depth = sceneCameraDepth;
+			InitSceneCamera ();
 		}
 
 		//-----------------------------------------------------------------------------
@@ -18,6 +19,12 @@ namespace Fps
 		public Player GetPlayer (string playerId)
 		{
 			return players [playerId];
+		}
+
+		void InitSceneCamera ()
+		{
+			sceneCamera.GetComponent<Camera> ().depth = sceneCameraDepth;
+			sceneCamera.GetComponent<BlurOptimized> ().enabled = true;
 		}
 
 		public void RegisterPlayer (string netId, Player player)
