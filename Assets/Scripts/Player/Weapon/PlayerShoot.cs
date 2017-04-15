@@ -3,17 +3,19 @@ using UnityEngine.Networking;
 
 namespace Fps
 {
+	[RequireComponent (typeof(WeaponManager))]
 	public class PlayerShoot : NetworkBehaviour
 	{
 		void Update ()
 		{
+			currentWeapon = weaponManager.GetCurrentWeapon ();
 			if (Util.Input.GetFireButton ())
 				Shoot ();
 		}
 
 		void Start ()
 		{
-			weaponGFX.layer = LayerMask.NameToLayer (weaponLayerName);
+			weaponManager = GetComponent<WeaponManager> ();
 		}
 
 		//-----------------------------------------------------------------------------
@@ -28,7 +30,7 @@ namespace Fps
 			bool intersect = Physics.Raycast (CameraPosition (), CameraDirection (), out hit, oponentMask);
 
 			if (intersect && hit.collider.tag == PLAYER_TAG)
-				CmdDamageToOponent (hit.collider.name, weapon.damage);
+				CmdDamageToOponent (hit.collider.name, currentWeapon.damage);
 		}
 
 		// On server side
@@ -67,14 +69,8 @@ namespace Fps
 		[SerializeField]
 		private Camera _camera;
 
-		[SerializeField]
-		private PlayerWeapon weapon;
+		private PlayerWeapon currentWeapon;
 
-
-		[SerializeField]
-		private GameObject weaponGFX;
-
-		[SerializeField]
-		private string weaponLayerName;
+		private WeaponManager weaponManager;
 	}
 }
