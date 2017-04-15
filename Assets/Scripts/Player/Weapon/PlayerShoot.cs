@@ -9,8 +9,7 @@ namespace Fps
 		void Update ()
 		{
 			currentWeapon = weaponManager.GetCurrentWeapon ();
-			if (Util.Input.GetFireButton ())
-				Shoot ();
+			UpdateShoot ();
 		}
 
 		void Start ()
@@ -26,11 +25,35 @@ namespace Fps
 		[Client]
 		void Shoot ()
 		{
+			Debug.Log ("SHOOT: " + ++counter);
 			RaycastHit hit;
 			bool intersect = Physics.Raycast (CameraPosition (), CameraDirection (), out hit, oponentMask);
 
 			if (intersect && hit.collider.tag == PLAYER_TAG)
 				CmdDamageToOponent (hit.collider.name, currentWeapon.damage);
+		}
+
+		void UpdateShoot ()
+		{
+			if (currentWeapon.fireRate <= 0f) {
+				if (Util.Input.GetFireButtonDown ())
+					Shoot ();
+			} else {
+				if (Util.Input.GetFireButtonDown ())
+					BurstShoot ();
+				else if (Util.Input.GetFireButtonUp ())
+					EndShoot ();
+			}
+		}
+
+		void BurstShoot ()
+		{
+			InvokeRepeating (SHOOT_METHOD_NAME, 0f, 1f / currentWeapon.fireRate);
+		}
+
+		void EndShoot ()
+		{
+			CancelInvoke (SHOOT_METHOD_NAME);
 		}
 
 		// On server side
@@ -59,9 +82,13 @@ namespace Fps
 
 		private const string PLAYER_TAG = "Player";
 
+		const string SHOOT_METHOD_NAME = "Shoot";
+
 		//-----------------------------------------------------------------------------
 		// Attributes
 		//-----------------------------------------------------------------------------
+
+		private float counter = 0;
 
 		[SerializeField]
 		private LayerMask oponentMask;

@@ -43,22 +43,22 @@ namespace Util
 
 		public static float NextMouseHorizontalMovementVariation ()
 		{
-			return NextMovementVariation ("Mouse X");
+			return NextMovementVariation (MOUSE_X);
 		}
 
 		public static float NextMouseVercalMovementVariation ()
 		{
-			return NextMovementVariation ("Mouse Y");
+			return NextMovementVariation (MOUSE_Y);
 		}
 
 		public static float NextHorizontalMovementVariation ()
 		{
-			return NextMovementVariation ("Horizontal");
+			return NextMovementVariation (HORIZONTAL);
 		}
 
 		public static float NextVerticalMovementVariation ()
 		{
-			return NextMovementVariation ("Vertical");
+			return NextMovementVariation (VERTICAL);
 		}
 
 		public static float NextMovementVariation (string axisName)
@@ -68,18 +68,45 @@ namespace Util
 
 		public static bool GetJumpButtonDown ()
 		{
-			return UnityEngine.Input.GetButtonDown ("Jump");
+			return UnityEngine.Input.GetButtonDown (JUMP);
 		}
 
 		public static bool GetJumpButtonUp ()
 		{
-			return UnityEngine.Input.GetButtonUp ("Jump");
+			return UnityEngine.Input.GetButtonUp (JUMP);
 		}
 
 		public static bool GetFireButton ()
 		{
-			return UnityEngine.Input.GetButton ("Fire1");
+			return UnityEngine.Input.GetButton (FIRE_1);
 		}
+
+
+		public static bool GetFireButtonUp ()
+		{
+			return UnityEngine.Input.GetButtonUp (FIRE_1);
+		}
+
+		public static bool GetFireButtonDown ()
+		{
+			return UnityEngine.Input.GetButtonDown (FIRE_1);
+		}
+
+		//-----------------------------------------------------------------------------
+		// Constants
+		//-----------------------------------------------------------------------------
+
+		private const string FIRE_1 = "Fire1";
+
+		private const string JUMP = "Jump";
+
+		private const string VERTICAL = "Vertical";
+
+		private const string HORIZONTAL = "Horizontal";
+
+		private const string MOUSE_X = "Mouse X";
+
+		private const string MOUSE_Y = "Mouse Y";
 
 		//-----------------------------------------------------------------------------
 		// Constructors
