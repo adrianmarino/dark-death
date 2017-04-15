@@ -36,6 +36,9 @@ namespace Fps
 			if (!isLocalPlayer)
 				return;
 			ShowCurrentHealth ();
+
+			if (Input.GetKeyDown (KeyCode.K))
+				RpcTakeDamage (99999);
 		}
 
 		//-----------------------------------------------------------------------------
