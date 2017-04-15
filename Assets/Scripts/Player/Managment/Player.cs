@@ -102,6 +102,12 @@ namespace Fps
 			// Rigidbody ().useGravity = false;
 			// SetEnableCollider (false);
 			Debug.Log (this.name + " is dead!");
+			PerformDeadEffect ();
+		}
+
+		void PerformDeadEffect ()
+		{
+			Instantiate (deadEffect, transform.position, Quaternion.identity);
 		}
 
 		void MoveToStartPoint ()
@@ -148,6 +154,9 @@ namespace Fps
 
 		[SerializeField]
 		public List<Behaviour> disableOnDeath;
+
+		[SerializeField]
+		private GameObject deadEffect;
 
 		[SyncVar]
 		private float currentHealth;
