@@ -33,6 +33,7 @@ namespace Fps
 		void RpcDoShootEffect ()
 		{
 			weaponManager.GetCurrentWeaponGraphics ().muzzleFlash.Play ();
+			weaponManager.GetCurrentWeaponGraphics ().GetComponent<AudioSource> ().Play ();
 		}
 
 		// Invoked on the server when hit something...
