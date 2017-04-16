@@ -60,7 +60,7 @@ namespace Fps
 
 		void ShowCurrentHealth ()
 		{
-			healthPanel.text = "Health: " + currentHealth;
+			healthPanel.text = "+ " + currentHealth;
 		}
 
 		void DecreaseHealth (float damage)
