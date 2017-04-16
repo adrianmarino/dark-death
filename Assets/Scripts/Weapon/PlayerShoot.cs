@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using UnityStandardAssets.ImageEffects;
 
 namespace Fps
 {
@@ -34,6 +35,26 @@ namespace Fps
 			weaponManager.GetCurrentWeaponGraphics ().muzzleFlash.Play ();
 		}
 
+		// Invoked on the server when hit something...
+		[Command]
+		void CmdOnHit (Vector3 position, Vector3 normal)
+		{
+			RpcDoHitEffect (position, normal);
+		}
+
+		// Invoked on all client to spawn hit effects...
+		[ClientRpc]
+		void RpcDoHitEffect (Vector3 position, Vector3 normal)
+		{
+			GameObject hitEffect = Instantiate (
+				                       weaponManager.GetCurrentWeaponGraphics ().hitEffectPrefab,
+				                       position,
+				                       Quaternion.LookRotation (normal)
+			                       );
+			Destroy (hitEffect, 2f);
+		}
+
+
 		// On client side
 		[Client]
 		void Shoot ()
@@ -46,10 +67,19 @@ namespace Fps
 
 			Debug.Log ("SHOOT: " + ++counter);
 			RaycastHit hit;
-			bool intersect = Physics.Raycast (CameraPosition (), CameraDirection (), out hit, oponentMask);
+			bool intersect = Physics.Raycast (
+				                 CameraPosition (), 
+				                 CameraDirection (), 
+				                 out hit, 
+				                 oponentMask
+			                 );
+			if (intersect) {
+				if (hit.collider.tag == PLAYER_TAG)
+					CmdDamageToOponent (hit.collider.name, currentWeapon.damage);
 
-			if (intersect && hit.collider.tag == PLAYER_TAG)
-				CmdDamageToOponent (hit.collider.name, currentWeapon.damage);
+				// When hit somthing, invoke OnHit on server side... 
+				CmdOnHit (hit.point, hit.normal);
+			}
 		}
 
 		void UpdateShoot ()
