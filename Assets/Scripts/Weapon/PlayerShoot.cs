@@ -21,10 +21,29 @@ namespace Fps
 		// Private Methods
 		//-----------------------------------------------------------------------------
 
+		[Command]
+		void CmdOnShoot ()
+		{
+			RpcDoShootEffect ();
+		}
+
+		// Invoke DoShootEffect command on all client from server side...
+		[ClientRpc]
+		void RpcDoShootEffect ()
+		{
+			weaponManager.GetCurrentWeaponGraphics ().muzzleFlash.Play ();
+		}
+
 		// On client side
 		[Client]
 		void Shoot ()
 		{
+			if (!isLocalPlayer)
+				return;
+
+			// Invoke OnShoot command on server side...
+			CmdOnShoot ();
+
 			Debug.Log ("SHOOT: " + ++counter);
 			RaycastHit hit;
 			bool intersect = Physics.Raycast (CameraPosition (), CameraDirection (), out hit, oponentMask);

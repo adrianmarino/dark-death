@@ -23,6 +23,11 @@ public class WeaponManager : NetworkBehaviour
 		return currentWeapon;
 	}
 
+	public WeaponGraphics GetCurrentWeaponGraphics ()
+	{
+		return currentWeaponGraphics;
+	}
+
 	//-----------------------------------------------------------------------------
 	// Private Methods
 	//-----------------------------------------------------------------------------
@@ -41,6 +46,10 @@ public class WeaponManager : NetworkBehaviour
 			                      weaponHolder.rotation
 		                      );
 		instance.transform.SetParent (weaponHolder);
+
+		currentWeaponGraphics = instance.GetComponent<WeaponGraphics> ();
+		if (currentWeaponGraphics == null)
+			Debug.Log ("Not found weapon graphics in player weapon: " + weapon.name);
 
 		if (isLocalPlayer)
 			Util.Layer.SetLayerRecursively (
@@ -65,4 +74,6 @@ public class WeaponManager : NetworkBehaviour
 	private Transform weaponHolder;
 
 	private PlayerWeapon currentWeapon;
+
+	private WeaponGraphics currentWeaponGraphics;
 }

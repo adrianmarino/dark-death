@@ -11,4 +11,5 @@ public class PlayerWeapon
 	public float fireRate = 2f;
 
 	public GameObject graphics;
+
 }
