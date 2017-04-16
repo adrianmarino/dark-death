@@ -46,6 +46,17 @@ namespace Fps
 		// Public Methods
 		//-----------------------------------------------------------------------------
 
+		public void SetName (string netId)
+		{
+			string playerId = ID_PREFIX + netId;
+			transform.name = playerId;
+		}
+
+		public string GetName ()
+		{
+			return transform.name;
+		}
+
 		public void Setup ()
 		{
 			Dead = false;
@@ -172,6 +183,12 @@ namespace Fps
 				dead = value;
 			}
 		}
+
+		//-----------------------------------------------------------------------------
+		// Constants
+		//-----------------------------------------------------------------------------
+
+		private const string ID_PREFIX = "Player ";
 
 		//-----------------------------------------------------------------------------
 		// Attributes

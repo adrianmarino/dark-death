@@ -21,29 +21,23 @@ namespace Fps
 			return players [playerId];
 		}
 
-		void InitSceneCamera ()
-		{
-			sceneCamera.GetComponent<Camera> ().depth = sceneCameraDepth;
-			sceneCamera.GetComponent<BlurOptimized> ().enabled = true;
-		}
-
 		public void RegisterPlayer (string netId, Player player)
 		{
-			if (player == null) {
-				Debug.Log ("Does not register a null player!");
+			if (player == null)
 				return;
-			}
 
-			string playerId = ID_PREFIX + netId;
-			player.transform.name = playerId;
-
-			players.Add (playerId, player);
-			Debug.Log (playerId + " Registered!");
+			player.SetName (netId);
+			players.Add (player.GetName (), player);
+			Debug.Log (player.GetName () + " Registered");
 		}
 
 		public void UnregisterPlayer (string playerId)
 		{
+			if (playerId == "0")
+				return;
+
 			players.Remove (playerId);
+			Debug.Log ("Unregister " + playerId);
 		}
 
 		public void SetEnableScenCameraListener (bool value)
@@ -52,10 +46,14 @@ namespace Fps
 		}
 
 		//-----------------------------------------------------------------------------
-		// Constants
+		// Private Methods
 		//-----------------------------------------------------------------------------
 
-		private const string ID_PREFIX = "Player ";
+		void InitSceneCamera ()
+		{
+			sceneCamera.GetComponent<Camera> ().depth = sceneCameraDepth;
+			sceneCamera.GetComponent<BlurOptimized> ().enabled = true;
+		}
 
 		//-----------------------------------------------------------------------------
 		// Attributes
@@ -64,11 +62,10 @@ namespace Fps
 		[SerializeField]
 		private GameObject sceneCamera;
 
-
 		[SerializeField]
 		private int sceneCameraDepth = 1;
 
-		private Dictionary<string, Player> players = new Dictionary <string, Player> ();
+		private Dictionary<string, Player> players;
 
 		public static GameManager singleton = null;
 
