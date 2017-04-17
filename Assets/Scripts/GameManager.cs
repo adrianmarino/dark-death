@@ -1,11 +1,20 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.ImageEffects;
+using System.Linq;
 
 namespace Fps
 {
 	public class GameManager : MonoBehaviour
 	{
+		void OnGUI ()
+		{
+			GUIUtils.PlayersWindow (
+				players.Values.ToList<Player> (),
+				new Rect (5, Screen.height - 155, 100, 120)
+			);
+		}
+
 		void Awake ()
 		{
 			singleton = this;
@@ -26,9 +35,9 @@ namespace Fps
 			if (player == null)
 				return;
 
-			player.SetName (netId);
-			players.Add (player.GetName (), player);
-			Debug.Log (player.GetName () + " Registered");
+			player.Name = netId;
+			players.Add (player.Name, player);
+			Debug.Log (player.Name + " Registered");
 		}
 
 		public void UnregisterPlayer (string playerId)

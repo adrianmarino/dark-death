@@ -46,23 +46,17 @@ namespace Fps
 		// Public Methods
 		//-----------------------------------------------------------------------------
 
-		public void SetName (string netId)
+		public string ToString ()
 		{
-			string playerId = ID_PREFIX + netId;
-			transform.name = playerId;
+			return tag + " " + transform.name;
 		}
 
-		public string GetName ()
-		{
-			return transform.name;
-		}
 
 		public void Setup ()
 		{
 			Dead = false;
 			currentHealth = maxHealth;
 			LoadActiveStates ();
-			// SetEnableCollider (true);
 		}
 
 		//-----------------------------------------------------------------------------
@@ -142,7 +136,6 @@ namespace Fps
 			SaveActiveStates ();
 			DisableAllBehaviours ();
 			DisableAllGameObjects ();
-			// SetEnableCollider (false);
 			Debug.Log (this.name + " is dead!");
 			PerformDeadEffect ();
 		}
@@ -174,7 +167,12 @@ namespace Fps
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
-	
+
+		public string Name {
+			get { return transform.name; }
+			set { transform.name = value; }	
+		}
+
 		public bool Dead {
 			get { 
 				return dead;
@@ -183,12 +181,6 @@ namespace Fps
 				dead = value;
 			}
 		}
-
-		//-----------------------------------------------------------------------------
-		// Constants
-		//-----------------------------------------------------------------------------
-
-		private const string ID_PREFIX = "Player ";
 
 		//-----------------------------------------------------------------------------
 		// Attributes
