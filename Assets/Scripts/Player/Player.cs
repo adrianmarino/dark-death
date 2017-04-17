@@ -1,4 +1,5 @@
-﻿using UnityEngine.Networking;
+﻿
+using UnityEngine.Networking;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ namespace Fps
 			ShowCurrentHealth ();
 
 			if (Input.GetKeyDown (KeyCode.K))
-				RpcTakeDamage (99999);
+				RpcTakeDamage (currentHealth);
 		}
 
 		//-----------------------------------------------------------------------------
