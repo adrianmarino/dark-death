@@ -1,57 +1,59 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections.Generic;
-using Fps;
 
-public class PlayerSetup : NetworkBehaviour
+namespace Fps
 {
-	//-----------------------------------------------------------------------------
-	// Engine Events
-	//-----------------------------------------------------------------------------
-
-	void Start ()
+	public class PlayerSetup : NetworkBehaviour
 	{
-		if (isLocalPlayer)
-			Player ().Setup ();
-		else
-			Util.Behaviours.DisableAll (components);
+		//-----------------------------------------------------------------------------
+		// Engine Events
+		//-----------------------------------------------------------------------------
 
-		GameManager.singleton.SetEnableScenCameraListener (false);
-	}
+		void Start ()
+		{
+			if (isLocalPlayer)
+				Player ().Setup ();
+			else
+				Util.Behaviours.DisableAll (components);
 
-	public override void OnStartClient ()
-	{
-		base.OnStartClient ();
-		GameManager.singleton.RegisterPlayer (NetId (), Player ());
-	}
-
-	void OnDisable ()
-	{
-		if (isLocalPlayer) {
-			Util.Input.ShowCursor ();
-			GameManager.singleton.SetEnableScenCameraListener (true);
+			GameManager.singleton.SetEnableScenCameraListener (false);
 		}
-		GameManager.singleton.UnregisterPlayer (NetId ());
+
+		public override void OnStartClient ()
+		{
+			base.OnStartClient ();
+			GameManager.singleton.RegisterPlayer (NetId (), Player ());
+		}
+
+		void OnDisable ()
+		{
+			if (isLocalPlayer) {
+				Util.Input.ShowCursor ();
+				GameManager.singleton.SetEnableScenCameraListener (true);
+			}
+			GameManager.singleton.UnregisterPlayer (NetId ());
+		}
+
+		//-----------------------------------------------------------------------------
+		// Private Methods
+		//-----------------------------------------------------------------------------
+
+		string NetId ()
+		{
+			return GetComponent<NetworkIdentity> ().netId.ToString ();
+		}
+
+		Player Player ()
+		{
+			return GetComponent<Player> ();
+		}
+
+		//-----------------------------------------------------------------------------
+		// Attributes
+		//-----------------------------------------------------------------------------
+
+		[SerializeField]
+		private List<Behaviour> components;
 	}
-
-	//-----------------------------------------------------------------------------
-	// Private Methods
-	//-----------------------------------------------------------------------------
-
-	string NetId ()
-	{
-		return GetComponent<NetworkIdentity> ().netId.ToString ();
-	}
-
-	Player Player ()
-	{
-		return GetComponent<Player> ();
-	}
-
-	//-----------------------------------------------------------------------------
-	// Attributes
-	//-----------------------------------------------------------------------------
-
-	[SerializeField]
-	private List<Behaviour> components;
 }

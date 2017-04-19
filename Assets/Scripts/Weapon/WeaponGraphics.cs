@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public class WeaponGraphics : MonoBehaviour
+namespace Fps
 {
-	public ParticleSystem muzzleFlash;
+	public class WeaponGraphics : MonoBehaviour
+	{
+		public ParticleSystem muzzleFlash;
 
-	public GameObject hitEffectPrefab;
+		public GameObject hitEffectPrefab;
+	}
 }
 

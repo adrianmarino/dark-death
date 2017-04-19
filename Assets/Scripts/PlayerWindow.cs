@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using Fps;
 using System.Linq;
 
-public class GUIUtils
+namespace Fps
 {
-	public static void PlayersWindow (List<Player> players, Rect rect)
+	public class GUIUtils
 	{
-		if (players.Count == 0)
-			return;
+		public static void PlayersWindow (List<Player> players, Rect rect)
+		{
+			if (players.Count == 0)
+				return;
 
-		string content = players
+			string content = players
 			.Select (it => it.ToString ())
 			.OrderBy (desc => desc)
 			.Aggregate ((nameA, nameB) => nameA + "\n" + nameB);
-		Util.GUI.TextWindow ("Players", content, rect);
+			Util.GUI.TextWindow ("Players", content, rect);
+		}
 	}
 }
 
