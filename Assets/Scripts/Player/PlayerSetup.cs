@@ -17,22 +17,29 @@ namespace Fps
 			else
 				Util.Behaviours.DisableAll (components);
 
-			GameManager.singleton.SetEnableScenCameraListener (false);
+			GameManager.SetEnableScenCameraListener (false);
 		}
 
 		public override void OnStartClient ()
 		{
-			base.OnStartClient ();
-			GameManager.singleton.RegisterPlayer (NetId (), Player ());
+			GameManager.RegisterPlayer (NetId (), Player ());
 		}
 
 		void OnDisable ()
 		{
 			if (isLocalPlayer) {
 				Util.Input.ShowCursor ();
-				GameManager.singleton.SetEnableScenCameraListener (true);
+				GameManager.SetEnableScenCameraListener (true);
 			}
-			GameManager.singleton.UnregisterPlayer (NetId ());
+			GameManager.UnregisterPlayer (NetId ());
+		}
+
+		//-----------------------------------------------------------------------------
+		// Properties
+		//-----------------------------------------------------------------------------
+
+		GameManager GameManager {
+			get { return GameManager.singleton; }
 		}
 
 		//-----------------------------------------------------------------------------

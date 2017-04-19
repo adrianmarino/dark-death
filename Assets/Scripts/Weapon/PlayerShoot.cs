@@ -16,9 +16,14 @@ namespace Fps
 				UpdateShoot ();
 		}
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+		// On server side
+		[Command]
+		void CmdDamageToOponent (string playerId, float damage)
+		{
+			Debug.Log (playerId + " has been shot!");
+			Player oponentPlayer = GameManager.GetPlayer (playerId);
+			oponentPlayer.RpcTakeDamage (damage);
+		}
 
 		// Invoked on the server when hit something...
 		[Command]
@@ -47,6 +52,10 @@ namespace Fps
 			Weapon.PlayShootEffect ();
 		}
 
+		//-----------------------------------------------------------------------------
+		// Private Methods
+		//-----------------------------------------------------------------------------
+
 		// On client side
 		[Client]
 		void Shoot ()
@@ -54,10 +63,10 @@ namespace Fps
 			if (!isLocalPlayer)
 				return;
 
-			RaycastHit target;
-		
 			// Invoke OnShoot command on server side...
 			CmdOnShoot ();
+
+			RaycastHit target;
 			if (Weapon.Shoot (_camera.transform, out target, oponentMask)) {
 				if (target.collider.tag == PLAYER_TAG)
 					CmdDamageToOponent (target.collider.name, Weapon.Damage);
@@ -90,16 +99,6 @@ namespace Fps
 			CancelInvoke (SHOOT_METHOD_NAME);
 		}
 
-		// On server side
-		[Command]
-		void CmdDamageToOponent (string playerId, float damage)
-		{
-			Debug.Log (playerId + " has been shot!");
-			Player oponentPlayer = GameManager.singleton.GetPlayer (playerId);
-
-			oponentPlayer.RpcTakeDamage (damage);
-		}
-
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
@@ -110,6 +109,10 @@ namespace Fps
 
 		WeaponManager WeaponManager {
 			get { return GetComponent<WeaponManager> (); }
+		}
+
+		GameManager GameManager {
+			get { return GameManager.singleton; }
 		}
 
 		//-----------------------------------------------------------------------------

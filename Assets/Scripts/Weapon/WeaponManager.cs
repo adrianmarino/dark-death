@@ -30,29 +30,15 @@ namespace Fps
 
 		Weapon CreateIntoHolder (GameObject _weaponPrefab)
 		{
-			GameObject instance = Instantiate (
-				                      _weaponPrefab, 
-				                      weaponHolder.position, 
-				                      weaponHolder.rotation
-			                      );
-			instance.transform.SetParent (weaponHolder);
-
-			Weapon weapon = instance.GetComponent<Weapon> ();
-			if (weapon == null)
-				Debug.Log ("Not found weapon component in weapon prefab!");
+			Weapon weapon = Weapon.InstantiateOnHolder (_weaponPrefab, weaponHolder);
 
 			if (isLocalPlayer)
 				Util.Layer.SetLayerRecursively (
-					instance, 
+					weapon.gameObject, 
 					LayerMask.NameToLayer (weaponLayerName)
 				);
 
 			return weapon;
-		}
-
-		GameObject LoadPrefab (string path)
-		{
-			return (GameObject)Resources.Load (path, typeof(GameObject));
 		}
 
 		//-----------------------------------------------------------------------------
@@ -60,9 +46,7 @@ namespace Fps
 		//-----------------------------------------------------------------------------
 
 		public Weapon CurrentWeapon {
-			get {
-				return currentWeapon;
-			}
+			get { return currentWeapon; }
 		}
 
 		//-----------------------------------------------------------------------------

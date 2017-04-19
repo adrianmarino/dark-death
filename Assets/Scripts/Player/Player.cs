@@ -10,7 +10,7 @@ namespace Fps
 	public class Player : NetworkBehaviour
 	{
 		//-----------------------------------------------------------------------------
-		// Engine Methods
+		// Events
 		//-----------------------------------------------------------------------------
 
 		void Start ()
@@ -50,7 +50,6 @@ namespace Fps
 		{
 			return tag + " " + transform.name;
 		}
-
 
 		public void Setup ()
 		{
