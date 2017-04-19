@@ -5,13 +5,47 @@ namespace Fps
 	[System.Serializable]
 	public class PlayerWeapon
 	{
-		public string name = "HeavyBlaster";
+		//-----------------------------------------------------------------------------
+		// Properties
+		//-----------------------------------------------------------------------------
 
-		public float damage = 25f;
-		public float range = 100f;
+		public string Name {
+			get { return name; }
+		}
 
-		public float fireRate = 2f;
+		public float Damage {
+			get { return damage; }
+		}
 
-		public GameObject graphics;
+		public float Range {
+			get { return range; }
+		}
+
+		public float FireRate {
+			get { return fireRate; }
+		}
+
+		public GameObject Graphics {
+			get { return graphics; }
+		}
+
+		//-----------------------------------------------------------------------------
+		// Attributes
+		//-----------------------------------------------------------------------------
+
+		[SerializeField]
+		private string name = "HeavyBlaster";
+
+		[SerializeField]
+		private float damage = 25f;
+
+		[SerializeField]
+		private float range = 100f;
+
+		[SerializeField]
+		private float fireRate = 2f;
+
+		[SerializeField]
+		private GameObject graphics;
 	}
 }

@@ -43,15 +43,15 @@ namespace Fps
 		GameObject CreateIntoHolder (PlayerWeapon weapon)
 		{
 			GameObject instance = Instantiate (
-				                     weapon.graphics, 
-				                     weaponHolder.position, 
-				                     weaponHolder.rotation
-			                     );
+				                      weapon.Graphics, 
+				                      weaponHolder.position, 
+				                      weaponHolder.rotation
+			                      );
 			instance.transform.SetParent (weaponHolder);
 
 			currentWeaponGraphics = instance.GetComponent<WeaponGraphics> ();
 			if (currentWeaponGraphics == null)
-				Debug.Log ("Not found weapon graphics in player weapon: " + weapon.name);
+				Debug.Log ("Not found weapon graphics in player weapon: " + weapon.Name);
 
 			if (isLocalPlayer)
 				Util.Layer.SetLayerRecursively (

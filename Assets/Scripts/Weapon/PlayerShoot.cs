@@ -31,7 +31,7 @@ namespace Fps
 		[ClientRpc]
 		void RpcDoShootEffect ()
 		{
-			weaponManager.GetCurrentWeaponGraphics ().muzzleFlash.Play ();
+			weaponManager.GetCurrentWeaponGraphics ().MuzzleFlash.Play ();
 			weaponManager.GetCurrentWeaponGraphics ().GetComponent<AudioSource> ().Play ();
 		}
 
@@ -47,7 +47,7 @@ namespace Fps
 		void RpcDoHitEffect (Vector3 position, Vector3 normal)
 		{
 			GameObject hitEffect = Instantiate (
-				                       weaponManager.GetCurrentWeaponGraphics ().hitEffect,
+				                       weaponManager.GetCurrentWeaponGraphics ().HitEffect,
 				                       position,
 				                       Quaternion.LookRotation (normal)
 			                       );
@@ -75,7 +75,7 @@ namespace Fps
 			                 );
 			if (intersect) {
 				if (hit.collider.tag == PLAYER_TAG)
-					CmdDamageToOponent (hit.collider.name, currentWeapon.damage);
+					CmdDamageToOponent (hit.collider.name, currentWeapon.Damage);
 
 				// When hit somthing, invoke OnHit on server side... 
 				CmdOnHit (hit.point, hit.normal);
@@ -84,7 +84,7 @@ namespace Fps
 
 		void UpdateShoot ()
 		{
-			if (currentWeapon.fireRate <= 0f) {
+			if (currentWeapon.FireRate <= 0f) {
 				if (Util.Input.GetFireButtonDown ())
 					Shoot ();
 			} else {
@@ -97,7 +97,7 @@ namespace Fps
 
 		void BurstShoot ()
 		{
-			InvokeRepeating (SHOOT_METHOD_NAME, 0f, 1f / currentWeapon.fireRate);
+			InvokeRepeating (SHOOT_METHOD_NAME, 0f, 1f / currentWeapon.FireRate);
 		}
 
 		void EndShoot ()
