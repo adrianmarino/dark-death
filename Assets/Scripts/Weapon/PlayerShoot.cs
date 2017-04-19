@@ -10,14 +10,9 @@ namespace Fps
 		// Events
 		//-----------------------------------------------------------------------------
 
-		void Start ()
-		{
-			weaponManager = GetComponent<WeaponManager> ();
-		}
-
 		void Update ()
 		{
-			if (weaponManager.isReady ())
+			if (WeaponManager.isReady ())
 				UpdateShoot ();
 		}
 
@@ -35,8 +30,7 @@ namespace Fps
 		[ClientRpc]
 		void RpcDoShootEffect ()
 		{
-			weaponManager.CurrentWeapon.MuzzleFlash.Play ();
-			weaponManager.CurrentWeapon.GetComponent<AudioSource> ().Play ();
+			Weapon.PlayShootEffects ();
 		}
 
 		// Invoked on the server when hit something...
@@ -50,14 +44,8 @@ namespace Fps
 		[ClientRpc]
 		void RpcDoHitEffect (Vector3 position, Vector3 normal)
 		{
-			GameObject hitEffect = Instantiate (
-				                       weaponManager.CurrentWeapon.HitEffect,
-				                       position,
-				                       Quaternion.LookRotation (normal)
-			                       );
-			Destroy (hitEffect, 2f);
+			Weapon.Hit (position, normal);
 		}
-
 
 		// On client side
 		[Client]
@@ -79,7 +67,7 @@ namespace Fps
 			                 );
 			if (intersect) {
 				if (hit.collider.tag == PLAYER_TAG)
-					CmdDamageToOponent (hit.collider.name, CurrentWeapon.Damage);
+					CmdDamageToOponent (hit.collider.name, Weapon.Damage);
 
 				// When hit somthing, invoke OnHit on server side... 
 				CmdOnHit (hit.point, hit.normal);
@@ -88,7 +76,7 @@ namespace Fps
 
 		void UpdateShoot ()
 		{
-			if (CurrentWeapon.FireRate <= 0f) {
+			if (Weapon.FireRate <= 0f) {
 				if (Util.Input.GetFireButtonDown ())
 					Shoot ();
 			} else {
@@ -101,7 +89,7 @@ namespace Fps
 
 		void BurstShoot ()
 		{
-			InvokeRepeating (SHOOT_METHOD_NAME, 0f, 1f / CurrentWeapon.FireRate);
+			InvokeRepeating (SHOOT_METHOD_NAME, 0f, 1f / Weapon.FireRate);
 		}
 
 		void EndShoot ()
@@ -133,12 +121,12 @@ namespace Fps
 		// Properties
 		//-----------------------------------------------------------------------------
 
-		Weapon CurrentWeapon {
-			get { 
-				if (weaponManager == null)
-					Debug.LogError ("WeaponManager is null");
-				return weaponManager.CurrentWeapon;
-			}
+		Weapon Weapon {
+			get { return WeaponManager.CurrentWeapon; }
+		}
+
+		WeaponManager WeaponManager {
+			get { return GetComponent<WeaponManager> (); }
 		}
 
 		//-----------------------------------------------------------------------------
@@ -160,7 +148,5 @@ namespace Fps
 
 		[SerializeField]
 		private Camera _camera;
-
-		private WeaponManager weaponManager;
 	}
 }

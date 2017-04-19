@@ -6,6 +6,26 @@ namespace Fps
 	public class Weapon : NetworkBehaviour
 	{
 		//-----------------------------------------------------------------------------
+		// Public Methods
+		//-----------------------------------------------------------------------------
+	
+		public void Hit (Vector3 position, Vector3 normal)
+		{
+			GameObject hitEffect = Instantiate (
+				                       HitEffect,
+				                       position,
+				                       Quaternion.LookRotation (normal)
+			                       );
+			Destroy (hitEffect, 2f);
+		}
+
+		public void PlayShootEffects ()
+		{
+			MuzzleFlash.Play ();
+			GetComponent<AudioSource> ().Play ();
+		}
+
+		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
 
