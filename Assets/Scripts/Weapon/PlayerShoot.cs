@@ -6,15 +6,19 @@ namespace Fps
 	[RequireComponent (typeof(WeaponManager))]
 	public class PlayerShoot : NetworkBehaviour
 	{
-		void Update ()
-		{
-			currentWeapon = weaponManager.GetCurrentWeapon ();
-			UpdateShoot ();
-		}
+		//-----------------------------------------------------------------------------
+		// Events
+		//-----------------------------------------------------------------------------
 
 		void Start ()
 		{
 			weaponManager = GetComponent<WeaponManager> ();
+		}
+
+		void Update ()
+		{
+			if (weaponManager.isReady ())
+				UpdateShoot ();
 		}
 
 		//-----------------------------------------------------------------------------
@@ -31,8 +35,8 @@ namespace Fps
 		[ClientRpc]
 		void RpcDoShootEffect ()
 		{
-			weaponManager.GetCurrentWeaponGraphics ().MuzzleFlash.Play ();
-			weaponManager.GetCurrentWeaponGraphics ().GetComponent<AudioSource> ().Play ();
+			weaponManager.CurrentWeapon.MuzzleFlash.Play ();
+			weaponManager.CurrentWeapon.GetComponent<AudioSource> ().Play ();
 		}
 
 		// Invoked on the server when hit something...
@@ -47,7 +51,7 @@ namespace Fps
 		void RpcDoHitEffect (Vector3 position, Vector3 normal)
 		{
 			GameObject hitEffect = Instantiate (
-				                       weaponManager.GetCurrentWeaponGraphics ().HitEffect,
+				                       weaponManager.CurrentWeapon.HitEffect,
 				                       position,
 				                       Quaternion.LookRotation (normal)
 			                       );
@@ -75,7 +79,7 @@ namespace Fps
 			                 );
 			if (intersect) {
 				if (hit.collider.tag == PLAYER_TAG)
-					CmdDamageToOponent (hit.collider.name, currentWeapon.Damage);
+					CmdDamageToOponent (hit.collider.name, CurrentWeapon.Damage);
 
 				// When hit somthing, invoke OnHit on server side... 
 				CmdOnHit (hit.point, hit.normal);
@@ -84,7 +88,7 @@ namespace Fps
 
 		void UpdateShoot ()
 		{
-			if (currentWeapon.FireRate <= 0f) {
+			if (CurrentWeapon.FireRate <= 0f) {
 				if (Util.Input.GetFireButtonDown ())
 					Shoot ();
 			} else {
@@ -97,7 +101,7 @@ namespace Fps
 
 		void BurstShoot ()
 		{
-			InvokeRepeating (SHOOT_METHOD_NAME, 0f, 1f / currentWeapon.FireRate);
+			InvokeRepeating (SHOOT_METHOD_NAME, 0f, 1f / CurrentWeapon.FireRate);
 		}
 
 		void EndShoot ()
@@ -126,6 +130,18 @@ namespace Fps
 		}
 
 		//-----------------------------------------------------------------------------
+		// Properties
+		//-----------------------------------------------------------------------------
+
+		Weapon CurrentWeapon {
+			get { 
+				if (weaponManager == null)
+					Debug.LogError ("WeaponManager is null");
+				return weaponManager.CurrentWeapon;
+			}
+		}
+
+		//-----------------------------------------------------------------------------
 		// Constants
 		//-----------------------------------------------------------------------------
 
@@ -144,8 +160,6 @@ namespace Fps
 
 		[SerializeField]
 		private Camera _camera;
-
-		private PlayerWeapon currentWeapon;
 
 		private WeaponManager weaponManager;
 	}

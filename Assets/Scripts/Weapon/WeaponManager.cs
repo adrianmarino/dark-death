@@ -1,57 +1,45 @@
-﻿using UnityEngine.Networking;
-using UnityEngine;
-using Fps;
+﻿using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Fps
 {
 	public class WeaponManager : NetworkBehaviour
 	{
-		void Awake ()
-		{
-			currentWeapon = primaryWeapon;
-		}
+		//-----------------------------------------------------------------------------
+		// Events
+		//-----------------------------------------------------------------------------
 
-		void Start ()
+		void OnEnable ()
 		{
-			EquipWeapon (primaryWeapon);
+			if (weaponPrefab != null) // Workaround by unity bug.
+				currentWeapon = CreateIntoHolder (weaponPrefab);
 		}
 
 		//-----------------------------------------------------------------------------
 		// Public Methods
 		//-----------------------------------------------------------------------------
 
-		public PlayerWeapon GetCurrentWeapon ()
+		public bool isReady ()
 		{
-			return currentWeapon;
-		}
-
-		public WeaponGraphics GetCurrentWeaponGraphics ()
-		{
-			return currentWeaponGraphics;
+			return currentWeapon != null;  // Workaround by unity bug.
 		}
 
 		//-----------------------------------------------------------------------------
 		// Private Methods
 		//-----------------------------------------------------------------------------
 
-		void EquipWeapon (PlayerWeapon weapon)
-		{
-			currentWeapon = weapon;
-			CreateIntoHolder (weapon);
-		}
-
-		GameObject CreateIntoHolder (PlayerWeapon weapon)
+		Weapon CreateIntoHolder (GameObject _weaponPrefab)
 		{
 			GameObject instance = Instantiate (
-				                      weapon.Graphics, 
+				                      _weaponPrefab, 
 				                      weaponHolder.position, 
 				                      weaponHolder.rotation
 			                      );
 			instance.transform.SetParent (weaponHolder);
 
-			currentWeaponGraphics = instance.GetComponent<WeaponGraphics> ();
-			if (currentWeaponGraphics == null)
-				Debug.Log ("Not found weapon graphics in player weapon: " + weapon.Name);
+			Weapon weapon = instance.GetComponent<Weapon> ();
+			if (weapon == null)
+				Debug.Log ("Not found weapon component in weapon prefab!");
 
 			if (isLocalPlayer)
 				Util.Layer.SetLayerRecursively (
@@ -59,7 +47,22 @@ namespace Fps
 					LayerMask.NameToLayer (weaponLayerName)
 				);
 
-			return instance;
+			return weapon;
+		}
+
+		GameObject LoadPrefab (string path)
+		{
+			return (GameObject)Resources.Load (path, typeof(GameObject));
+		}
+
+		//-----------------------------------------------------------------------------
+		// Properties
+		//-----------------------------------------------------------------------------
+
+		public Weapon CurrentWeapon {
+			get {
+				return currentWeapon;
+			}
 		}
 
 		//-----------------------------------------------------------------------------
@@ -67,16 +70,14 @@ namespace Fps
 		//-----------------------------------------------------------------------------
 
 		[SerializeField]
-		private PlayerWeapon primaryWeapon;
-
-		[SerializeField]
 		private string weaponLayerName = "Weapon";
 
 		[SerializeField]
 		private Transform weaponHolder;
 
-		private PlayerWeapon currentWeapon;
+		[SerializeField]
+		private GameObject weaponPrefab;
 
-		private WeaponGraphics currentWeaponGraphics;
+		private Weapon currentWeapon;
 	}
 }

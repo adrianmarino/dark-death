@@ -1,16 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Fps
 {
-	[System.Serializable]
-	public class PlayerWeapon
+	public class Weapon : NetworkBehaviour
 	{
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
 
+		public ParticleSystem MuzzleFlash {
+			get { return muzzleFlash; }
+		}
+
+		public GameObject HitEffect {
+			get { return hitEffect; }
+		}
+
 		public string Name {
-			get { return name; }
+			get { return _name; }
 		}
 
 		public float Damage {
@@ -25,8 +33,8 @@ namespace Fps
 			get { return fireRate; }
 		}
 
-		public GameObject Graphics {
-			get { return graphics; }
+		public GameObject GameObject {
+			get { return this.gameObject; }
 		}
 
 		//-----------------------------------------------------------------------------
@@ -34,7 +42,13 @@ namespace Fps
 		//-----------------------------------------------------------------------------
 
 		[SerializeField]
-		private string name = "HeavyBlaster";
+		private ParticleSystem muzzleFlash;
+
+		[SerializeField]
+		private GameObject hitEffect;
+
+		[SerializeField]
+		private string _name = "HeavyBlaster";
 
 		[SerializeField]
 		private float damage = 25f;
@@ -44,8 +58,6 @@ namespace Fps
 
 		[SerializeField]
 		private float fireRate = 2f;
-
-		[SerializeField]
-		private GameObject graphics;
 	}
 }
+
