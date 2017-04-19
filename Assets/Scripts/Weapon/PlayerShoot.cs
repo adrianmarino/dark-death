@@ -47,7 +47,7 @@ namespace Fps
 		void RpcDoHitEffect (Vector3 position, Vector3 normal)
 		{
 			GameObject hitEffect = Instantiate (
-				                       weaponManager.GetCurrentWeaponGraphics ().hitEffectPrefab,
+				                       weaponManager.GetCurrentWeaponGraphics ().hitEffect,
 				                       position,
 				                       Quaternion.LookRotation (normal)
 			                       );

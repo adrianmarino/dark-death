@@ -6,7 +6,7 @@ namespace Fps
 	{
 		public ParticleSystem muzzleFlash;
 
-		public GameObject hitEffectPrefab;
+		public GameObject hitEffect;
 	}
 }
 
