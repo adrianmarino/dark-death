@@ -20,19 +20,6 @@ namespace Fps
 		// Private Methods
 		//-----------------------------------------------------------------------------
 
-		[Command]
-		void CmdOnShoot ()
-		{
-			RpcDoShootEffect ();
-		}
-
-		// Invoke DoShootEffect command on all client from server side...
-		[ClientRpc]
-		void RpcDoShootEffect ()
-		{
-			Weapon.PlayShootEffects ();
-		}
-
 		// Invoked on the server when hit something...
 		[Command]
 		void CmdOnHit (Vector3 position, Vector3 normal)
@@ -44,7 +31,20 @@ namespace Fps
 		[ClientRpc]
 		void RpcDoHitEffect (Vector3 position, Vector3 normal)
 		{
-			Weapon.Hit (position, normal);
+			Weapon.HitTarget (position, normal);
+		}
+
+		[Command]
+		void CmdOnShoot ()
+		{
+			RpcDoShootEffect ();
+		}
+
+		// Invoke DoShootEffect command on all client from server side...
+		[ClientRpc]
+		void RpcDoShootEffect ()
+		{
+			Weapon.PlayShootEffect ();
 		}
 
 		// On client side
@@ -54,23 +54,16 @@ namespace Fps
 			if (!isLocalPlayer)
 				return;
 
+			RaycastHit target;
+		
 			// Invoke OnShoot command on server side...
 			CmdOnShoot ();
-
-			Debug.Log ("SHOOT: " + ++counter);
-			RaycastHit hit;
-			bool intersect = Physics.Raycast (
-				                 CameraPosition (), 
-				                 CameraDirection (), 
-				                 out hit, 
-				                 oponentMask
-			                 );
-			if (intersect) {
-				if (hit.collider.tag == PLAYER_TAG)
-					CmdDamageToOponent (hit.collider.name, Weapon.Damage);
+			if (Weapon.Shoot (_camera.transform, out target, oponentMask)) {
+				if (target.collider.tag == PLAYER_TAG)
+					CmdDamageToOponent (target.collider.name, Weapon.Damage);
 
 				// When hit somthing, invoke OnHit on server side... 
-				CmdOnHit (hit.point, hit.normal);
+				CmdOnHit (target.point, target.normal);
 			}
 		}
 
@@ -107,16 +100,6 @@ namespace Fps
 			oponentPlayer.RpcTakeDamage (damage);
 		}
 
-		Vector3 CameraPosition ()
-		{
-			return _camera.transform.position;
-		}
-
-		Vector3 CameraDirection ()
-		{
-			return _camera.transform.forward;
-		}
-
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
@@ -140,8 +123,6 @@ namespace Fps
 		//-----------------------------------------------------------------------------
 		// Attributes
 		//-----------------------------------------------------------------------------
-
-		private float counter = 0;
 
 		[SerializeField]
 		private LayerMask oponentMask;

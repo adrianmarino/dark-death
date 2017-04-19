@@ -1,15 +1,25 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 
 namespace Fps
 {
-	public class Weapon : NetworkBehaviour
+	public class Weapon : MonoBehaviour
 	{
 		//-----------------------------------------------------------------------------
 		// Public Methods
 		//-----------------------------------------------------------------------------
 	
-		public void Hit (Vector3 position, Vector3 normal)
+		public bool Shoot (Transform origin, out RaycastHit target, LayerMask targetMask)
+		{
+			Debug.Log ("SHOOT: " + ++counter);
+			return Physics.Raycast (
+				origin.position, 
+				origin.forward, 
+				out target, 
+				targetMask
+			);
+		}
+
+		public void HitTarget (Vector3 position, Vector3 normal)
 		{
 			GameObject hitEffect = Instantiate (
 				                       HitEffect,
@@ -19,19 +29,15 @@ namespace Fps
 			Destroy (hitEffect, 2f);
 		}
 
-		public void PlayShootEffects ()
+		public void PlayShootEffect ()
 		{
-			MuzzleFlash.Play ();
+			muzzleFlash.Play ();
 			GetComponent<AudioSource> ().Play ();
 		}
 
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
-
-		public ParticleSystem MuzzleFlash {
-			get { return muzzleFlash; }
-		}
 
 		public GameObject HitEffect {
 			get { return hitEffect; }
@@ -51,10 +57,6 @@ namespace Fps
 
 		public float FireRate {
 			get { return fireRate; }
-		}
-
-		public GameObject GameObject {
-			get { return this.gameObject; }
 		}
 
 		//-----------------------------------------------------------------------------
@@ -78,6 +80,8 @@ namespace Fps
 
 		[SerializeField]
 		private float fireRate = 2f;
+
+		private float counter = 0;
 	}
 }
 
