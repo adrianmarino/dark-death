@@ -56,6 +56,7 @@ namespace Fps
 			Dead = false;
 			currentHealth = maxHealth;
 			LoadActiveStates ();
+			WeaponManager.CurrentWeapon.Show ();
 		}
 
 		//-----------------------------------------------------------------------------
@@ -135,6 +136,7 @@ namespace Fps
 			SaveActiveStates ();
 			DisableAllBehaviours ();
 			DisableAllGameObjects ();
+			WeaponManager.CurrentWeapon.Hide ();
 			Debug.Log (this.name + " is dead!");
 			PerformDeadEffect ();
 		}
@@ -166,6 +168,10 @@ namespace Fps
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
+
+		WeaponManager WeaponManager {
+			get { return GetComponent<WeaponManager> (); }
+		}
 
 		public string Name {
 			get { return transform.name; }
@@ -209,6 +215,5 @@ namespace Fps
 		private Dictionary<Behaviour, bool> behaviourActiveStates = new Dictionary<Behaviour, bool> ();
 
 		private Dictionary<GameObject, bool> gameObjectActiveStates = new Dictionary<GameObject, bool> ();
-
 	}
 }

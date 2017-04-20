@@ -39,6 +39,16 @@ namespace Fps
 			return Name;
 		}
 
+		public void Hide ()
+		{
+			model.SetActive (false);
+		}
+
+		public void Show ()
+		{
+			model.SetActive (true);
+		}
+
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
@@ -88,6 +98,9 @@ namespace Fps
 
 		[SerializeField]
 		private float fireRate = 2f;
+
+		[SerializeField]
+		private GameObject model;
 	}
 }
 
