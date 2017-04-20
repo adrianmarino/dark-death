@@ -8,24 +8,8 @@ namespace Fps
 		// Public Methods
 		//-----------------------------------------------------------------------------
 
-		public static Weapon InstantiateOnHolder (GameObject weapon, Transform holder)
-		{
-			GameObject instance = Instantiate (
-				                      weapon, 
-				                      holder.position, 
-				                      holder.rotation
-			                      );
-			instance.transform.SetParent (holder);
-
-			Weapon weaponComponent = instance.GetComponent<Weapon> ();
-			if (weapon == null)
-				Debug.Log ("Not found weapon component in weapon prefab!");
-			return weaponComponent;
-		}
-
 		public bool Shoot (Transform origin, out RaycastHit target, LayerMask targetMask)
 		{
-			Debug.Log ("SHOOT: " + ++counter);
 			return Physics.Raycast (
 				origin.position, 
 				origin.forward, 
@@ -47,12 +31,21 @@ namespace Fps
 		public void PlayShootEffect ()
 		{
 			muzzleFlash.Play ();
-			GetComponent<AudioSource> ().Play ();
+			ShootSound.Play ();
+		}
+
+		public override string ToString ()
+		{
+			return Name;
 		}
 
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
+
+		AudioSource ShootSound {
+			get { return GetComponent<AudioSource> (); }
+		}
 
 		public GameObject HitEffect {
 			get { return hitEffect; }
@@ -95,8 +88,6 @@ namespace Fps
 
 		[SerializeField]
 		private float fireRate = 2f;
-
-		private float counter = 0;
 	}
 }
 

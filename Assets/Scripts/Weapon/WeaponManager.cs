@@ -30,7 +30,7 @@ namespace Fps
 
 		Weapon CreateIntoHolder (GameObject _weaponPrefab)
 		{
-			Weapon weapon = Weapon.InstantiateOnHolder (_weaponPrefab, weaponHolder);
+			Weapon weapon = WeaponFactory.InstantiateOnHolder (_weaponPrefab, weaponHolder);
 
 			if (isLocalPlayer)
 				Util.Layer.SetLayerRecursively (

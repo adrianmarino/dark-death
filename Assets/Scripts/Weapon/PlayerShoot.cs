@@ -64,11 +64,12 @@ namespace Fps
 				return;
 
 			// Invoke OnShoot command on server side...
+			Debug.Log (Weapon + " shoot count: " + ++counter);
 			CmdOnShoot ();
 
 			RaycastHit target;
 			if (Weapon.Shoot (_camera.transform, out target, oponentMask)) {
-				if (target.collider.tag == PLAYER_TAG)
+				if (IsPlayer (target))
 					CmdDamageToOponent (target.collider.name, Weapon.Damage);
 
 				// When hit somthing, invoke OnHit on server side... 
@@ -97,6 +98,11 @@ namespace Fps
 		void EndShoot ()
 		{
 			CancelInvoke (SHOOT_METHOD_NAME);
+		}
+
+		bool IsPlayer (RaycastHit target)
+		{
+			return target.collider.tag == PLAYER_TAG;
 		}
 
 		//-----------------------------------------------------------------------------
@@ -132,5 +138,7 @@ namespace Fps
 
 		[SerializeField]
 		private Camera _camera;
+
+		private float counter = 0;
 	}
 }
