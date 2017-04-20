@@ -9,7 +9,7 @@ namespace Fps
 		// Events
 		//-----------------------------------------------------------------------------
 
-		void OnEnable ()
+		void Start ()
 		{
 			if (weaponPrefab != null) // Workaround by unity bug.
 				currentWeapon = CreateIntoHolder (weaponPrefab);
