@@ -25,43 +25,43 @@ namespace Util
 			Cursor.lockState = CursorLockMode.None;
 		}
 
-		public static Vector2 NextKeyboardHorVerMovementVariation ()
+		public static Vector2 KeyboardHorVerMovementDelta ()
 		{
 			return new Vector2 (
-				NextHorizontalMovementVariation (), 
-				NextVerticalMovementVariation ()
+				HorizontalMovementDelta (), 
+				VerticalMovementDelta ()
 			);
 		}
 
-		public static Vector2 NextMouseHorVerMovementVariation ()
+		public static Vector2 MouseHorVerMovementDelta ()
 		{
 			return new Vector2 (
-				NextMouseHorizontalMovementVariation (), 
-				NextMouseVercalMovementVariation ()
+				MouseHorizontalMovementDelta (), 
+				MouseVercalMovementDelta ()
 			);
 		}
 
-		public static float NextMouseHorizontalMovementVariation ()
+		public static float MouseHorizontalMovementDelta ()
 		{
-			return NextMovementVariation (MOUSE_X);
+			return MovementDelta (MOUSE_X);
 		}
 
-		public static float NextMouseVercalMovementVariation ()
+		public static float MouseVercalMovementDelta ()
 		{
-			return NextMovementVariation (MOUSE_Y);
+			return MovementDelta (MOUSE_Y);
 		}
 
-		public static float NextHorizontalMovementVariation ()
+		public static float HorizontalMovementDelta ()
 		{
-			return NextMovementVariation (HORIZONTAL);
+			return MovementDelta (HORIZONTAL);
 		}
 
-		public static float NextVerticalMovementVariation ()
+		public static float VerticalMovementDelta ()
 		{
-			return NextMovementVariation (VERTICAL);
+			return MovementDelta (VERTICAL);
 		}
 
-		public static float NextMovementVariation (string axisName)
+		public static float MovementDelta (string axisName)
 		{
 			return UnityEngine.Input.GetAxisRaw (axisName);
 		}

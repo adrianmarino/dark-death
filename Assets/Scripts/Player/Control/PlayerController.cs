@@ -65,12 +65,12 @@ namespace Fps
 
 		Vector2 KeyboardMovementVariation ()
 		{
-			return Util.Input.NextKeyboardHorVerMovementVariation ();
+			return Util.Input.KeyboardHorVerMovementDelta ();
 		}
 
 		Vector2 MouseMovementVariation ()
 		{
-			return Util.Input.NextMouseHorVerMovementVariation ();
+			return Util.Input.MouseHorVerMovementDelta ();
 		}
 
 
