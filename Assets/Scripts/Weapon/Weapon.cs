@@ -32,6 +32,7 @@ namespace Fps
 		{
 			muzzleFlash.Play ();
 			ShootSound.Play ();
+			shootSmoke.Play ();
 		}
 
 		public override string ToString ()
@@ -57,7 +58,7 @@ namespace Fps
 			get { return GetComponent<AudioSource> (); }
 		}
 
-		public GameObject HitEffect {
+		GameObject HitEffect {
 			get { return hitEffect; }
 		}
 
@@ -83,6 +84,9 @@ namespace Fps
 
 		[SerializeField]
 		private ParticleSystem muzzleFlash;
+
+		[SerializeField]
+		private ParticleSystem shootSmoke;
 
 		[SerializeField]
 		private GameObject hitEffect;
