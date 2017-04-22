@@ -56,7 +56,9 @@ namespace Fps
 			Dead = false;
 			currentHealth = maxHealth;
 			LoadActiveStates ();
-			WeaponManager.CurrentWeapon.Show ();
+
+			if (WeaponManager.CurrentWeapon != null)
+				WeaponManager.CurrentWeapon.Show ();
 		}
 
 		//-----------------------------------------------------------------------------
