@@ -43,7 +43,7 @@ namespace Fps
 		void UpdateJump ()
 		{
 			if (!grounded) {
-				grounded = Util.ObjectElement.Grounded (this, floorDistance);
+				grounded = Util.ObjectElement.IsGrounded (this, floorDistance);
 				SetJointSettings (jointSpring);
 			}
 			Vector3 thruterForceVector = Vector4.zero;

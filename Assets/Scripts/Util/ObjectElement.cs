@@ -4,7 +4,7 @@ namespace Util
 {
 	public class ObjectElement
 	{
-		public static bool Grounded (MonoBehaviour behaviour, float distance)
+		public static bool IsGrounded (MonoBehaviour behaviour, float distance)
 		{
 			return Physics.RaycastAll (
 				behaviour.transform.position, 

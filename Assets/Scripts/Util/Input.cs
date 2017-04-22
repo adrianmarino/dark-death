@@ -4,6 +4,11 @@ namespace Util
 {
 	public class Input
 	{
+		public static bool IsMoving ()
+		{
+			return HorizontalMovementDelta () != 0 || VerticalMovementDelta () != 0;
+		}
+
 		public static void HideCursor (bool value)
 		{
 			if (value)
