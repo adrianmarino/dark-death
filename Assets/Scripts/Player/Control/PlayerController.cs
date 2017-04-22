@@ -36,7 +36,11 @@ namespace Fps
 
 		void UpdateMovement ()
 		{
-			Vector3 velocity = Util.VelocityVector.create (transform, KeyboardMovementVariation (), speed);
+			Vector3 velocity = Util.VelocityVector.create (
+				                   transform, 
+				                   KeyboardMovementVariation (), 
+				                   Speed
+			                   );
 			motor.Move (velocity);
 		}
 
@@ -79,12 +83,24 @@ namespace Fps
 			joint.yDrive = new JointDrive { positionSpring = _jointSpring, maximumForce = jointMaxForce };
 		}
 
+
+		//-----------------------------------------------------------------------------
+		// Properties
+		//-----------------------------------------------------------------------------
+
+		float Speed {
+			get { return Util.Input.GetRunButton () ? runSpeed : walkSpeed; }
+		}
+
 		//-----------------------------------------------------------------------------
 		// Attributes
 		//-----------------------------------------------------------------------------
 
 		[SerializeField]
-		private float speed = 5f;
+		private float walkSpeed = 5f;
+
+		[SerializeField]
+		private float runSpeed = 50f;
 
 		[SerializeField]
 		private float lookSensibility = 3f;
@@ -108,5 +124,8 @@ namespace Fps
 		private AudioSource audioSource;
 
 		private bool grounded = true;
+
+		private float currentSpeed;
+
 	}
 }

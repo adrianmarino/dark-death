@@ -15,7 +15,7 @@ public class Headbob : NetworkBehaviour
 
 		if (Util.Input.IsMoving ()) {
 			// Use the timer value to set the position
-			timer += bobSpeed * Time.deltaTime;
+			timer += Speed * Time.deltaTime;
 
 			// Abs val of y for a parabolic path
 			Position = NextHeadBobMovementPostion (timer);
@@ -68,6 +68,10 @@ public class Headbob : NetworkBehaviour
 		set { transform.localPosition = value; }
 	}
 
+	float Speed {
+		get { return Util.Input.GetRunButton () ? runSpeed : walkSpeed; }
+	}
+
 	//-----------------------------------------------------------------------------
 	// Constants
 	//-----------------------------------------------------------------------------
@@ -87,7 +91,10 @@ public class Headbob : NetworkBehaviour
 
 	// Smooths out the transition from moving to not moving.
 	[SerializeField]
-	private float bobSpeed = 4.8f;
+	private float walkSpeed = 4.8f;
+
+	[SerializeField]
+	private float runSpeed = 8f;
 
 	// How quickly the player's head bobs.
 	[SerializeField]

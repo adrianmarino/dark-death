@@ -4,6 +4,11 @@ namespace Util
 {
 	public class Input
 	{
+		public static bool GetRunButton ()
+		{
+			return UnityEngine.Input.GetButton (RUN);
+		}
+
 		public static bool IsMoving ()
 		{
 			return HorizontalMovementDelta () != 0 || VerticalMovementDelta () != 0;
@@ -104,6 +109,8 @@ namespace Util
 		private const string FIRE_1 = "Fire1";
 
 		private const string JUMP = "Jump";
+
+		private const string RUN = "Run";
 
 		private const string VERTICAL = "Vertical";
 
