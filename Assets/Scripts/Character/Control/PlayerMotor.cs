@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Fps.Character.Control
+namespace Fps.Player
 {
 	[RequireComponent (typeof(Rigidbody))]
 	public class PlayerMotor : MonoBehaviour

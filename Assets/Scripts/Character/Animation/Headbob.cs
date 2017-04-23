@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Fps.Character.Animation
+namespace Fps.Player.Animation
 {
 	public class Headbob : NetworkBehaviour
 	{

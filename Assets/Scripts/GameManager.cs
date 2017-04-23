@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityStandardAssets.ImageEffects;
 using System.Linq;
-using Fps.Character;
+using Fps.Player;
 
 namespace Fps
 {
@@ -15,7 +15,7 @@ namespace Fps
 		void OnGUI ()
 		{
 			GUIUtils.PlayersWindow (
-				players.Values.ToList<Player> (),
+				players.Values.ToList<PlayerState> (),
 				new Rect (5, Screen.height - 155, 100, 120)
 			);
 		}
@@ -30,12 +30,12 @@ namespace Fps
 		// Public Methods
 		//-----------------------------------------------------------------------------
 
-		public Player GetPlayer (string playerId)
+		public PlayerState GetPlayer (string playerId)
 		{
 			return players [playerId];
 		}
 
-		public void RegisterPlayer (string netId, Player player)
+		public void RegisterPlayer (string netId, PlayerState player)
 		{
 			if (player == null)
 				return;
@@ -79,7 +79,7 @@ namespace Fps
 		[SerializeField]
 		private int sceneCameraDepth = 1;
 
-		private Dictionary<string, Player> players;
+		private Dictionary<string, PlayerState> players;
 
 		public static GameManager singleton = null;
 
@@ -89,7 +89,7 @@ namespace Fps
 
 		public GameManager ()
 		{
-			players = new Dictionary <string, Player> ();
+			players = new Dictionary <string, PlayerState> ();
 		}
 	}
 }

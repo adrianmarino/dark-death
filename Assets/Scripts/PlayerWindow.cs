@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Fps.Character;
+using Fps.Player;
 using System.Linq;
 
 namespace Fps
 {
 	public class GUIUtils
 	{
-		public static void PlayersWindow (List<Player> players, Rect rect)
+		public static void PlayersWindow (List<PlayerState> players, Rect rect)
 		{
 			if (players.Count == 0)
 				return;

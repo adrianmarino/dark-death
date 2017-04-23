@@ -2,7 +2,7 @@
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
-namespace Fps.Character
+namespace Fps.Player
 {
 	public class PlayerSetup : NetworkBehaviour
 	{
@@ -51,9 +51,9 @@ namespace Fps.Character
 			return GetComponent<NetworkIdentity> ().netId.ToString ();
 		}
 
-		Player Player ()
+		PlayerState Player ()
 		{
-			return GetComponent<Player> ();
+			return GetComponent<PlayerState> ();
 		}
 
 		//-----------------------------------------------------------------------------

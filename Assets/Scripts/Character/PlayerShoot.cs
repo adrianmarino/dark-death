@@ -2,7 +2,7 @@
 using UnityEngine.Networking;
 using Fps.Weapon;
 
-namespace Fps.Character
+namespace Fps.Player
 {
 	[RequireComponent (typeof(WeaponManager))]
 	public class PlayerShoot : NetworkBehaviour
@@ -22,7 +22,7 @@ namespace Fps.Character
 		void CmdDamageToOponent (string playerId, float damage)
 		{
 			Debug.Log (playerId + " has been shot!");
-			Player oponentPlayer = GameManager.GetPlayer (playerId);
+			PlayerState oponentPlayer = GameManager.GetPlayer (playerId);
 			oponentPlayer.RpcTakeDamage (damage);
 		}
 

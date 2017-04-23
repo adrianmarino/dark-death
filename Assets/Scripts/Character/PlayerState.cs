@@ -6,9 +6,9 @@ using System.Collections;
 using System.Linq;
 using Fps.Weapon;
 
-namespace Fps.Character
+namespace Fps.Player
 {
-	public class Player : NetworkBehaviour
+	public class PlayerState : NetworkBehaviour
 	{
 		//-----------------------------------------------------------------------------
 		// Event Methods

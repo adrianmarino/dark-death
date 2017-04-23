@@ -58,19 +58,6 @@ namespace Fps.Weapon
 		// Properties
 		//-----------------------------------------------------------------------------
 
-		AudioSource ShootSound {
-			get { return GetComponent<AudioSource> (); }
-		}
-
-		WeaponRecoil WeaponRecoilAnimation ()
-		{
-			return GetComponent<WeaponRecoil> ();
-		}
-
-		GameObject HitEffect {
-			get { return hitEffect; }
-		}
-
 		public string Name {
 			get { return _name; }
 		}
@@ -89,6 +76,19 @@ namespace Fps.Weapon
 
 		public GameObject GameObject {
 			get { return this.gameObject; }
+		}
+
+		AudioSource ShootSound {
+			get { return GetComponent<AudioSource> (); }
+		}
+
+		WeaponRecoil WeaponRecoilAnimation ()
+		{
+			return GetComponent<WeaponRecoil> ();
+		}
+
+		GameObject HitEffect {
+			get { return hitEffect; }
 		}
 
 		//-----------------------------------------------------------------------------

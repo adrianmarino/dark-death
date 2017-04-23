@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using Fps.Character.Animation;
+using Fps.Player.Animation;
 
-namespace Fps.Character.Control
+namespace Fps.Player
 {
 	[RequireComponent (typeof(ConfigurableJoint))]
 	[RequireComponent (typeof(PlayerMotor))]
