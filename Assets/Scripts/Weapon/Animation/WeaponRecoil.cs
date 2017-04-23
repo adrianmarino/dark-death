@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 
-public class Recoil: MonoBehaviour
+public class WeaponRecoil: MonoBehaviour
 {
 	void Update ()
 	{
@@ -30,8 +30,6 @@ public class Recoil: MonoBehaviour
 	//-----------------------------------------------------------------------------
 	// Attributes
 	//-----------------------------------------------------------------------------
-
-	// Set default values for recoil translation and rotation.
 
 	[SerializeField]
 	private Vector3 recoilTranslation = new Vector3 (-0.1f, -0.2f, -0.5f);

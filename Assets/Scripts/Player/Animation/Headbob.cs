@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using UnityEngine.Networking;
 
 public class Headbob : NetworkBehaviour
