@@ -2,12 +2,12 @@
 using UnityEngine.Networking;
 using System.Collections.Generic;
 
-namespace Fps
+namespace Fps.Character
 {
 	public class PlayerSetup : NetworkBehaviour
 	{
 		//-----------------------------------------------------------------------------
-		// Engine Events
+		// Event Methods
 		//-----------------------------------------------------------------------------
 
 		void Start ()

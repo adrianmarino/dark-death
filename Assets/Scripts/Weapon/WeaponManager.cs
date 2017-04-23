@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Fps
+namespace Fps.Weapon
 {
+	[RequireComponent (typeof(WeaponFactory))]
 	public class WeaponManager : NetworkBehaviour
 	{
 		//-----------------------------------------------------------------------------
-		// Events
+		// Event Methods
 		//-----------------------------------------------------------------------------
 
 		void Start ()
@@ -28,13 +29,13 @@ namespace Fps
 		// Private Methods
 		//-----------------------------------------------------------------------------
 
-		Weapon CreateIntoHolder (GameObject _weaponPrefab)
+		IWeapon CreateIntoHolder (GameObject _weaponPrefab)
 		{
-			Weapon weapon = WeaponFactory.InstantiateOnHolder (_weaponPrefab, weaponHolder);
+			IWeapon weapon = Factory.InstantiateOnHolder (_weaponPrefab, weaponHolder);
 
 			if (isLocalPlayer)
 				Util.Layer.SetLayerRecursively (
-					weapon.gameObject, 
+					weapon.GameObject, 
 					LayerMask.NameToLayer (weaponLayerName)
 				);
 
@@ -45,8 +46,12 @@ namespace Fps
 		// Properties
 		//-----------------------------------------------------------------------------
 
-		public Weapon CurrentWeapon {
+		public IWeapon CurrentWeapon {
 			get { return currentWeapon; }
+		}
+
+		WeaponFactory Factory {
+			get { return GetComponent <WeaponFactory> (); }
 		}
 
 		//-----------------------------------------------------------------------------
@@ -62,6 +67,6 @@ namespace Fps
 		[SerializeField]
 		private GameObject weaponPrefab;
 
-		private Weapon currentWeapon;
+		private IWeapon currentWeapon;
 	}
 }

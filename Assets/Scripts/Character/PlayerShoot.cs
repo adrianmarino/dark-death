@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using Fps.Weapon;
 
-namespace Fps
+namespace Fps.Character
 {
 	[RequireComponent (typeof(WeaponManager))]
 	public class PlayerShoot : NetworkBehaviour
 	{
 		//-----------------------------------------------------------------------------
-		// Events
+		// Event Methods
 		//-----------------------------------------------------------------------------
 
 		void Update ()
@@ -109,7 +110,7 @@ namespace Fps
 		// Properties
 		//-----------------------------------------------------------------------------
 
-		Weapon Weapon {
+		IWeapon Weapon {
 			get { return WeaponManager.CurrentWeapon; }
 		}
 

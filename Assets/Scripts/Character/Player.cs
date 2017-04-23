@@ -4,13 +4,14 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using Fps.Weapon;
 
-namespace Fps
+namespace Fps.Character
 {
 	public class Player : NetworkBehaviour
 	{
 		//-----------------------------------------------------------------------------
-		// Events
+		// Event Methods
 		//-----------------------------------------------------------------------------
 
 		void Start ()

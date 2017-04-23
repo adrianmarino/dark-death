@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Fps;
 
-namespace Fps
+namespace Fps.Weapon
 {
 	public class WeaponFactory : MonoBehaviour
 	{
-		public static Weapon InstantiateOnHolder (GameObject weapon, Transform holder)
+		public IWeapon InstantiateOnHolder (GameObject weapon, Transform holder)
 		{
 			GameObject instance = Instantiate (
 				                      weapon, 
@@ -15,7 +13,7 @@ namespace Fps
 			                      );
 			instance.transform.SetParent (holder);
 
-			Weapon weaponComponent = instance.GetComponent<Weapon> ();
+			IWeapon weaponComponent = instance.GetComponent<IWeapon> ();
 			if (weapon == null)
 				Debug.Log ("Not found weapon component in weapon prefab!");
 			return weaponComponent;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Fps;
+using Fps.Character;
 using System.Linq;
 
 namespace Fps

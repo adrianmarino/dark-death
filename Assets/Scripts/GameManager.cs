@@ -2,11 +2,16 @@
 using UnityEngine;
 using UnityStandardAssets.ImageEffects;
 using System.Linq;
+using Fps.Character;
 
 namespace Fps
 {
 	public class GameManager : MonoBehaviour
 	{
+		//-----------------------------------------------------------------------------
+		// Event Methods
+		//-----------------------------------------------------------------------------
+
 		void OnGUI ()
 		{
 			GUIUtils.PlayersWindow (

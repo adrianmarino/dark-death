@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
+using Fps.Weapon.Animation;
 
-namespace Fps
+namespace Fps.Weapon
 {
-	public class Weapon : MonoBehaviour
+	[RequireComponent (typeof(WeaponRecoil))]
+	[RequireComponent (typeof(WeaponSway))]
+	public class HeavyBlaster : MonoBehaviour, IWeapon
 	{
 		//-----------------------------------------------------------------------------
 		// Public Methods
@@ -82,6 +85,10 @@ namespace Fps
 
 		public float FireRate {
 			get { return fireRate; }
+		}
+
+		public GameObject GameObject {
+			get { return this.gameObject; }
 		}
 
 		//-----------------------------------------------------------------------------

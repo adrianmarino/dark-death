@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
+using Fps.Character.Animation;
 
-namespace Fps
+namespace Fps.Character.Control
 {
 	[RequireComponent (typeof(ConfigurableJoint))]
 	[RequireComponent (typeof(PlayerMotor))]
+	[RequireComponent (typeof(Headbob))]
 	public class PlayerController : MonoBehaviour
 	{
 		//-----------------------------------------------------------------------------
-		// Engine Methods
+		// Event Methods
 		//-----------------------------------------------------------------------------
 
 		void Start ()

@@ -1,45 +1,52 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 
-public class WeaponRecoil : MonoBehaviour
+namespace Fps.Weapon.Animation
 {
-	public void Play ()
+	public class WeaponRecoil : MonoBehaviour
 	{
-		// Stop and complete any animation we had on the weapon.
-		transform.DOKill (true);
+		//-----------------------------------------------------------------------------
+		// Public Methods
+		//-----------------------------------------------------------------------------
 
-		// Use punch tweens to animate the weapon to slightly randomized values.
-		transform.DOPunchPosition (
-			recoilTranslation * Random.Range (1, 1.1f), 
-			duration,
-			vibrate, 
-			elasticity
-		).SetRelative ();
+		public void Play ()
+		{
+			// Stop and complete any animation we had on the weapon.
+			transform.DOKill (true);
 
-		transform.DOPunchRotation (
-			recoilRotation * Random.Range (1, 1.1f), 
-			duration, 
-			vibrate, 
-			elasticity
-		).SetRelative ();
+			// Use punch tweens to animate the weapon to slightly randomized values.
+			transform.DOPunchPosition (
+				recoilTranslation * Random.Range (1, 1.1f), 
+				duration,
+				vibrate, 
+				elasticity
+			).SetRelative ();
+
+			transform.DOPunchRotation (
+				recoilRotation * Random.Range (1, 1.1f), 
+				duration, 
+				vibrate, 
+				elasticity
+			).SetRelative ();
+		}
+
+		//-----------------------------------------------------------------------------
+		// Attributes
+		//-----------------------------------------------------------------------------
+
+		[SerializeField]
+		private Vector3 recoilTranslation = new Vector3 (-0.1f, -0.2f, -0.5f);
+
+		[SerializeField]
+		private Vector3 recoilRotation = new Vector3 (-5, 0, 0);
+
+		[SerializeField]
+		private float duration = 0.4f;
+
+		[SerializeField]
+		private int vibrate = 3;
+
+		[SerializeField]
+		private float elasticity = 0.2f;
 	}
-
-	//-----------------------------------------------------------------------------
-	// Attributes
-	//-----------------------------------------------------------------------------
-
-	[SerializeField]
-	private Vector3 recoilTranslation = new Vector3 (-0.1f, -0.2f, -0.5f);
-
-	[SerializeField]
-	private Vector3 recoilRotation = new Vector3 (-5, 0, 0);
-
-	[SerializeField]
-	private float duration = 0.4f;
-
-	[SerializeField]
-	private int vibrate = 3;
-
-	[SerializeField]
-	private float elasticity = 0.2f;
 }
