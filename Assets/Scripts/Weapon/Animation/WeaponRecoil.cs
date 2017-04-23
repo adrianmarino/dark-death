@@ -1,13 +1,10 @@
 ﻿using UnityEngine;
 using DG.Tweening;
 
-public class WeaponRecoil: MonoBehaviour
+public class WeaponRecoil : MonoBehaviour
 {
-	void Update ()
+	public void Play ()
 	{
-		if (!Util.Input.GetFireButtonDown ())
-			return;
-	
 		// Stop and complete any animation we had on the weapon.
 		transform.DOKill (true);
 

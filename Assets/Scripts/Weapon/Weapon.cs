@@ -33,6 +33,7 @@ namespace Fps
 			muzzleFlash.Play ();
 			ShootSound.Play ();
 			shootSmoke.Play ();
+			WeaponRecoilAnimation ().Play ();
 		}
 
 		public override string ToString ()
@@ -56,6 +57,11 @@ namespace Fps
 
 		AudioSource ShootSound {
 			get { return GetComponent<AudioSource> (); }
+		}
+
+		WeaponRecoil WeaponRecoilAnimation ()
+		{
+			return GetComponent<WeaponRecoil> ();
 		}
 
 		GameObject HitEffect {
@@ -107,4 +113,3 @@ namespace Fps
 		private GameObject model;
 	}
 }
-
