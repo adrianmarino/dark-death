@@ -91,6 +91,10 @@ namespace Util
 			return UnityEngine.Input.GetButton (FIRE_1);
 		}
 
+		public static bool GetReloadButton ()
+		{
+			return UnityEngine.Input.GetButtonDown (RELOAD);
+		}
 
 		public static bool GetFireButtonUp ()
 		{
@@ -119,6 +123,8 @@ namespace Util
 		private const string MOUSE_X = "Mouse X";
 
 		private const string MOUSE_Y = "Mouse Y";
+
+		private const string RELOAD = "Reload";
 
 		//-----------------------------------------------------------------------------
 		// Constructors

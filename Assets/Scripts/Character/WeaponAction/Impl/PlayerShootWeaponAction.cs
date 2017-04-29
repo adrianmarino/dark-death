@@ -1,12 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using Fps.Weapon;
-using UnityEngine.UI;
 
 namespace Fps.Player
 {
-	[RequireComponent (typeof(WeaponManager))]
-	public class PlayerShoot : NetworkBehaviour
+	public class PlayerShootWeaponAction : PlayerWeaponAction
 	{
 		//-----------------------------------------------------------------------------
 		// Event Methods
@@ -78,11 +75,6 @@ namespace Fps.Player
 			}
 		}
 
-		void UpdateAmmoPanel ()
-		{
-			ammoPanel.text = Weapon.RemainAmmo.ToString ();
-		}
-
 		void UpdateShoot ()
 		{
 			if (Weapon.FireRate <= 0f) {
@@ -116,14 +108,6 @@ namespace Fps.Player
 		// Properties
 		//-----------------------------------------------------------------------------
 
-		IWeapon Weapon {
-			get { return WeaponManager.CurrentWeapon; }
-		}
-
-		WeaponManager WeaponManager {
-			get { return GetComponent<WeaponManager> (); }
-		}
-
 		GameManager GameManager {
 			get { return GameManager.singleton; }
 		}
@@ -145,8 +129,5 @@ namespace Fps.Player
 
 		[SerializeField]
 		private Camera _camera;
-
-		[SerializeField]
-		private Text ammoPanel;
 	}
 }

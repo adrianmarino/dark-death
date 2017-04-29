@@ -29,6 +29,11 @@ namespace Fps.Weapon
 			WeaponRecoilAnimation ().Play ();
 		}
 
+		public override void PlayReloadEffectAction ()
+		{
+			WeaponRecoilAnimation ().Play ();
+		}
+
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------

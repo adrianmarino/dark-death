@@ -13,6 +13,7 @@ namespace Fps.Weapon
 
 		public override void Reload ()
 		{
+			weapon.PlayReloadEffectAction ();
 			weapon.GoToLoadedState ();
 		}
 

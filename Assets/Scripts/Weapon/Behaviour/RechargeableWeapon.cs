@@ -20,6 +20,8 @@ namespace Fps.Weapon
 			State = InitState ();
 		}
 
+		public abstract void PlayReloadEffectAction ();
+
 		//-----------------------------------------------------------------------------
 		// Protected Methods
 		//-----------------------------------------------------------------------------
