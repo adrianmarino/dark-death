@@ -33,6 +33,7 @@ namespace Fps.Weapon
 		public override void PlayReloadEffectAction ()
 		{
 			WeaponReloadAnimation ().Play ();
+			ReloadSound.Play ();
 		}
 
 		//-----------------------------------------------------------------------------
@@ -40,7 +41,11 @@ namespace Fps.Weapon
 		//-----------------------------------------------------------------------------
 
 		AudioSource ShootSound {
-			get { return GetComponent<AudioSource> (); }
+			get { return GetComponents<AudioSource> () [0]; }
+		}
+
+		AudioSource ReloadSound {
+			get { return GetComponents<AudioSource> () [1]; }
 		}
 
 		WeaponRecoilAnimation WeaponRecoilAnimation ()

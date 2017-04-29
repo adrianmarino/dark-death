@@ -41,7 +41,7 @@ namespace Fps.Weapon
 		//-----------------------------------------------------------------------------
 
 		[SerializeField]
-		protected int maxAmmo = 5;
+		protected int maxAmmo = 10;
 
 		//-----------------------------------------------------------------------------
 		// Constructors
