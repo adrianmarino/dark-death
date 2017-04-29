@@ -23,6 +23,27 @@ namespace Fps.Weapon
 		public bool isReady ()
 		{
 			return currentWeapon != null;  // Workaround by unity bug.
+
+		}
+
+		public int RemainAmmo ()
+		{
+			return CurrentWeapon.RemainAmmo;
+		}
+
+		public static WeaponManager GetFromPlayer ()
+		{
+			GameObject player = GameObject.Find ("Player");
+			if (player == null) {
+				Debug.Log ("Not found a player in scene!");
+				return null;
+			}
+			WeaponManager weaponManager = player.GetComponent<WeaponManager> ();
+			if (weaponManager == null) {
+				Debug.Log ("Not found weapon manager componente in player object!");
+				return null;
+			}
+			return weaponManager;
 		}
 
 		//-----------------------------------------------------------------------------

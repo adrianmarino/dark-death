@@ -47,7 +47,7 @@ namespace Fps.Player
 		// Public Methods
 		//-----------------------------------------------------------------------------
 
-		public string ToString ()
+		public override string ToString ()
 		{
 			return tag + " " + transform.name;
 		}

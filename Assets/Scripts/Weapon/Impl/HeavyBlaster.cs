@@ -5,33 +5,23 @@ namespace Fps.Weapon
 {
 	[RequireComponent (typeof(WeaponRecoil))]
 	[RequireComponent (typeof(WeaponSway))]
-	public class HeavyBlaster : MonoBehaviour, IWeapon
+	public class HeavyBlaster : RechargeableWeapon
 	{
 		//-----------------------------------------------------------------------------
 		// Public Methods
 		//-----------------------------------------------------------------------------
 
-		public bool Shoot (Transform origin, out RaycastHit target, LayerMask targetMask)
+		public override void HitTargetAction (Vector3 position, Vector3 normal)
 		{
-			return Physics.Raycast (
-				origin.position, 
-				origin.forward, 
-				out target, 
-				targetMask
-			);
+			GameObject _hitEffect = Instantiate (
+				                        HitEffect,
+				                        position,
+				                        Quaternion.LookRotation (normal)
+			                        );
+			Destroy (_hitEffect, 2f);
 		}
 
-		public void HitTarget (Vector3 position, Vector3 normal)
-		{
-			GameObject hitEffect = Instantiate (
-				                       HitEffect,
-				                       position,
-				                       Quaternion.LookRotation (normal)
-			                       );
-			Destroy (hitEffect, 2f);
-		}
-
-		public void PlayShootEffect ()
+		public override void PlayShootEffectAction ()
 		{
 			muzzleFlash.Play ();
 			ShootSound.Play ();
@@ -39,44 +29,9 @@ namespace Fps.Weapon
 			WeaponRecoilAnimation ().Play ();
 		}
 
-		public override string ToString ()
-		{
-			return Name;
-		}
-
-		public void Hide ()
-		{
-			model.SetActive (false);
-		}
-
-		public void Show ()
-		{
-			model.SetActive (true);
-		}
-
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
-
-		public string Name {
-			get { return _name; }
-		}
-
-		public float Damage {
-			get { return damage; }
-		}
-
-		public float Range {
-			get { return range; }
-		}
-
-		public float FireRate {
-			get { return fireRate; }
-		}
-
-		public GameObject GameObject {
-			get { return this.gameObject; }
-		}
 
 		AudioSource ShootSound {
 			get { return GetComponent<AudioSource> (); }
@@ -104,19 +59,12 @@ namespace Fps.Weapon
 		[SerializeField]
 		private GameObject hitEffect;
 
-		[SerializeField]
-		private string _name = "HeavyBlaster";
+		//-----------------------------------------------------------------------------
+		// Constructors
+		//-----------------------------------------------------------------------------
 
-		[SerializeField]
-		private float damage = 25f;
-
-		[SerializeField]
-		private float range = 100f;
-
-		[SerializeField]
-		private float fireRate = 2f;
-
-		[SerializeField]
-		private GameObject model;
+		private HeavyBlaster () : base ()
+		{
+		}
 	}
 }

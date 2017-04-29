@@ -18,9 +18,15 @@ namespace Fps.Weapon
 
 		void Show ();
 
+		void Reload ();
+
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
+
+		int RemainAmmo {
+			get;
+		}
 
 		GameObject GameObject {
 			get;

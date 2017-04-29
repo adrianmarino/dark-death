@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
 using Fps.Weapon;
+using UnityEngine.UI;
 
 namespace Fps.Player
 {
@@ -65,7 +66,6 @@ namespace Fps.Player
 				return;
 
 			// Invoke OnShoot command on server side...
-			Debug.Log (Weapon + " shoot count: " + ++counter);
 			CmdOnShoot ();
 
 			RaycastHit target;
@@ -76,6 +76,11 @@ namespace Fps.Player
 				// When hit somthing, invoke OnHit on server side... 
 				CmdOnHit (target.point, target.normal);
 			}
+		}
+
+		void UpdateAmmoPanel ()
+		{
+			ammoPanel.text = Weapon.RemainAmmo.ToString ();
 		}
 
 		void UpdateShoot ()
@@ -89,6 +94,7 @@ namespace Fps.Player
 				else if (Util.Input.GetFireButtonUp ())
 					EndShoot ();
 			}
+			UpdateAmmoPanel ();
 		}
 
 		void BurstShoot ()
@@ -140,6 +146,7 @@ namespace Fps.Player
 		[SerializeField]
 		private Camera _camera;
 
-		private float counter = 0;
+		[SerializeField]
+		private Text ammoPanel;
 	}
 }
