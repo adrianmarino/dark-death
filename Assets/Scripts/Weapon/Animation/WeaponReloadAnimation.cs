@@ -3,7 +3,7 @@ using DG.Tweening;
 
 namespace Fps.Weapon.Animation
 {
-	public class WeaponRecoil : MonoBehaviour
+	public class WeaponReloadAnimation : MonoBehaviour
 	{
 		//-----------------------------------------------------------------------------
 		// Public Methods
@@ -16,14 +16,14 @@ namespace Fps.Weapon.Animation
 
 			// Use punch tweens to animate the weapon to slightly randomized values.
 			transform.DOPunchPosition (
-				recoilTranslation * Random.Range (1, 1.1f), 
+				translation * Random.Range (1.3f, 1.7f), 
 				duration,
 				vibrate, 
 				elasticity
 			).SetRelative ();
 
 			transform.DOPunchRotation (
-				recoilRotation * Random.Range (1, 1.1f), 
+				rotation * Random.Range (1.3f, 1.7f), 
 				duration, 
 				vibrate, 
 				elasticity
@@ -35,18 +35,19 @@ namespace Fps.Weapon.Animation
 		//-----------------------------------------------------------------------------
 
 		[SerializeField]
-		private Vector3 recoilTranslation = new Vector3 (-0.1f, -0.2f, -0.5f);
+		private Vector3 translation = new Vector3 (-0.3f, -0.3f, 0.2f);
 
 		[SerializeField]
-		private Vector3 recoilRotation = new Vector3 (-5, 0, 0);
+		private Vector3 rotation = new Vector3 (20, -30f, 0);
 
 		[SerializeField]
-		private float duration = 0.4f;
+		private float duration = 1.6f;
 
 		[SerializeField]
-		private int vibrate = 3;
+		private int vibrate = 0;
 
 		[SerializeField]
-		private float elasticity = 0.2f;
+		private float elasticity = 0;
 	}
 }
+

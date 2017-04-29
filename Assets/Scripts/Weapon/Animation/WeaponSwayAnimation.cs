@@ -2,7 +2,7 @@
 
 namespace Fps.Weapon.Animation
 {
-	public class WeaponSway : MonoBehaviour
+	public class WeaponSwayAnimation : MonoBehaviour
 	{
 		//-----------------------------------------------------------------------------
 		// Event Methods

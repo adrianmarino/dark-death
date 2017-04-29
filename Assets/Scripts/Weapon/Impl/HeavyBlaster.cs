@@ -3,8 +3,9 @@ using Fps.Weapon.Animation;
 
 namespace Fps.Weapon
 {
-	[RequireComponent (typeof(WeaponRecoil))]
-	[RequireComponent (typeof(WeaponSway))]
+	[RequireComponent (typeof(WeaponRecoilAnimation))]
+	[RequireComponent (typeof(WeaponSwayAnimation))]
+	[RequireComponent (typeof(WeaponReloadAnimation))]
 	public class HeavyBlaster : RechargeableWeapon
 	{
 		//-----------------------------------------------------------------------------
@@ -31,7 +32,7 @@ namespace Fps.Weapon
 
 		public override void PlayReloadEffectAction ()
 		{
-			WeaponRecoilAnimation ().Play ();
+			WeaponReloadAnimation ().Play ();
 		}
 
 		//-----------------------------------------------------------------------------
@@ -42,9 +43,14 @@ namespace Fps.Weapon
 			get { return GetComponent<AudioSource> (); }
 		}
 
-		WeaponRecoil WeaponRecoilAnimation ()
+		WeaponRecoilAnimation WeaponRecoilAnimation ()
 		{
-			return GetComponent<WeaponRecoil> ();
+			return GetComponent<WeaponRecoilAnimation> ();
+		}
+
+		WeaponReloadAnimation WeaponReloadAnimation ()
+		{
+			return GetComponent<WeaponReloadAnimation> ();
 		}
 
 		GameObject HitEffect {
