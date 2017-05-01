@@ -1,4 +1,6 @@
-﻿namespace Fps.Player
+﻿using UnityEngine;
+
+namespace Fps.Player
 {
 	public class PlayerReloadWeaponAction : PlayerWeaponAction
 	{
@@ -8,10 +10,19 @@
 
 		void Update ()
 		{
-			if (WeaponManager.isReady () && Util.Input.GetReloadButton ()) {
+			if (WeaponManager.isReady () && PressReload ()) {
 				Weapon.Reload ();
 				UpdateAmmoPanel ();
 			}
+		}
+
+		//-----------------------------------------------------------------------------
+		// Private Methods
+		//-----------------------------------------------------------------------------
+
+		static bool PressReload ()
+		{
+			return (Util.Input.GetReloadButton () || Input.GetMouseButtonDown (1));
 		}
 	}
 }
