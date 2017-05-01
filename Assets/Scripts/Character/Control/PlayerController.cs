@@ -82,7 +82,8 @@ namespace Fps.Player
 
 		void SetJointSettings (float _jointSpring)
 		{
-			joint.yDrive = new JointDrive { positionSpring = _jointSpring, maximumForce = jointMaxForce };
+			if (joint != null)
+				joint.yDrive = new JointDrive { positionSpring = _jointSpring, maximumForce = jointMaxForce };
 		}
 
 
