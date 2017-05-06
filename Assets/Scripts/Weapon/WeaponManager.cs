@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections.Generic;
+using System.Linq;
+using Util;
 
 namespace Fps.Weapon
 {
@@ -12,8 +15,17 @@ namespace Fps.Weapon
 
 		void Start ()
 		{
-			if (weaponPrefab != null) // Workaround by unity bug.
-				currentWeapon = CreateIntoHolder (weaponPrefab);
+			// Workaround by unity 
+			if (weaponPrefabs.Count > 0)
+				Use (Weapons.First ());
+		}
+
+		void Update ()
+		{
+			if (Util.Input.NextWeaponButton ())
+				Use (Weapons.Next (currentWeapon));
+			else if (Util.Input.PreviousWeaponButton ())
+				Use (Weapons.Previous (currentWeapon));
 		}
 
 		//-----------------------------------------------------------------------------
@@ -23,7 +35,6 @@ namespace Fps.Weapon
 		public bool isReady ()
 		{
 			return currentWeapon != null;  // Workaround by unity bug.
-
 		}
 
 		public int RemainAmmo ()
@@ -63,9 +74,34 @@ namespace Fps.Weapon
 			return weapon;
 		}
 
+		List<IWeapon> CreateWeapons ()
+		{
+			return weaponPrefabs.Select (CreateIntoHolder).Select ((weapon) => {
+				weapon.GameObject.SetActive (false);
+				return weapon;
+			}).ToList ();
+		}
+
+		void Use (IWeapon weapon)
+		{
+			if (currentWeapon != null)
+				currentWeapon.GameObject.SetActive (false);
+
+			currentWeapon = weapon;
+			currentWeapon.GameObject.SetActive (true);
+		}
+			
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
+
+		public List<IWeapon> Weapons {
+			get {
+				if (weapons == null)
+					weapons = CreateWeapons ();
+				return weapons;
+			}
+		}
 
 		public IWeapon CurrentWeapon {
 			get { return currentWeapon; }
@@ -86,7 +122,9 @@ namespace Fps.Weapon
 		private Transform weaponHolder;
 
 		[SerializeField]
-		private GameObject weaponPrefab;
+		private List<GameObject> weaponPrefabs;
+
+		private List<IWeapon> weapons;
 
 		private IWeapon currentWeapon;
 	}

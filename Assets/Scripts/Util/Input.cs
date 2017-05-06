@@ -4,6 +4,16 @@ namespace Util
 {
 	public class Input
 	{
+		public static bool NextWeaponButton ()
+		{
+			return UnityEngine.Input.GetKeyDown (KeyCode.E);
+		}
+
+		public static bool PreviousWeaponButton ()
+		{
+			return UnityEngine.Input.GetKeyDown (KeyCode.Q);
+		}
+
 		public static bool GetRunButton ()
 		{
 			return UnityEngine.Input.GetButton (RUN);
