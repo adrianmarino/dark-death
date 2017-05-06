@@ -1,13 +1,26 @@
 ﻿using UnityEngine;
 using Fps.Weapon.State;
+using Fps.Weapon.Animation;
 
 namespace Fps.Weapon
 {
+	[RequireComponent (typeof(WeaponRecoilAnimation))]
+	[RequireComponent (typeof(WeaponSwayAnimation))]
 	public abstract class BaseWeapon : MonoBehaviour, IWeapon
 	{
 		//-----------------------------------------------------------------------------
 		// Public Methods
 		//-----------------------------------------------------------------------------
+
+		public void HitTargetAction (Vector3 position, Vector3 normal)
+		{
+			GameObject _hitEffect = Instantiate (
+				                        HitEffect,
+				                        position,
+				                        Quaternion.LookRotation (normal)
+			                        );
+			Destroy (_hitEffect, 2f);
+		}
 
 		public virtual bool Shoot (Transform origin, out RaycastHit target, LayerMask targetMask)
 		{
@@ -54,9 +67,14 @@ namespace Fps.Weapon
 			);
 		}
 
-		public abstract void HitTargetAction (Vector3 position, Vector3 normal);
-
-		public abstract void PlayShootEffectAction ();
+		public void PlayShootEffectAction ()
+		{
+			ShootSound.Play ();
+			muzzleFlash.Stop ();
+			muzzleFlash.Play ();
+			shootSmoke.Play ();
+			WeaponRecoilAnimation ().Play ();
+		}
 
 		//-----------------------------------------------------------------------------
 		// Protected Methods
@@ -97,12 +115,25 @@ namespace Fps.Weapon
 			get { return this.gameObject; }
 		}
 
+		AudioSource ShootSound {
+			get { return GetComponents<AudioSource> () [0]; }
+		}
+
+		WeaponRecoilAnimation WeaponRecoilAnimation ()
+		{
+			return GetComponent<WeaponRecoilAnimation> ();
+		}
+
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
 
 		public int RemainAmmo {
 			get { return State.RemainAmmo; }
+		}
+
+		GameObject HitEffect {
+			get { return hitEffect; }
 		}
 
 		//-----------------------------------------------------------------------------
@@ -123,6 +154,15 @@ namespace Fps.Weapon
 
 		[SerializeField]
 		private float fireRate = 2f;
+
+		[SerializeField]
+		private ParticleSystem muzzleFlash;
+
+		[SerializeField]
+		private ParticleSystem shootSmoke;
+
+		[SerializeField]
+		private GameObject hitEffect;
 
 		private WeaponState currentState;
 

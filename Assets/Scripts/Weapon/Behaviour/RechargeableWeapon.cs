@@ -1,10 +1,12 @@
 ﻿using Fps.Weapon;
 using UnityEngine;
 using Fps.Weapon.State;
+using Fps.Weapon.Animation;
 
 namespace Fps.Weapon
 {
-	public abstract class RechargeableWeapon : BaseWeapon
+	[RequireComponent (typeof(WeaponReloadAnimation))]
+	public class RechargeableWeapon : BaseWeapon
 	{
 		//-----------------------------------------------------------------------------
 		// Public Methods
@@ -20,7 +22,11 @@ namespace Fps.Weapon
 			State = InitState ();
 		}
 
-		public abstract void PlayReloadEffectAction ();
+		public void PlayReloadEffectAction ()
+		{
+			WeaponReloadAnimation ().Play ();
+			ReloadSound.Play ();
+		}
 
 		//-----------------------------------------------------------------------------
 		// Protected Methods
@@ -34,6 +40,19 @@ namespace Fps.Weapon
 		protected WeaponState UnloadState ()
 		{
 			return new UnloadedWeapon (this);
+		}
+
+		//-----------------------------------------------------------------------------
+		// Properties
+		//-----------------------------------------------------------------------------
+
+		AudioSource ReloadSound {
+			get { return GetComponents<AudioSource> () [1]; }
+		}
+
+		WeaponReloadAnimation WeaponReloadAnimation ()
+		{
+			return GetComponent<WeaponReloadAnimation> ();
 		}
 
 		//-----------------------------------------------------------------------------
