@@ -2,6 +2,6 @@
 
 A rapid multiplayer fps.
 
-## Game Play video
+## Game Play video por version
 
-[![Blue Death v0.0.1](http://img.youtube.com/vi/mb7adHhNN8o/0.jpg)](http://www.youtube.com/watch?v=mb7adHhNN8o "Blue Death v0.0.1")
+[![Blue Death v0.0.1](http://img.youtube.com/vi/w9zjnGgVsZk/0.jpg)](https://www.youtube.com/playlist?list=PLcUKhWwmWVPHpVO0qTNTxEtt8QSWgM-1q "Blue Death Versions")
