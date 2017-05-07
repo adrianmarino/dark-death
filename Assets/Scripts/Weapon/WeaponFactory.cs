@@ -4,7 +4,7 @@ namespace Fps.Weapon
 {
 	public class WeaponFactory : MonoBehaviour
 	{
-		public IWeapon InstantiateOnHolder (GameObject weapon, Transform holder)
+		public GameObject InstantiateOnHolder (GameObject weapon, Transform holder)
 		{
 			GameObject instance = Instantiate (
 				                      weapon, 
@@ -12,11 +12,8 @@ namespace Fps.Weapon
 				                      holder.rotation
 			                      );
 			instance.transform.SetParent (holder);
-
-			IWeapon weaponComponent = instance.GetComponent<IWeapon> ();
-			if (weapon == null)
-				Debug.Log ("Not found weapon component in weapon prefab!");
-			return weaponComponent;
+			instance.SetActive (false);
+			return instance;
 		}
 	}
 }

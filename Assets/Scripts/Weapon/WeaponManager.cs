@@ -16,16 +16,29 @@ namespace Fps.Weapon
 		void Start ()
 		{
 			// Workaround by unity 
-			if (weaponPrefabs.Count > 0)
-				Use (Weapons.First ());
+			if (weaponPrefabs.Count > 0) {
+				UseWeapon (FIRST_WEAPON);
+
+				if (isLocalPlayer)
+					CmdOnUseWeapon (FIRST_WEAPON);
+			}
 		}
 
+		[Client]
 		void Update ()
 		{
-			if (Util.Input.NextWeaponButton ())
-				Use (Weapons.Next (currentWeapon));
-			else if (Util.Input.PreviousWeaponButton ())
-				Use (Weapons.Previous (currentWeapon));
+			if (!isLocalPlayer)
+				return;
+
+			if (Util.Input.NextWeaponButton ()) {
+				int weaponNumber = Weapons.NextPosition (currentWeapon);
+				UseWeapon (weaponNumber);
+				CmdOnUseWeapon (weaponNumber);
+			} else if (Util.Input.PreviousWeaponButton ()) {
+				int weaponNumber = Weapons.PreviousPosition (currentWeapon);
+				UseWeapon (weaponNumber);
+				CmdOnUseWeapon (weaponNumber);
+			}
 		}
 
 		//-----------------------------------------------------------------------------
@@ -34,7 +47,7 @@ namespace Fps.Weapon
 
 		public bool isReady ()
 		{
-			return currentWeapon != null;  // Workaround by unity bug.
+			return CurrentWeapon != null;  // Workaround by unity bug.
 		}
 
 		public int RemainAmmo ()
@@ -61,55 +74,63 @@ namespace Fps.Weapon
 		// Private Methods
 		//-----------------------------------------------------------------------------
 
-		IWeapon CreateIntoHolder (GameObject _weaponPrefab)
+		GameObject CreateIntoHolder (GameObject _weaponPrefab)
 		{
-			IWeapon weapon = Factory.InstantiateOnHolder (_weaponPrefab, weaponHolder);
+			GameObject weapon = Factory.InstantiateOnHolder (_weaponPrefab, weaponHolder);
 
 			if (isLocalPlayer)
-				Util.Layer.SetLayerRecursively (
-					weapon.GameObject, 
-					LayerMask.NameToLayer (weaponLayerName)
-				);
+				Util.Layer.SetLayerRecursively (weapon, LayerMask.NameToLayer (weaponLayerName));
 
 			return weapon;
 		}
 
-		List<IWeapon> CreateWeapons ()
-		{
-			return weaponPrefabs.Select (CreateIntoHolder).Select ((weapon) => {
-				weapon.GameObject.SetActive (false);
-				return weapon;
-			}).ToList ();
-		}
-
-		void Use (IWeapon weapon)
+		void UseWeapon (int weaponNumber)
 		{
 			if (currentWeapon != null)
-				currentWeapon.GameObject.SetActive (false);
+				currentWeapon.SetActive (false);
 
-			currentWeapon = weapon;
-			currentWeapon.GameObject.SetActive (true);
+			currentWeapon = Weapons [weaponNumber];
+			currentWeapon.SetActive (true);
 		}
-			
+
+		[Command]
+		void CmdOnUseWeapon (int weaponNumber)
+		{
+			RpcDoUseWeapon (weaponNumber);
+		}
+
+		[ClientRpc]
+		void RpcDoUseWeapon (int weaponNumber)
+		{
+			UseWeapon (weaponNumber);
+		}
+	
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------
 
-		public List<IWeapon> Weapons {
+		public List<GameObject> Weapons {
 			get {
 				if (weapons == null)
-					weapons = CreateWeapons ();
+					weapons = weaponPrefabs.Select (CreateIntoHolder).ToList ();
 				return weapons;
 			}
 		}
 
 		public IWeapon CurrentWeapon {
-			get { return currentWeapon; }
+			get { return currentWeapon.GetComponent<IWeapon> (); }
 		}
 
 		WeaponFactory Factory {
 			get { return GetComponent <WeaponFactory> (); }
 		}
+
+
+		//-----------------------------------------------------------------------------
+		// Constants
+		//-----------------------------------------------------------------------------
+
+		private const int FIRST_WEAPON = 0;
 
 		//-----------------------------------------------------------------------------
 		// Attributes
@@ -124,8 +145,8 @@ namespace Fps.Weapon
 		[SerializeField]
 		private List<GameObject> weaponPrefabs;
 
-		private List<IWeapon> weapons;
+		private List<GameObject> weapons;
 
-		private IWeapon currentWeapon;
+		private GameObject currentWeapon;
 	}
 }
