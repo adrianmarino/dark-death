@@ -1,12 +1,12 @@
 ﻿namespace Fps.Weapon
 {
-	public class HeavyBlaster : RechargeableWeapon
+	public class Blaster : RechargeableWeapon
 	{
 		//-----------------------------------------------------------------------------
 		// Constructors
 		//-----------------------------------------------------------------------------
 
-		private HeavyBlaster () : base ()
+		private Blaster () : base ()
 		{
 		}
 	}

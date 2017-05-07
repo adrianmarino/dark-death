@@ -43,5 +43,9 @@ namespace Fps.Weapon
 		float FireRate {
 			get;
 		}
+
+		string Name {
+			get;
+		}
 	}
 }
