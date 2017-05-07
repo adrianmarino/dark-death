@@ -17,10 +17,10 @@ namespace Fps.Weapon
 		{
 			// Workaround by unity 
 			if (weaponPrefabs.Count > 0) {
-				UseWeapon (FIRST_WEAPON);
+				UseWeapon (defaultWeapon);
 
 				if (isLocalPlayer)
-					CmdOnUseWeapon (FIRST_WEAPON);
+					CmdOnUseWeapon (defaultWeapon);
 			}
 		}
 
@@ -125,13 +125,6 @@ namespace Fps.Weapon
 			get { return GetComponent <WeaponFactory> (); }
 		}
 
-
-		//-----------------------------------------------------------------------------
-		// Constants
-		//-----------------------------------------------------------------------------
-
-		private const int FIRST_WEAPON = 0;
-
 		//-----------------------------------------------------------------------------
 		// Attributes
 		//-----------------------------------------------------------------------------
@@ -141,6 +134,9 @@ namespace Fps.Weapon
 
 		[SerializeField]
 		private Transform weaponHolder;
+
+		[SerializeField]
+		private int defaultWeapon = 1;
 
 		[SerializeField]
 		private List<GameObject> weaponPrefabs;
