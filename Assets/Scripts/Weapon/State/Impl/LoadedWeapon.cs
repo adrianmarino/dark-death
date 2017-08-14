@@ -28,6 +28,11 @@ namespace Fps.Weapon
 			weapon.HitTargetAction (position, normal);
 		}
 
+		public override void Reload ()
+		{
+			weapon.Reload ();
+		}
+
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------

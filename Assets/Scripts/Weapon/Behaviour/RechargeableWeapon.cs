@@ -12,6 +12,12 @@ namespace Fps.Weapon
 		// Public Methods
 		//-----------------------------------------------------------------------------
 
+		public override void Reload ()
+		{
+			this.PlayReloadEffectAction ();
+			this.GoToLoadedState ();
+		}
+
 		public void GoToUnloadedState ()
 		{
 			State = UnloadState ();
