@@ -14,13 +14,17 @@ namespace Fps.Weapon
 
 		public override void Reload ()
 		{
-			this.PlayReloadEffectAction ();
-			this.GoToLoadedState ();
+			State.Reload ();
 		}
 
 		public void GoToUnloadedState ()
 		{
 			State = UnloadState ();
+		}
+
+		public void GoToLoadingState ()
+		{
+			State = LoadingState ();
 		}
 
 		public void GoToLoadedState ()
@@ -38,14 +42,19 @@ namespace Fps.Weapon
 		// Protected Methods
 		//-----------------------------------------------------------------------------
 
+		protected WeaponState LoadingState ()
+		{
+			return new LoadingWeaponState (this, WeaponReloadAnimation ().Duration);
+		}
+
 		protected override WeaponState InitState ()
 		{
-			return new LoadedWeapon (this, maxAmmo);
+			return new LoadedWeaponState (this, maxAmmo);
 		}
 
 		protected WeaponState UnloadState ()
 		{
-			return new UnloadedWeapon (this);
+			return new UnloadedWeaponState (this);
 		}
 
 		//-----------------------------------------------------------------------------

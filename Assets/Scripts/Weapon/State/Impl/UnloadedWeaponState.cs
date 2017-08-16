@@ -3,7 +3,7 @@ using Fps.Weapon.State;
 
 namespace Fps.Weapon
 {
-	public class UnloadedWeapon : WeaponState
+	public class UnloadedWeaponState : WeaponState
 	{
 		public override bool Shoot (Transform origin, out RaycastHit target, LayerMask targetMask)
 		{
@@ -13,7 +13,7 @@ namespace Fps.Weapon
 
 		public override void Reload ()
 		{
-			weapon.Reload ();
+			weapon.GoToLoadingState ();
 		}
 
 		//-----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ namespace Fps.Weapon
 		// Constructors
 		//-----------------------------------------------------------------------------
 
-		public UnloadedWeapon (RechargeableWeapon weapon)
+		public UnloadedWeaponState (RechargeableWeapon weapon)
 		{
 			this.weapon = weapon;
 		}

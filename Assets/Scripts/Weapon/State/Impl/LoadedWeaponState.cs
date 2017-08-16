@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Fps.Weapon
 {
-	public class LoadedWeapon : WeaponState
+	public class LoadedWeaponState : WeaponState
 	{
 		//-----------------------------------------------------------------------------
 		// Public Methods
@@ -30,7 +30,7 @@ namespace Fps.Weapon
 
 		public override void Reload ()
 		{
-			weapon.Reload ();
+			weapon.GoToLoadingState ();
 		}
 
 		//-----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ namespace Fps.Weapon
 		// Constructors
 		//-----------------------------------------------------------------------------
 
-		public LoadedWeapon (RechargeableWeapon weapon, int maxAmmo)
+		public LoadedWeaponState (RechargeableWeapon weapon, int maxAmmo)
 		{
 			this.weapon = weapon;
 			remainAmmo = maxAmmo;
