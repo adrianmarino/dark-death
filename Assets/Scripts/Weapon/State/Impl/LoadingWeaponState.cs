@@ -8,6 +8,11 @@ namespace Fps.Weapon
 	[RequireComponent (typeof(WeaponReloadAnimation))]
 	public class LoadingWeaponState : WeaponState
 	{
+		public override string ToString ()
+		{
+			return "Loading";
+		}
+
 		//-----------------------------------------------------------------------------
 		// Private Methods
 		//-----------------------------------------------------------------------------

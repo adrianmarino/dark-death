@@ -33,6 +33,11 @@ namespace Fps.Weapon
 			weapon.GoToLoadingState ();
 		}
 
+		public override string ToString ()
+		{
+			return "Loaded";
+		}
+
 		//-----------------------------------------------------------------------------
 		// Properties
 		//-----------------------------------------------------------------------------

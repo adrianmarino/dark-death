@@ -30,6 +30,9 @@ namespace Fps.Weapon
 			if (!isLocalPlayer)
 				return;
 
+			if (CurrentWeapon.State is LoadingWeaponState)
+				return;
+
 			if (Util.Input.NextWeaponButton ()) {
 				int weaponNumber = Weapons.NextPosition (currentWeapon);
 				UseWeapon (weaponNumber);

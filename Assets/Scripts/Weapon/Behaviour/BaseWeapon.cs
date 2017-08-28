@@ -90,7 +90,7 @@ namespace Fps.Weapon
 			get { return _name; }
 		}
 
-		protected WeaponState State {
+		public WeaponState State {
 			get {
 				if (currentState == null)
 					currentState = InitState ();

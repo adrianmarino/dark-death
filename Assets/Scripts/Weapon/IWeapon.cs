@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Fps.Weapon.State;
 
 namespace Fps.Weapon
 {
@@ -45,6 +46,10 @@ namespace Fps.Weapon
 		}
 
 		string Name {
+			get;
+		}
+
+		WeaponState State {
 			get;
 		}
 	}
