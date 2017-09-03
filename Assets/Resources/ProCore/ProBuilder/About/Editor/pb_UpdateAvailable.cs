@@ -1,6 +1,6 @@
-#define PROTOTYPE
 using UnityEngine;
 using UnityEditor;
+using ProBuilder2.Common;
 
 namespace ProBuilder2.EditorCommon
 {
@@ -23,8 +23,8 @@ namespace ProBuilder2.EditorCommon
 
 		private bool checkForProBuilderUpdates
 		{
-			get { return EditorPrefs.GetBool(pb_Constant.pbCheckForProBuilderUpdates, true); }
-			set { EditorPrefs.SetBool(pb_Constant.pbCheckForProBuilderUpdates, value); }
+			get { return pb_PreferencesInternal.GetBool(pb_Constant.pbCheckForProBuilderUpdates, true); }
+			set { pb_PreferencesInternal.SetBool(pb_Constant.pbCheckForProBuilderUpdates, value); }
 		}
 
 		void OnEnable()

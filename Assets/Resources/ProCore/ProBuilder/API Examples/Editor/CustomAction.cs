@@ -1,5 +1,4 @@
-#define PROTOTYPE
-/**
+﻿/**
  *	This script demonstrates how to create a new action that can be accessed from the 
  *	ProBuilder toolbar.
  *

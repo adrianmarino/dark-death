@@ -1,4 +1,3 @@
-#define PROTOTYPE
 #if UNITY_STANDALONE || UNITY_EDITOR
 
 using UnityEngine;

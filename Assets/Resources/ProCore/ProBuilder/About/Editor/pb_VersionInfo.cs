@@ -1,4 +1,3 @@
-#define PROTOTYPE
 using System.Text.RegularExpressions;
 
 namespace ProBuilder2.EditorCommon

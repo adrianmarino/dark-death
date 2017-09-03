@@ -1,4 +1,3 @@
-#define PROTOTYPE
 /**
  * Repairs missing pb_Object and pb_Entity references.  It is based
  * on this article by Unity Gems: http://unitygems.com/lateral1/
@@ -8,6 +7,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
+using ProBuilder2.Common;
 
 namespace ProBuilder2.EditorCommon
 {

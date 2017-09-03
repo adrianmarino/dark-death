@@ -1,9 +1,9 @@
-#define PROTOTYPE
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using ProBuilder2.EditorCommon;
 using System.Linq;
+using ProBuilder2.Common;
 
 namespace ProBuilder2.Actions
 {
@@ -14,7 +14,7 @@ namespace ProBuilder2.Actions
 	{
 		[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Repair/Upgrade Scene to Advanced", false, pb_Constant.MENU_REPAIR + 10)]
 		public static void MenuUpgradeSceneAdvanced()
-		{	
+		{
 			if( !EditorUtility.DisplayDialog("Upgrade Scene to Advanced", "This utility sets the materials on every ProBuilder object in the scene.  Continue?", "Okay", "Cancel") )
 				return;
 
@@ -25,7 +25,7 @@ namespace ProBuilder2.Actions
 
 		[MenuItem("Tools/" + pb_Constant.PRODUCT_NAME + "/Repair/Upgrade Selection to Advanced", false, pb_Constant.MENU_REPAIR + 10)]
 		public static void MenuUpgradeSelectionAdvanced()
-		{	
+		{
 			if( !EditorUtility.DisplayDialog("Upgrade Selection to Advanced", "This utility sets the materials on every selected ProBuilder object.  Continue?", "Okay", "Cancel") )
 				return;
 
@@ -35,7 +35,7 @@ namespace ProBuilder2.Actions
 		}
 
 		private static void DoUpgrade(pb_Object[] all)
-		{		
+		{
 			bool interactive = all != null && all.Length > 8;
 
 			for(int i = 0 ; i < all.Length; i++)
@@ -56,7 +56,7 @@ namespace ProBuilder2.Actions
 				pb.Refresh();
 				pb.Optimize();
 			}
-				
+
 			if(interactive)
 			{
 				EditorUtility.ClearProgressBar();
