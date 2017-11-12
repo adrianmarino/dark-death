@@ -1,4 +1,6 @@
-﻿Shader "ProBuilder/Reference Unlit"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "ProBuilder/Reference Unlit"
 {
 	Properties
 	{
@@ -15,7 +17,7 @@
 		Cull Off
 		Offset 1,1
 
-		Pass 
+		Pass
 		{
 			AlphaTest Greater .25
 

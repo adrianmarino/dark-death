@@ -7,7 +7,7 @@
 
 	SubShader
 	{
-		Tags 
+		Tags
 		{
 			"IgnoreProjector"="True"
 			"RenderType"="Transparent"
@@ -21,7 +21,7 @@
 		Blend Off
 		Offset -1,-1
 
-		Pass 
+		Pass
 		{
 			AlphaTest Greater .25
 

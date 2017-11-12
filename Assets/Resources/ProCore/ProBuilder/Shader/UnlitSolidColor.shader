@@ -1,4 +1,6 @@
-﻿Shader "ProBuilder/Unlit Solid Color" 
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "ProBuilder/Unlit Solid Color"
 {
 	Properties
 	{

@@ -1,4 +1,6 @@
-﻿Shader "Hidden/ProBuilder/pb_TransparentOverlay" 
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Hidden/ProBuilder/pb_TransparentOverlay"
 {
 	Properties
 	{

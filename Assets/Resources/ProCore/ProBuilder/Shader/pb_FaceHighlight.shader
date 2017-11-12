@@ -1,4 +1,4 @@
-Shader "Hidden/ProBuilder/FaceHighlight" 
+Shader "Hidden/ProBuilder/FaceHighlight"
 {
 	Properties
 	{

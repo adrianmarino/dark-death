@@ -1,4 +1,6 @@
-﻿Shader "Hidden/ProBuilder/FacePicker" 
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Hidden/ProBuilder/FacePicker"
 {
 	Properties {}
 
@@ -41,7 +43,7 @@
 				return o;
 			}
 
-			half4 frag (v2f i) : COLOR
+			float4 frag (v2f i) : COLOR
 			{
 				return i.color;
 			}

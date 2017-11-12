@@ -1,4 +1,6 @@
-﻿Shader "ProBuilder/UnlitVertexColor"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "ProBuilder/UnlitVertexColor"
 {
 	SubShader
 	{
@@ -9,7 +11,7 @@
 		ZWrite On
 		Cull Off
 
-		Pass 
+		Pass
 		{
 			AlphaTest Greater .25
 
@@ -17,9 +19,6 @@
 			#pragma vertex vert
 			#pragma fragment frag
 			#include "UnityCG.cginc"
-
-			float4 _Color;
-			float _Scale;
 
 			struct appdata
 			{
@@ -37,7 +36,7 @@
 			{
 				v2f o;
 
-				o.pos = UnityObjectToClipPos(v.vertex);
+                o.pos = UnityObjectToClipPos(v.vertex);
 				o.color = v.color;
 
 				return o;

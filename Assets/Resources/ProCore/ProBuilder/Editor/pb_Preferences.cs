@@ -12,15 +12,12 @@
 
 using UnityEngine;
 using UnityEditor;
-#if !UNITY_4_6 && !UNITY_4_7
 using UnityEngine.Rendering;
-#endif
 using ProBuilder2.Common;
 using ProBuilder2.EditorCommon;
-using System.Collections;
 using System.Linq;
 
-public class pb_Preferences
+public class pb_Preferences : Editor
 {
 	private static bool prefsLoaded = false;
 
@@ -53,7 +50,7 @@ public class pb_Preferences
 	static bool pbDragSelectWholeElement = false;
 	static bool pbEnableExperimental = false;
 
-	static bool showMissingLightmapUvWarning = true;
+	static bool showMissingLightmapUvWarning = false;
 
 	#if !UNITY_4_6 && !UNITY_4_7
 	static ShadowCastingMode pbShadowCastingMode = ShadowCastingMode.On;
@@ -68,8 +65,8 @@ public class pb_Preferences
 
 	static pb_Shortcut[] defaultShortcuts;
 
-	[PreferenceItem (pb_Constant.PRODUCT_NAME)]
-	public static void PreferencesGUI ()
+	[PreferenceItem(pb_Constant.PRODUCT_NAME)]
+	private static void PreferencesGUI ()
 	{
 		// Load the preferences
 		if (!prefsLoaded) {
@@ -245,7 +242,9 @@ public class pb_Preferences
 			pb_PreferencesInternal.DeleteKey(pb_Constant.pbEnableExperimental);
 			pb_PreferencesInternal.DeleteKey(pb_Constant.pbFillHoleSelectsEntirePath);
 			pb_PreferencesInternal.DeleteKey(pb_Constant.pbDetachToNewObject);
+			#pragma warning disable 0618
 			pb_PreferencesInternal.DeleteKey(pb_Constant.pbPreserveFaces);
+			#pragma warning restore 0618
 			pb_PreferencesInternal.DeleteKey(pb_Constant.pbVertexHandleSize);
 			pb_PreferencesInternal.DeleteKey(pb_Constant.pbUVGridSnapValue);
 			pb_PreferencesInternal.DeleteKey(pb_Constant.pbUVWeldDistance);
@@ -342,9 +341,14 @@ public class pb_Preferences
 			GUILayout.Label("Modifiers", EditorStyles.boldLabel);
 			// EnumMaskField returns a bit-mask where the flags correspond to the indices of the enum, not the enum values,
 			// so this isn't technically correct.
+#if UNITY_2017_3_OR_NEWER
+			EventModifiers em = (EventModifiers) defaultShortcuts[shortcutIndex].eventModifiers;
+			defaultShortcuts[shortcutIndex].eventModifiers = (EventModifiers) EditorGUILayout.EnumFlagsField(em);
+#else
 			EventModifiers em = (EventModifiers) (((int)defaultShortcuts[shortcutIndex].eventModifiers) * 2);
 			em = (EventModifiers)EditorGUILayout.EnumMaskField(em);
 			defaultShortcuts[shortcutIndex].eventModifiers = (EventModifiers) (((int)em) / 2);
+#endif
 			GUILayout.Label("Description", EditorStyles.boldLabel);
 
 			GUILayout.Label(defaultShortcuts[shortcutIndex].description, EditorStyles.wordWrappedLabel);
@@ -376,7 +380,7 @@ public class pb_Preferences
 		pbElementSelectIsHamFisted			= pb_PreferencesInternal.GetBool(pb_Constant.pbElementSelectIsHamFisted);
 		pbDragSelectWholeElement			= pb_PreferencesInternal.GetBool(pb_Constant.pbDragSelectWholeElement);
 		pbEnableExperimental				= pb_PreferencesInternal.GetBool(pb_Constant.pbEnableExperimental);
-		showMissingLightmapUvWarning		= pb_PreferencesInternal.GetBool("pb_Lightmapping::showMissingLightmapUvWarning", true);
+		showMissingLightmapUvWarning		= pb_PreferencesInternal.GetBool("pb_Lightmapping::showMissingLightmapUvWarning", false);
 
 
 		pbDefaultFaceColor = pb_PreferencesInternal.GetColor( pb_Constant.pbDefaultFaceColor );
