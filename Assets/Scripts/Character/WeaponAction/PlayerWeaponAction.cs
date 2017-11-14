@@ -14,7 +14,8 @@ namespace Fps.Player
 
 		protected void UpdateAmmoPanel ()
 		{
-			ammoPanel.text = Weapon.RemainAmmo + " " + Weapon.Name + " " + Weapon.State;
+			ammoPanel.text = 
+				Weapon.RemainAmmo.ToString ().PadLeft (2, '0') + " " + Weapon.Name + " " + Weapon.State;
 		}
 
 		//-----------------------------------------------------------------------------
