@@ -11,6 +11,9 @@ namespace UnityStandardAssets.Utility
     [ExecuteInEditMode]
 #endif
     public class PlatformSpecificContent : MonoBehaviour
+#if UNITY_EDITOR
+        , UnityEditor.Build.IActiveBuildTargetChanged
+#endif
     {
         private enum BuildTargetGroup
         {
@@ -28,6 +31,14 @@ namespace UnityStandardAssets.Utility
 	{
 		CheckEnableContent();
 	}
+#else
+        public int callbackOrder
+        {
+            get
+            {
+                return 1;
+            }
+        }
 #endif
 
 #if UNITY_EDITOR
@@ -35,14 +46,17 @@ namespace UnityStandardAssets.Utility
         private void OnEnable()
         {
             EditorApplication.update += Update;
-            EditorUserBuildSettings.activeBuildTargetChanged += Update;
         }
 
 
         private void OnDisable()
         {
             EditorApplication.update -= Update;
-            EditorUserBuildSettings.activeBuildTargetChanged -= Update;
+        }
+
+        public void OnActiveBuildTargetChanged(BuildTarget previousTarget, BuildTarget newTarget)
+        {
+            CheckEnableContent();
         }
 
         private void Update()
@@ -54,7 +68,7 @@ namespace UnityStandardAssets.Utility
 
         private void CheckEnableContent()
         {
-#if (UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_TIZEN || UNITY_STV )
+#if (UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8)
 		if (m_BuildTargetGroup == BuildTargetGroup.Mobile)
 		{
 			EnableContent(true);
@@ -63,7 +77,7 @@ namespace UnityStandardAssets.Utility
 		}
 #endif
 
-#if !(UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_TIZEN || UNITY_STV )
+#if !(UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8)
             if (m_BuildTargetGroup == BuildTargetGroup.Mobile)
             {
                 EnableContent(false);
