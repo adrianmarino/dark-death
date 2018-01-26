@@ -14,7 +14,7 @@ namespace Fps
 
 		void OnGUI ()
 		{
-			GUIUtils.PlayersWindow (
+			GuiUtils.PlayersWindow (
 				players.Values.ToList (),
 				new Rect (5, Screen.height - 155, 88, 120)
 			);
