@@ -27,36 +27,20 @@
               <e p="readme.txt" t="Include" />
             </e>
           </e>
-          <e p="Detonator Explosion Framework" t="Include">
-            <e p="Resources" t="Include">
-              <e p="Detonator" t="Include">
-                <e p="Textures" t="Include">
-                  <e p="HeatDistort.shader" t="Include" />
-                </e>
+          <e p="EffectExamples" t="Include">
+            <e p="Shared" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="DecalDestroyer.cs" t="Include" />
+                <e p="ExtinguishableFire.cs" t="Include" />
+                <e p="GunAim.cs" t="Include" />
+                <e p="GunShoot.cs" t="Include" />
+                <e p="ParticleCollision.cs" t="Include" />
+                <e p="ParticleExamples.cs" t="Include" />
+                <e p="ParticleMenu.cs" t="Include" />
               </e>
-            </e>
-            <e p="Sample Supporting Emitters" t="Include">
-              <e p="DetonatorSprayHelper.cs" t="Include" />
-            </e>
-            <e p="System" t="Include">
-              <e p="Detonator.cs" t="Include" />
-              <e p="DetonatorBurstEmitter.cs" t="Include" />
-              <e p="DetonatorCloudRing.cs" t="Include" />
-              <e p="DetonatorComponent.cs" t="Include" />
-              <e p="DetonatorFireball.cs" t="Include" />
-              <e p="DetonatorForce.cs" t="Include" />
-              <e p="DetonatorGlow.cs" t="Include" />
-              <e p="DetonatorHeatwave.cs" t="Include" />
-              <e p="DetonatorLight.cs" t="Include" />
-              <e p="DetonatorShockwave.cs" t="Include" />
-              <e p="DetonatorSmoke.cs" t="Include" />
-              <e p="DetonatorSound.cs" t="Include" />
-              <e p="DetonatorSparks.cs" t="Include" />
-              <e p="DetonatorSpray.cs" t="Include" />
-            </e>
-            <e p="TestScene" t="Include">
-              <e p="DetonatorTest.cs" t="Include" />
-              <e p="TouchToMouse.cs" t="Include" />
+              <e p="Shaders" t="Include">
+                <e p="SurfaceShader_VC.shader" t="Include" />
+              </e>
             </e>
           </e>
           <e p="PostProcessing" t="Include">
@@ -650,6 +634,7 @@
               </e>
             </e>
             <e p="Console.cs" t="Include" />
+            <e p="DestroyTimer.cs" t="Include" />
             <e p="GUI.cs" t="Include" />
             <e p="GameObjects.cs" t="Include" />
             <e p="Input.cs" t="Include" />

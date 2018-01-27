@@ -7,53 +7,39 @@ Shader "Hidden/Post FX/Depth Of Field"
 
     CGINCLUDE
         #pragma exclude_renderers d3d11_9x
+        #pragma target 3.0
     ENDCG
 
-    // SubShader with SM 5.0 support
-    // Gather intrinsics are used to reduce texture sample count.
     SubShader
     {
         Cull Off ZWrite Off ZTest Always
 
-        Pass // 0
+        // (0) Downsampling, prefiltering & CoC
+        Pass
         {
-            Name "CoC Calculation"
             CGPROGRAM
-                #pragma target 3.0
-                #pragma vertex VertDOF
-                #pragma fragment FragCoC
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-
-        Pass // 1
-        {
-            Name "CoC Temporal Filter"
-            CGPROGRAM
-                #pragma target 5.0
-                #pragma vertex VertDOF
-                #pragma fragment FragTempFilter
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-
-        Pass // 2
-        {
-            Name "Downsample and Prefilter"
-            CGPROGRAM
-                #pragma target 5.0
+                #pragma multi_compile __ UNITY_COLORSPACE_GAMMA
                 #pragma vertex VertDOF
                 #pragma fragment FragPrefilter
-                #pragma multi_compile __ UNITY_COLORSPACE_GAMMA
                 #include "DepthOfField.cginc"
             ENDCG
         }
 
-        Pass // 3
+        // (1) Pass 0 + temporal antialiasing
+        Pass
         {
-            Name "Bokeh Filter (small)"
             CGPROGRAM
-                #pragma target 3.0
+                #pragma vertex VertDOF
+                #pragma fragment FragPrefilter
+                #define PREFILTER_TAA
+                #include "DepthOfField.cginc"
+            ENDCG
+        }
+
+        // (2-5) Bokeh filter with disk-shaped kernels
+        Pass
+        {
+            CGPROGRAM
                 #pragma vertex VertDOF
                 #pragma fragment FragBlur
                 #define KERNEL_SMALL
@@ -61,11 +47,9 @@ Shader "Hidden/Post FX/Depth Of Field"
             ENDCG
         }
 
-        Pass // 4
+        Pass
         {
-            Name "Bokeh Filter (medium)"
             CGPROGRAM
-                #pragma target 3.0
                 #pragma vertex VertDOF
                 #pragma fragment FragBlur
                 #define KERNEL_MEDIUM
@@ -73,11 +57,9 @@ Shader "Hidden/Post FX/Depth Of Field"
             ENDCG
         }
 
-        Pass // 5
+        Pass
         {
-            Name "Bokeh Filter (large)"
             CGPROGRAM
-                #pragma target 3.0
                 #pragma vertex VertDOF
                 #pragma fragment FragBlur
                 #define KERNEL_LARGE
@@ -85,11 +67,9 @@ Shader "Hidden/Post FX/Depth Of Field"
             ENDCG
         }
 
-        Pass // 6
+        Pass
         {
-            Name "Bokeh Filter (very large)"
             CGPROGRAM
-                #pragma target 3.0
                 #pragma vertex VertDOF
                 #pragma fragment FragBlur
                 #define KERNEL_VERYLARGE
@@ -97,110 +77,10 @@ Shader "Hidden/Post FX/Depth Of Field"
             ENDCG
         }
 
-        Pass // 7
+        // (6) Postfilter blur
+        Pass
         {
-            Name "Postfilter"
             CGPROGRAM
-                #pragma target 3.0
-                #pragma vertex VertDOF
-                #pragma fragment FragPostBlur
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-    }
-
-    // Fallback SubShader with SM 3.0
-    SubShader
-    {
-        Cull Off ZWrite Off ZTest Always
-
-        Pass // 0
-        {
-            Name "CoC Calculation"
-            CGPROGRAM
-                #pragma target 3.0
-                #pragma vertex VertDOF
-                #pragma fragment FragCoC
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-
-        Pass // 1
-        {
-            Name "CoC Temporal Filter"
-            CGPROGRAM
-                #pragma target 3.0
-                #pragma vertex VertDOF
-                #pragma fragment FragTempFilter
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-
-        Pass // 2
-        {
-            Name "Downsample and Prefilter"
-            CGPROGRAM
-                #pragma target 3.0
-                #pragma vertex VertDOF
-                #pragma fragment FragPrefilter
-                #pragma multi_compile __ UNITY_COLORSPACE_GAMMA
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-
-        Pass // 3
-        {
-            Name "Bokeh Filter (small)"
-            CGPROGRAM
-                #pragma target 3.0
-                #pragma vertex VertDOF
-                #pragma fragment FragBlur
-                #define KERNEL_SMALL
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-
-        Pass // 4
-        {
-            Name "Bokeh Filter (medium)"
-            CGPROGRAM
-                #pragma target 3.0
-                #pragma vertex VertDOF
-                #pragma fragment FragBlur
-                #define KERNEL_MEDIUM
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-
-        Pass // 5
-        {
-            Name "Bokeh Filter (large)"
-            CGPROGRAM
-                #pragma target 3.0
-                #pragma vertex VertDOF
-                #pragma fragment FragBlur
-                #define KERNEL_LARGE
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-
-        Pass // 6
-        {
-            Name "Bokeh Filter (very large)"
-            CGPROGRAM
-                #pragma target 3.0
-                #pragma vertex VertDOF
-                #pragma fragment FragBlur
-                #define KERNEL_VERYLARGE
-                #include "DepthOfField.cginc"
-            ENDCG
-        }
-
-        Pass // 7
-        {
-            Name "Postfilter"
-            CGPROGRAM
-                #pragma target 3.0
                 #pragma vertex VertDOF
                 #pragma fragment FragPostBlur
                 #include "DepthOfField.cginc"

@@ -16,7 +16,6 @@ Shader "Hidden/Post FX/Ambient Occlusion"
             CGPROGRAM
                 #pragma vertex VertMultitex
                 #pragma fragment FragAO
-                #pragma multi_compile FOG_OFF FOG_LINEAR FOG_EXP FOG_EXP2
                 #define SOURCE_DEPTH
                 #include "AmbientOcclusion.cginc"
             ENDCG
@@ -28,7 +27,6 @@ Shader "Hidden/Post FX/Ambient Occlusion"
             CGPROGRAM
                 #pragma vertex VertMultitex
                 #pragma fragment FragAO
-                #pragma multi_compile FOG_OFF FOG_LINEAR FOG_EXP FOG_EXP2
                 #define SOURCE_DEPTHNORMALS
                 #include "AmbientOcclusion.cginc"
             ENDCG
@@ -40,7 +38,6 @@ Shader "Hidden/Post FX/Ambient Occlusion"
             CGPROGRAM
                 #pragma vertex VertMultitex
                 #pragma fragment FragAO
-                #pragma multi_compile FOG_OFF FOG_LINEAR FOG_EXP FOG_EXP2
                 #define SOURCE_GBUFFER
                 #include "AmbientOcclusion.cginc"
             ENDCG

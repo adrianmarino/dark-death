@@ -1,3 +1,4 @@
+using System;
 using UnityEngine.Rendering;
 
 namespace UnityEngine.PostProcessing
@@ -38,7 +39,7 @@ namespace UnityEngine.PostProcessing
 
         public override CameraEvent GetCameraEvent()
         {
-            return CameraEvent.AfterImageEffectsOpaque;
+            return CameraEvent.BeforeImageEffectsOpaque;
         }
 
         public override void PopulateCommandBuffer(CommandBuffer cb)
@@ -47,8 +48,7 @@ namespace UnityEngine.PostProcessing
 
             var material = context.materialFactory.Get(k_ShaderString);
             material.shaderKeywords = null;
-            var fogColor = GraphicsUtils.isLinearColorSpace ? RenderSettings.fogColor.linear : RenderSettings.fogColor;
-            material.SetColor(Uniforms._FogColor, fogColor);
+            material.SetColor(Uniforms._FogColor, RenderSettings.fogColor);
             material.SetFloat(Uniforms._Density, RenderSettings.fogDensity);
             material.SetFloat(Uniforms._Start, RenderSettings.fogStartDistance);
             material.SetFloat(Uniforms._End, RenderSettings.fogEndDistance);
