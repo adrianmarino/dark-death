@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fcf5af81-238b-44e9-a9a4-ec3c25c2ec51" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.blue-death/.idea/contentModel.xml" afterPath="$PROJECT_DIR$/.idea/.idea.blue-death/.idea/contentModel.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.blue-death/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/.idea.blue-death/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Player.prefab" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/PlayerExplosion.prefab" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/PlayerExplosion.prefab.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Detonator Explosion Framework/Prefab Examples/Detonator-Sounds.prefab" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Detonator Explosion Framework/Prefab Examples/Detonator-Sounds.prefab.meta" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/PlayerWindow.cs" afterPath="$PROJECT_DIR$/Assets/Scripts/PlayerWindow.cs" />
-    </list>
+    <list default="true" id="fcf5af81-238b-44e9-a9a4-ec3c25c2ec51" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -117,7 +107,7 @@
         <entry file="file://$PROJECT_DIR$/Assets/Scripts/Character/PlayerState.cs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="290">
-              <caret line="208" column="24" lean-forward="true" selection-start-line="208" selection-start-column="24" selection-end-line="208" selection-end-column="24" />
+              <caret line="208" column="24" lean-forward="false" selection-start-line="208" selection-start-column="24" selection-end-line="208" selection-end-column="24" />
               <folding>
                 <marker date="1516927956794" expanded="false" signature="6:167" ph="..." />
                 <marker date="1516927956794" expanded="true" signature="189:4844" ph="{...}" />
@@ -225,7 +215,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="-12" />
     <option name="width" value="1920" />
     <option name="height" value="1092" />
@@ -332,12 +322,12 @@
       <workItem from="1516850080282" duration="2758000" />
       <workItem from="1516881792320" duration="120000" />
       <workItem from="1516881929650" duration="1027000" />
-      <workItem from="1516965945100" duration="998000" />
+      <workItem from="1516965945100" duration="1571000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5264000" />
+    <option name="totallyTimeSpent" value="5837000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -349,7 +339,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-12" width="1920" height="1092" extended-state="7" />
+    <frame x="0" y="-12" width="1920" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -954,7 +944,7 @@
     <entry file="file://$PROJECT_DIR$/Assets/Scripts/Character/PlayerState.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
-          <caret line="208" column="24" lean-forward="true" selection-start-line="208" selection-start-column="24" selection-end-line="208" selection-end-column="24" />
+          <caret line="208" column="24" lean-forward="false" selection-start-line="208" selection-start-column="24" selection-end-line="208" selection-end-column="24" />
           <folding>
             <marker date="1516927956794" expanded="false" signature="6:167" ph="..." />
             <marker date="1516927956794" expanded="true" signature="189:4844" ph="{...}" />
