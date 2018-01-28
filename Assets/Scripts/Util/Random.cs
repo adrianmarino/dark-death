@@ -1,17 +1,15 @@
-﻿using System;
-
-namespace Util
+﻿namespace Util
 {
-    public class RandomUtils
+    public class Random
     {
-        private static readonly Random random = new Random();
+        private static readonly System.Random random = new System.Random();
 
         public static int GetNumber(int min, int max)
         {
             return random.Next(min, max);
         }
 
-        private RandomUtils()
+        private Random()
         {
         }
     }

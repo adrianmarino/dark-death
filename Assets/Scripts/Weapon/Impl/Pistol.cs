@@ -1,16 +1,13 @@
-﻿using UnityEngine;
-
-namespace Fps.Weapon
+﻿namespace Fps.Weapon
 {
-	public class Pistol : RechargeableWeapon
-	{
+    public class Pistol : RechargeableWeapon
+    {
+        //-----------------------------------------------------------------------------
+        // Constructors
+        //-----------------------------------------------------------------------------
 
-		//-----------------------------------------------------------------------------
-		// Constructors
-		//-----------------------------------------------------------------------------
-
-		private Pistol () : base ()
-		{
-		}
-	}
+        private Pistol()
+        {
+        }
+    }
 }

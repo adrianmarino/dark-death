@@ -8,215 +8,208 @@ using Fps.Weapon;
 
 namespace Fps.Player
 {
-	public class PlayerState : NetworkBehaviour
-	{
-		//-----------------------------------------------------------------------------
-		// Event Methods
-		//-----------------------------------------------------------------------------
+    public class PlayerState : NetworkBehaviour
+    {
+        //-----------------------------------------------------------------------------
+        // Event Methods
+        //-----------------------------------------------------------------------------
 
-		void Start ()
-		{
-			Setup ();
-		}
+        void Start()
+        {
+            Setup();
+        }
 
-		[ClientRpc]
-		public void RpcTakeDamage (float damage)
-		{
-			if (Dead)
-				return;
+        [ClientRpc]
+        public void RpcTakeDamage(float damage)
+        {
+            if (Dead)
+                return;
 
-			DecreaseHealth (damage);
+            DecreaseHealth(damage);
 
-			if (currentHealth <= 0) {
-				Die ();
-				Restart ();
-			}
-		}
+            if (currentHealth <= 0)
+            {
+                Die();
+                Restart();
+            }
+        }
 
-		void Update ()
-		{
-			if (!isLocalPlayer)
-				return;
-			ShowCurrentHealth ();
+        void Update()
+        {
+            if (!isLocalPlayer)
+                return;
+            ShowCurrentHealth();
 
-			if (Input.GetKeyDown (KeyCode.K))
-				RpcTakeDamage (currentHealth);
-		}
+            if (Input.GetKeyDown(KeyCode.K))
+                RpcTakeDamage(currentHealth);
+        }
 
-		//-----------------------------------------------------------------------------
-		// Public Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Public Methods
+        //-----------------------------------------------------------------------------
 
-		public override string ToString ()
-		{
-			return tag + " " + transform.name;
-		}
+        public override string ToString()
+        {
+            return tag + " " + transform.name;
+        }
 
-		public void Setup ()
-		{
-			Dead = false;
-			currentHealth = maxHealth;
-			LoadActiveStates ();
+        public void Setup()
+        {
+            Dead = false;
+            currentHealth = maxHealth;
+            LoadActiveStates();
 
-			if (WeaponManager.CurrentWeapon != null)
-				WeaponManager.CurrentWeapon.Show ();
-		}
+            if (WeaponManager.CurrentWeapon != null)
+                WeaponManager.CurrentWeapon.Show();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-		void ShowCurrentHealth ()
-		{
-			healthPanel.text = "+ " + currentHealth;
-		}
+        void ShowCurrentHealth()
+        {
+            healthPanel.text = "+ " + currentHealth;
+        }
 
-		void DecreaseHealth (float damage)
-		{
-			currentHealth -= damage;
-			Debug.Log (this.name + " current health: " + currentHealth);
-		}
+        void DecreaseHealth(float damage)
+        {
+            currentHealth -= damage;
+            Debug.Log(this.name + " current health: " + currentHealth);
+        }
 
-		void SaveActiveStates ()
-		{
-			SaveBehaviourActiveStates ();
-			SaveGameObjectActiveStates ();
-		}
+        void SaveActiveStates()
+        {
+            SaveBehaviourActiveStates();
+            SaveGameObjectActiveStates();
+        }
 
-		void SaveBehaviourActiveStates ()
-		{
-			behaviourActiveStates.Clear ();
-			disableBehaviourOnDeath.ForEach (it => behaviourActiveStates.Add (it, it.enabled));
-		}
+        void SaveBehaviourActiveStates()
+        {
+            behaviourActiveStates.Clear();
+            disableBehaviourOnDeath.ForEach(it => behaviourActiveStates.Add(it, it.enabled));
+        }
 
-		void SaveGameObjectActiveStates ()
-		{
-			gameObjectActiveStates.Clear ();
-			disableGameObjectsOnDeath.ForEach (it => gameObjectActiveStates.Add (it, it.activeSelf));
-		}
+        void SaveGameObjectActiveStates()
+        {
+            gameObjectActiveStates.Clear();
+            disableGameObjectsOnDeath.ForEach(it => gameObjectActiveStates.Add(it, it.activeSelf));
+        }
 
-		void LoadActiveStates ()
-		{
-			LoadBehaviourActiveStates ();
-			LoadGameObjectActiveStates ();
-		}
+        void LoadActiveStates()
+        {
+            LoadBehaviourActiveStates();
+            LoadGameObjectActiveStates();
+        }
 
-		void LoadBehaviourActiveStates ()
-		{
-			behaviourActiveStates.ToList ().ForEach (entry => entry.Key.enabled = entry.Value);
-		}
+        void LoadBehaviourActiveStates()
+        {
+            behaviourActiveStates.ToList().ForEach(entry => entry.Key.enabled = entry.Value);
+        }
 
-		void LoadGameObjectActiveStates ()
-		{
-			gameObjectActiveStates.ToList ().ForEach (it => it.Key.SetActive (it.Value));
-		}
+        void LoadGameObjectActiveStates()
+        {
+            gameObjectActiveStates.ToList().ForEach(it => it.Key.SetActive(it.Value));
+        }
 
-		void SetEnableCollider (bool value)
-		{
-			Collider component = GetComponent<Collider> ();
-			if (component != null)
-				component.enabled = value;
-		}
+        void SetEnableCollider(bool value)
+        {
+            Collider component = GetComponent<Collider>();
+            if (component != null)
+                component.enabled = value;
+        }
 
-		Rigidbody Rigidbody ()
-		{
-			return GetComponent<Rigidbody> ();
-		}
+        Rigidbody Rigidbody()
+        {
+            return GetComponent<Rigidbody>();
+        }
 
-		void DisableAllBehaviours ()
-		{
-			Util.Behaviours.DisableAll (disableBehaviourOnDeath);
-		}
+        void DisableAllBehaviours()
+        {
+            Util.Behaviours.DisableAll(disableBehaviourOnDeath);
+        }
 
-		void DisableAllGameObjects ()
-		{
-			Util.GameObjects.DisableAll (disableGameObjectsOnDeath);
-		}
+        void DisableAllGameObjects()
+        {
+            Util.GameObjects.DisableAll(disableGameObjectsOnDeath);
+        }
 
-		void Die ()
-		{
-			Dead = true;
-			SaveActiveStates ();
-			DisableAllBehaviours ();
-			DisableAllGameObjects ();
-			WeaponManager.CurrentWeapon.Hide ();
-			Debug.Log (name + " is dead!");
-			PerformDeadEffect ();
-		}
+        void Die()
+        {
+            Dead = true;
+            SaveActiveStates();
+            DisableAllBehaviours();
+            DisableAllGameObjects();
+            WeaponManager.CurrentWeapon.Hide();
+            Debug.Log(name + " is dead!");
+            PerformDeadEffect();
+        }
 
-		void PerformDeadEffect ()
-		{
-			Instantiate (deadEffect, transform.position, Quaternion.identity);
-		}
+        void PerformDeadEffect()
+        {
+            Instantiate(deadEffect, transform.position, Quaternion.identity);
+        }
 
-		void MoveToStartPoint ()
-		{
-			Transform startPoint = NetworkManager.singleton.GetStartPosition ();
-			transform.position = startPoint.position;
-			transform.rotation = startPoint.rotation;
-		}
+        void MoveToStartPoint()
+        {
+            Transform startPoint = NetworkManager.singleton.GetStartPosition();
+            transform.position = startPoint.position;
+            transform.rotation = startPoint.rotation;
+        }
 
-		void Restart ()
-		{
-			StartCoroutine (Respawn (4f));
-		}
+        void Restart()
+        {
+            StartCoroutine(Respawn(4f));
+        }
 
-		IEnumerator Respawn (float delay)
-		{
-			yield return new WaitForSeconds (delay);
-			Setup ();
-			MoveToStartPoint ();
-		}
+        IEnumerator Respawn(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            Setup();
+            MoveToStartPoint();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		WeaponManager WeaponManager {
-			get { return GetComponent<WeaponManager> (); }
-		}
+        WeaponManager WeaponManager
+        {
+            get { return GetComponent<WeaponManager>(); }
+        }
 
-		public string Name {
-			get { return transform.name; }
-			set { transform.name = value; }	
-		}
+        public string Name
+        {
+            get { return transform.name; }
+            set { transform.name = value; }
+        }
 
-		public bool Dead {
-			get { 
-				return dead;
-			}
-			protected set { 
-				dead = value;
-			}
-		}
+        public bool Dead
+        {
+            get { return dead; }
+            protected set { dead = value; }
+        }
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
 
-		[SerializeField]
-		private float maxHealth = 100f;
-	
-		[SerializeField]
-		public Text healthPanel;
+        [SerializeField] private float maxHealth = 100f;
 
-		[SerializeField]
-		public List<Behaviour> disableBehaviourOnDeath;
+        [SerializeField] public Text healthPanel;
 
-		[SerializeField]
-		public List<GameObject> disableGameObjectsOnDeath;
+        [SerializeField] public List<Behaviour> disableBehaviourOnDeath;
 
-		[SerializeField]
-		private GameObject deadEffect;
+        [SerializeField] public List<GameObject> disableGameObjectsOnDeath;
 
-		[SyncVar]
-		private float currentHealth;
+        [SerializeField] private GameObject deadEffect;
 
-		[SyncVar]
-		private bool dead;
+        [SyncVar] private float currentHealth;
 
-		private Dictionary<Behaviour, bool> behaviourActiveStates = new Dictionary<Behaviour, bool> ();
+        [SyncVar] private bool dead;
 
-		private Dictionary<GameObject, bool> gameObjectActiveStates = new Dictionary<GameObject, bool> ();
-	}
+        private Dictionary<Behaviour, bool> behaviourActiveStates = new Dictionary<Behaviour, bool>();
+
+        private Dictionary<GameObject, bool> gameObjectActiveStates = new Dictionary<GameObject, bool>();
+    }
 }

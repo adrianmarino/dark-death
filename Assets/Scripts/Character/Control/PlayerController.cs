@@ -3,132 +3,130 @@ using Fps.Player.Animation;
 
 namespace Fps.Player
 {
-	[RequireComponent (typeof(ConfigurableJoint))]
-	[RequireComponent (typeof(PlayerMotor))]
-	[RequireComponent (typeof(Headbob))]
-	public class PlayerController : MonoBehaviour
-	{
-		//-----------------------------------------------------------------------------
-		// Event Methods
-		//-----------------------------------------------------------------------------
+    [RequireComponent(typeof(ConfigurableJoint))]
+    [RequireComponent(typeof(PlayerMotor))]
+    [RequireComponent(typeof(Headbob))]
+    public class PlayerController : MonoBehaviour
+    {
+        //-----------------------------------------------------------------------------
+        // Event Methods
+        //-----------------------------------------------------------------------------
 
-		void Start ()
-		{
-			motor = GetComponent <PlayerMotor> ();
-			joint = GetComponent <ConfigurableJoint> ();
-			SetJointSettings (jointSpring);
-			motor.Reset ();
-		}
+        void Start()
+        {
+            motor = GetComponent<PlayerMotor>();
+            joint = GetComponent<ConfigurableJoint>();
+            SetJointSettings(jointSpring);
+            motor.Reset();
+        }
 
-		void Update ()
-		{
-			UpdateLookRotation ();
-			UpdatePosition ();
-		}
+        void Update()
+        {
+            UpdateLookRotation();
+            UpdatePosition();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-		void UpdatePosition ()
-		{
-			UpdateMovement ();
-			UpdateJump ();
-		}
+        void UpdatePosition()
+        {
+            UpdateMovement();
+            UpdateJump();
+        }
 
-		void UpdateMovement ()
-		{
-			Vector3 velocity = Util.VelocityVector.create (
-				                   transform, 
-				                   KeyboardMovementVariation (), 
-				                   Speed
-			                   );
-			motor.Move (velocity);
-		}
+        void UpdateMovement()
+        {
+            Vector3 velocity = Util.VelocityVector.create(
+                transform,
+                KeyboardMovementVariation(),
+                Speed
+            );
+            motor.Move(velocity);
+        }
 
-		void UpdateJump ()
-		{
-			if (!grounded) {
-				grounded = Util.ObjectElement.IsGrounded (this, floorDistance);
-				SetJointSettings (jointSpring);
-			}
-			Vector3 thruterForceVector = Vector4.zero;
-			if (Util.Input.GetJumpButtonDown () && grounded) {
-				thruterForceVector = Vector3.up * thrusterForce;
-				SetJointSettings (0f);
-				grounded = false;
-			}
-			motor.ApplyTrusterForce (thruterForceVector);
-		}
+        void UpdateJump()
+        {
+            if (!grounded)
+            {
+                grounded = Util.ObjectElement.IsGrounded(this, floorDistance);
+                SetJointSettings(jointSpring);
+            }
 
-		void UpdateLookRotation ()
-		{
-			Vector3 rotation = new Vector3 (0f, MouseMovementVariation ().x, 0f) * lookSensibility;
-			motor.Rotate (rotation);
+            Vector3 thruterForceVector = Vector4.zero;
+            if (Util.Input.GetJumpButtonDown() && grounded)
+            {
+                thruterForceVector = Vector3.up * thrusterForce;
+                SetJointSettings(0f);
+                grounded = false;
+            }
 
-			motor.RotateCamera (MouseMovementVariation ().y * lookSensibility);
-		}
+            motor.ApplyTrusterForce(thruterForceVector);
+        }
 
-		Vector2 KeyboardMovementVariation ()
-		{
-			return Util.Input.KeyboardHorVerMovementDelta ();
-		}
+        void UpdateLookRotation()
+        {
+            Vector3 rotation = new Vector3(0f, MouseMovementVariation().x, 0f) * lookSensibility;
+            motor.Rotate(rotation);
 
-		Vector2 MouseMovementVariation ()
-		{
-			return Util.Input.MouseHorVerMovementDelta ();
-		}
+            motor.RotateCamera(MouseMovementVariation().y * lookSensibility);
+        }
 
+        Vector2 KeyboardMovementVariation()
+        {
+            return Util.Input.KeyboardHorVerMovementDelta();
+        }
 
-		void SetJointSettings (float _jointSpring)
-		{
-			if (joint != null)
-				joint.yDrive = new JointDrive { positionSpring = _jointSpring, maximumForce = jointMaxForce };
-		}
+        Vector2 MouseMovementVariation()
+        {
+            return Util.Input.MouseHorVerMovementDelta();
+        }
 
 
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+        void SetJointSettings(float _jointSpring)
+        {
+            if (joint != null)
+                joint.yDrive = new JointDrive {positionSpring = _jointSpring, maximumForce = jointMaxForce};
+        }
 
-		float Speed {
-			get { return Util.Input.GetRunButton () ? runSpeed : walkSpeed; }
-		}
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		[SerializeField]
-		private float walkSpeed = 5f;
+        float Speed
+        {
+            get { return Util.Input.GetRunButton() ? runSpeed : walkSpeed; }
+        }
 
-		[SerializeField]
-		private float runSpeed = 50f;
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
 
-		[SerializeField]
-		private float lookSensibility = 3f;
+        [SerializeField] private float walkSpeed = 5f;
 
-		[SerializeField]
-		private float thrusterForce = 1000f;
+        [SerializeField] private float runSpeed = 50f;
 
-		[Header ("Spring settings:")]
-		[SerializeField]
-		private float jointSpring = 20f;
-		[SerializeField]
-		private float jointMaxForce = 40f;
+        [SerializeField] private float lookSensibility = 3f;
 
-		[SerializeField]
-		private float floorDistance = 2f;
+        [SerializeField] private float thrusterForce = 1000f;
 
-		private PlayerMotor motor;
+        [Header("Spring settings:")] [SerializeField]
+        private float jointSpring = 20f;
 
-		private ConfigurableJoint joint;
+        [SerializeField] private float jointMaxForce = 40f;
 
-		private AudioSource audioSource;
+        [SerializeField] private float floorDistance = 2f;
 
-		private bool grounded = true;
+        private PlayerMotor motor;
 
-		private float currentSpeed;
+        private ConfigurableJoint joint;
 
-	}
+        private AudioSource audioSource;
+
+        private bool grounded = true;
+
+        private float currentSpeed;
+    }
 }

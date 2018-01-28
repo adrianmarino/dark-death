@@ -11,7 +11,7 @@ namespace Fps.Weapon
 
 		public override bool Shoot (Transform origin, out RaycastHit target, LayerMask targetMask)
 		{
-			Debug.Log (weapon + " shoot bullet " + ++shotCounter);
+			Debug.Log (weapon.name + " shoot bullet " + ++shotCounter);
 			return weapon.ShootAction (origin, out target, targetMask);
 		}
 
@@ -23,9 +23,9 @@ namespace Fps.Weapon
 			weapon.PlayShootEffectAction ();
 		}
 
-		public override void HitTarget (Vector3 position, Vector3 normal)
+		public override void HitTarget (GameObject gameObject, float distance, Vector3 position, Vector3 normal)
 		{
-			weapon.HitTargetAction (position, normal);
+			weapon.HitTargetAction (gameObject, distance, position, normal);
 		}
 
 		public override void Reload ()
@@ -50,7 +50,7 @@ namespace Fps.Weapon
 		// Attributes
 		//-----------------------------------------------------------------------------
 
-		protected RechargeableWeapon weapon;
+		private readonly RechargeableWeapon weapon;
 
 		private int remainAmmo;
 

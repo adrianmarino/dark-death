@@ -6,146 +6,154 @@ using Util;
 
 namespace Fps.Weapon
 {
-	[RequireComponent (typeof(WeaponFactory))]
-	public class WeaponManager : NetworkBehaviour
-	{
-		//-----------------------------------------------------------------------------
-		// Event Methods
-		//-----------------------------------------------------------------------------
+    [RequireComponent(typeof(WeaponFactory))]
+    public class WeaponManager : NetworkBehaviour
+    {
+        //-----------------------------------------------------------------------------
+        // Event Methods
+        //-----------------------------------------------------------------------------
 
-		void Start ()
-		{
-			// Workaround by unity 
-			if (weaponPrefabs.Count > 0) {
-				UseWeapon (defaultWeapon);
+        void Start()
+        {
+            // Workaround by unity 
+            if (weaponPrefabs.Count > 0)
+            {
+                UseWeapon(defaultWeapon);
 
-				if (isLocalPlayer)
-					CmdOnUseWeapon (defaultWeapon);
-			}
-		}
+                if (isLocalPlayer)
+                    CmdOnUseWeapon(defaultWeapon);
+            }
+        }
 
-		[Client]
-		void Update ()
-		{
-			if (!isLocalPlayer)
-				return;
+        [Client]
+        void Update()
+        {
+            if (!isLocalPlayer)
+                return;
 
-			if (CurrentWeapon.State is LoadingWeaponState)
-				return;
+            if (CurrentWeapon.State is LoadingWeaponState)
+                return;
 
-			if (Util.Input.NextWeaponButton ()) {
-				int weaponNumber = Weapons.NextPosition (currentWeapon);
-				UseWeapon (weaponNumber);
-				CmdOnUseWeapon (weaponNumber);
-			} else if (Util.Input.PreviousWeaponButton ()) {
-				int weaponNumber = Weapons.PreviousPosition (currentWeapon);
-				UseWeapon (weaponNumber);
-				CmdOnUseWeapon (weaponNumber);
-			}
-		}
+            if (Util.Input.NextWeaponButton())
+            {
+                int weaponNumber = Weapons.NextPosition(currentWeapon);
+                UseWeapon(weaponNumber);
+                CmdOnUseWeapon(weaponNumber);
+            }
+            else if (Util.Input.PreviousWeaponButton())
+            {
+                int weaponNumber = Weapons.PreviousPosition(currentWeapon);
+                UseWeapon(weaponNumber);
+                CmdOnUseWeapon(weaponNumber);
+            }
+        }
 
-		//-----------------------------------------------------------------------------
-		// Public Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Public Methods
+        //-----------------------------------------------------------------------------
 
-		public bool isReady ()
-		{
-			return CurrentWeapon != null;  // Workaround by unity bug.
-		}
+        public bool isReady()
+        {
+            return CurrentWeapon != null; // Workaround by unity bug.
+        }
 
-		public int RemainAmmo ()
-		{
-			return CurrentWeapon.RemainAmmo;
-		}
+        public int RemainAmmo()
+        {
+            return CurrentWeapon.RemainAmmo;
+        }
 
-		public static WeaponManager GetFromPlayer ()
-		{
-			GameObject player = GameObject.Find ("Player");
-			if (player == null) {
-				Debug.Log ("Not found a player in scene!");
-				return null;
-			}
-			WeaponManager weaponManager = player.GetComponent<WeaponManager> ();
-			if (weaponManager == null) {
-				Debug.Log ("Not found weapon manager componente in player object!");
-				return null;
-			}
-			return weaponManager;
-		}
+        public static WeaponManager GetFromPlayer()
+        {
+            GameObject player = GameObject.Find("Player");
+            if (player == null)
+            {
+                Debug.Log("Not found a player in scene!");
+                return null;
+            }
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+            WeaponManager weaponManager = player.GetComponent<WeaponManager>();
+            if (weaponManager == null)
+            {
+                Debug.Log("Not found weapon manager componente in player object!");
+                return null;
+            }
 
-		GameObject CreateIntoHolder (GameObject _weaponPrefab)
-		{
-			GameObject weapon = Factory.InstantiateOnHolder (_weaponPrefab, weaponHolder);
+            return weaponManager;
+        }
 
-			if (isLocalPlayer)
-				Util.Layer.SetLayerRecursively (weapon, LayerMask.NameToLayer (weaponLayerName));
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-			return weapon;
-		}
+        GameObject CreateIntoHolder(GameObject _weaponPrefab)
+        {
+            GameObject weapon = Factory.InstantiateOnHolder(_weaponPrefab, weaponHolder);
 
-		void UseWeapon (int weaponNumber)
-		{
-			if (currentWeapon != null)
-				currentWeapon.SetActive (false);
+            if (isLocalPlayer)
+                Util.Layer.SetLayerRecursively(weapon, LayerMask.NameToLayer(weaponLayerName));
 
-			currentWeapon = Weapons [weaponNumber];
-			currentWeapon.SetActive (true);
-		}
+            return weapon;
+        }
 
-		[Command]
-		void CmdOnUseWeapon (int weaponNumber)
-		{
-			RpcDoUseWeapon (weaponNumber);
-		}
+        void UseWeapon(int weaponNumber)
+        {
+            if (currentWeapon != null)
+                currentWeapon.SetActive(false);
 
-		[ClientRpc]
-		void RpcDoUseWeapon (int weaponNumber)
-		{
-			UseWeapon (weaponNumber);
-		}
-	
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+            currentWeapon = Weapons[weaponNumber];
+            currentWeapon.SetActive(true);
+        }
 
-		public List<GameObject> Weapons {
-			get {
-				if (weapons == null)
-					weapons = weaponPrefabs.Select (CreateIntoHolder).ToList ();
-				return weapons;
-			}
-		}
+        [Command]
+        void CmdOnUseWeapon(int weaponNumber)
+        {
+            RpcDoUseWeapon(weaponNumber);
+        }
 
-		public IWeapon CurrentWeapon {
-			get { return currentWeapon.GetComponent<IWeapon> (); }
-		}
+        [ClientRpc]
+        void RpcDoUseWeapon(int weaponNumber)
+        {
+            UseWeapon(weaponNumber);
+        }
 
-		WeaponFactory Factory {
-			get { return GetComponent <WeaponFactory> (); }
-		}
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        public List<GameObject> Weapons
+        {
+            get
+            {
+                if (weapons == null)
+                    weapons = weaponPrefabs.Select(CreateIntoHolder).ToList();
+                return weapons;
+            }
+        }
 
-		[SerializeField]
-		private string weaponLayerName = "Weapon";
+        public IWeapon CurrentWeapon
+        {
+            get { return currentWeapon.GetComponent<IWeapon>(); }
+        }
 
-		[SerializeField]
-		private Transform weaponHolder;
+        WeaponFactory Factory
+        {
+            get { return GetComponent<WeaponFactory>(); }
+        }
 
-		[SerializeField]
-		private int defaultWeapon = 1;
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
 
-		[SerializeField]
-		private List<GameObject> weaponPrefabs;
+        [SerializeField] private string weaponLayerName = "Weapon";
 
-		private List<GameObject> weapons;
+        [SerializeField] private Transform weaponHolder;
 
-		private GameObject currentWeapon;
-	}
+        [SerializeField] private int defaultWeapon = 1;
+
+        [SerializeField] private List<GameObject> weaponPrefabs;
+
+        private List<GameObject> weapons;
+
+        private GameObject currentWeapon;
+    }
 }

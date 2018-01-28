@@ -2,112 +2,109 @@
 
 namespace Fps.Player
 {
-	[RequireComponent (typeof(Rigidbody))]
-	public class PlayerMotor : MonoBehaviour
-	{
-		//-----------------------------------------------------------------------------
-		// Event Methods
-		//-----------------------------------------------------------------------------
+    [RequireComponent(typeof(Rigidbody))]
+    public class PlayerMotor : MonoBehaviour
+    {
+        //-----------------------------------------------------------------------------
+        // Event Methods
+        //-----------------------------------------------------------------------------
 
-		void Start ()
-		{
-			ShowHideCursor ();
-			_rigidbody = GetComponent<Rigidbody> ();
-			velocity = rotation = thrusterForce = Vector3.zero;
-			cameraRotation = 0f;
-		}
+        void Start()
+        {
+            ShowHideCursor();
+            _rigidbody = GetComponent<Rigidbody>();
+            velocity = rotation = thrusterForce = Vector3.zero;
+            cameraRotation = 0f;
+        }
 
-		void FixedUpdate ()
-		{
-			ShowHideCursor ();
-			UpdatePosition ();
-			UpdateRotation ();
-		}
+        void FixedUpdate()
+        {
+            ShowHideCursor();
+            UpdatePosition();
+            UpdateRotation();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Public Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Public Methods
+        //-----------------------------------------------------------------------------
 
-		public void Reset ()
-		{
-			Move (Vector3.zero);
-			Rotate (Vector3.zero);
-			if (_camera != null)
-				_camera.transform.Rotate (Vector3.zero);
-		}
+        public void Reset()
+        {
+            Move(Vector3.zero);
+            Rotate(Vector3.zero);
+            if (_camera != null)
+                _camera.transform.Rotate(Vector3.zero);
+        }
 
-		public void ApplyTrusterForce (Vector3 thrusterForce)
-		{
-			this.thrusterForce = thrusterForce;
-		}
+        public void ApplyTrusterForce(Vector3 thrusterForce)
+        {
+            this.thrusterForce = thrusterForce;
+        }
 
-		public void Move (Vector3 velocity)
-		{
-			this.velocity = velocity;
-		}
+        public void Move(Vector3 velocity)
+        {
+            this.velocity = velocity;
+        }
 
-		public void Rotate (Vector3 rotation)
-		{
-			this.rotation = rotation;
-		}
+        public void Rotate(Vector3 rotation)
+        {
+            this.rotation = rotation;
+        }
 
-		public void RotateCamera (float cameraRotation)
-		{
-			this.cameraRotation = cameraRotation;
-		}
+        public void RotateCamera(float cameraRotation)
+        {
+            this.cameraRotation = cameraRotation;
+        }
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-		void ShowHideCursor ()
-		{
-			Util.Input.HideCursor (hideCursor);
-		}
+        void ShowHideCursor()
+        {
+            Util.Input.HideCursor(hideCursor);
+        }
 
-		void UpdatePosition ()
-		{
-			Util.Rigidbody.Move (_rigidbody, velocity);
-			Util.Rigidbody.AddForce (_rigidbody, thrusterForce, ForceMode.Impulse);
-		}
+        void UpdatePosition()
+        {
+            Util.RigidbodyUtil.Move(_rigidbody, velocity);
+            Util.RigidbodyUtil.AddForce(_rigidbody, thrusterForce, ForceMode.Impulse);
+        }
 
-		void UpdateRotation ()
-		{
-			Util.Rigidbody.Rotate (_rigidbody, rotation);
-			SetCameraRotation (cameraRotation);
-		}
+        void UpdateRotation()
+        {
+            Util.RigidbodyUtil.Rotate(_rigidbody, rotation);
+            SetCameraRotation(cameraRotation);
+        }
 
-		void SetCameraRotation (float xRotation)
-		{
-			if (_camera == null)
-				return;
+        void SetCameraRotation(float xRotation)
+        {
+            if (_camera == null)
+                return;
 
-			currentCameraRotation -= xRotation;
-			currentCameraRotation = Mathf.Clamp (
-				currentCameraRotation,
-				-cameraRotationLimit,
-				cameraRotationLimit
-			);
-			_camera.transform.localEulerAngles = new Vector3 (currentCameraRotation, 0f, 0f);		
-		}
+            currentCameraRotation -= xRotation;
+            currentCameraRotation = Mathf.Clamp(
+                currentCameraRotation,
+                -cameraRotationLimit,
+                cameraRotationLimit
+            );
+            _camera.transform.localEulerAngles = new Vector3(currentCameraRotation, 0f, 0f);
+        }
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
 
-		[SerializeField]
-		private Camera _camera;
+        [SerializeField] private Camera _camera;
 
-		[SerializeField]
-		private float cameraRotationLimit = 85f;
+        [SerializeField] private float cameraRotationLimit = 85f;
 
-		[SerializeField]
-		private bool hideCursor = true;
+        [SerializeField] private bool hideCursor = true;
 
-		private Rigidbody _rigidbody;
+        private Rigidbody _rigidbody;
 
-		private Vector3 velocity, rotation, thrusterForce;
+        private Vector3 velocity, rotation, thrusterForce;
 
-		private float cameraRotation, currentCameraRotation;
-	}
+        private float cameraRotation, currentCameraRotation;
+    }
 }

@@ -1,133 +1,141 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using Util;
 
 namespace Fps.Player
 {
-	public class PlayerShootWeaponAction : PlayerWeaponAction
-	{
-		//-----------------------------------------------------------------------------
-		// Event Methods
-		//-----------------------------------------------------------------------------
+    public class PlayerShootWeaponAction : PlayerWeaponAction
+    {
+        //-----------------------------------------------------------------------------
+        // Event Methods
+        //-----------------------------------------------------------------------------
 
-		void Update ()
-		{
-			if (WeaponManager.isReady ())
-				UpdateShoot ();
-		}
+        void Update()
+        {
+            if (WeaponManager.isReady()) UpdateShoot();
+        }
 
-		// On server side
-		[Command]
-		void CmdDamageToOponent (string playerId, float damage)
-		{
-			Debug.Log (playerId + " has been shot!");
-			PlayerState oponentPlayer = GameManager.GetPlayer (playerId);
-			oponentPlayer.RpcTakeDamage (damage);
-		}
+        // On server side
+        [Command]
+        void CmdDamageToOponent(string playerId, float damage)
+        {
+            Debug.Log(playerId + " has been shot!");
+            PlayerState oponentPlayer = GameManager.GetPlayer(playerId);
+            oponentPlayer.RpcTakeDamage(damage);
+        }
 
-		// Invoked on the server when hit something...
-		[Command]
-		void CmdOnHit (Vector3 position, Vector3 normal)
-		{
-			RpcDoHitEffect (position, normal);
-		}
+        // Invoked on the server when hit something...
+        [Command]
+        void CmdOnHit(GameObject target, float distance, Vector3 position, Vector3 normal)
+        {
+            RpcDoHitEffect(target, distance, position, normal);
+        }
 
-		// Invoked on all client to spawn hit effects...
-		[ClientRpc]
-		void RpcDoHitEffect (Vector3 position, Vector3 normal)
-		{
-			Weapon.HitTarget (position, normal);
-		}
+        // Invoked on all client to spawn hit effects...
+        [ClientRpc]
+        void RpcDoHitEffect(GameObject target, float distance, Vector3 position, Vector3 normal)
+        {
+            Weapon.HitTarget(target, distance, position, normal);
+        }
 
-		[Command]
-		void CmdOnShoot ()
-		{
-			RpcDoShootEffect ();
-		}
+        [Command]
+        void CmdOnShoot()
+        {
+            RpcDoShootEffect();
+        }
 
-		// Invoke DoShootEffect command on all client from server side...
-		[ClientRpc]
-		void RpcDoShootEffect ()
-		{
-			Weapon.PlayShootEffect ();
-		}
+        // Invoke DoShootEffect command on all client from server side...
+        [ClientRpc]
+        void RpcDoShootEffect()
+        {
+            Weapon.PlayShootEffect();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-		// On client side
-		[Client]
-		void Shoot ()
-		{
-			if (!isLocalPlayer)
-				return;
+        // On client side
+        [Client]
+        void Shoot()
+        {
+            if (!isLocalPlayer) return;
 
-			// Invoke OnShoot command on server side...
-			CmdOnShoot ();
+            // Invoke OnShoot command on server side...
+            CmdOnShoot();
 
-			RaycastHit target;
-			if (Weapon.Shoot (_camera.transform, out target, oponentMask)) {
-				if (IsPlayer (target))
-					CmdDamageToOponent (target.collider.name, Weapon.Damage);
+            RaycastHit target;
+            if (Weapon.Shoot(_camera.transform, out target, oponentMask))
+            {
+                Collider targetCollider = target.collider;
 
-				// When hit somthing, invoke OnHit on server side... 
-				CmdOnHit (target.point, target.normal);
-			}
-		}
+                if (IsPlayer(target))
+                    CmdDamageToOponent(targetCollider.name, Weapon.Damage);
 
-		void UpdateShoot ()
-		{
-			if (Weapon.FireRate <= 0f) {
-				if (Util.Input.GetFireButtonDown ())
-					Shoot ();
-			} else {
-				if (Util.Input.GetFireButtonDown ())
-					BurstShoot ();
-				else if (Util.Input.GetFireButtonUp ())
-					EndShoot ();
-			}
-			UpdateAmmoPanel ();
-		}
+                // When hit somthing, invoke OnHit on server side...                 
+                ComponentUtil.tryGet<NetworkBehaviour>(
+                    targetCollider.gameObject,
+                    it => CmdOnHit(it.gameObject, target.distance, target.point, target.normal)
+                );
+            }
+        }
 
-		void BurstShoot ()
-		{
-			InvokeRepeating (SHOOT_METHOD_NAME, 0f, 1f / Weapon.FireRate);
-		}
+        void UpdateShoot()
+        {
+            if (Weapon.FireRate <= 0f)
+            {
+                if (Util.Input.GetFireButtonDown())
+                    Shoot();
+            }
+            else
+            {
+                if (Util.Input.GetFireButtonDown())
+                    BurstShoot();
+                else if (Util.Input.GetFireButtonUp())
+                    EndShoot();
+            }
 
-		void EndShoot ()
-		{
-			CancelInvoke (SHOOT_METHOD_NAME);
-		}
+            UpdateAmmoPanel();
+        }
 
-		bool IsPlayer (RaycastHit target)
-		{
-			return target.collider.tag == PLAYER_TAG;
-		}
+        void BurstShoot()
+        {
+            InvokeRepeating(SHOOT_METHOD_NAME, 0f, 1f / Weapon.FireRate);
+        }
 
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+        void EndShoot()
+        {
+            CancelInvoke(SHOOT_METHOD_NAME);
+        }
 
-		GameManager GameManager {
-			get { return GameManager.singleton; }
-		}
+        bool IsPlayer(RaycastHit target)
+        {
+            return target.collider.tag == PLAYER_TAG;
+        }
 
-		//-----------------------------------------------------------------------------
-		// Constants
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		private const string PLAYER_TAG = "Player";
+        GameManager GameManager
+        {
+            get { return GameManager.singleton; }
+        }
 
-		const string SHOOT_METHOD_NAME = "Shoot";
+        //-----------------------------------------------------------------------------
+        // Constants
+        //-----------------------------------------------------------------------------
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        private const string PLAYER_TAG = "Player";
 
-		[SerializeField]
-		private LayerMask oponentMask;
+        const string SHOOT_METHOD_NAME = "Shoot";
 
-		[SerializeField]
-		private Camera _camera;
-	}
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
+
+        [SerializeField] private LayerMask oponentMask;
+
+        [SerializeField] private Camera _camera;
+    }
 }

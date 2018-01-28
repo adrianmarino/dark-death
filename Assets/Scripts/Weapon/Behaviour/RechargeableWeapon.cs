@@ -1,88 +1,87 @@
-﻿using Fps.Weapon;
-using UnityEngine;
+﻿using UnityEngine;
 using Fps.Weapon.State;
 using Fps.Weapon.Animation;
 
 namespace Fps.Weapon
 {
-	[RequireComponent (typeof(WeaponReloadAnimation))]
-	public class RechargeableWeapon : BaseWeapon
-	{
-		//-----------------------------------------------------------------------------
-		// Public Methods
-		//-----------------------------------------------------------------------------
+    [RequireComponent(typeof(WeaponReloadAnimation))]
+    public class RechargeableWeapon : BaseWeapon
+    {
+        //-----------------------------------------------------------------------------
+        // Public Methods
+        //-----------------------------------------------------------------------------
 
-		public override void Reload ()
-		{
-			State.Reload ();
-		}
+        public override void Reload()
+        {
+            State.Reload();
+        }
 
-		public void GoToUnloadedState ()
-		{
-			State = UnloadState ();
-		}
+        public void GoToUnloadedState()
+        {
+            State = UnloadState();
+        }
 
-		public void GoToLoadingState ()
-		{
-			State = LoadingState ();
-		}
+        public void GoToLoadingState()
+        {
+            State = LoadingState();
+        }
 
-		public void GoToLoadedState ()
-		{
-			State = InitState ();
-		}
+        public void GoToLoadedState()
+        {
+            State = InitState();
+        }
 
-		public void PlayReloadEffectAction ()
-		{
-			WeaponReloadAnimation ().Play ();
-			ReloadSound.Play ();
-		}
+        public void PlayReloadEffectAction()
+        {
+            WeaponReloadAnimation().Play();
+            ReloadSound.Play();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Protected Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Protected Methods
+        //-----------------------------------------------------------------------------
 
-		protected WeaponState LoadingState ()
-		{
-			return new LoadingWeaponState (this, WeaponReloadAnimation ().Duration);
-		}
+        protected WeaponState LoadingState()
+        {
+            return new LoadingWeaponState(this, WeaponReloadAnimation().Duration);
+        }
 
-		protected override WeaponState InitState ()
-		{
-			return new LoadedWeaponState (this, maxAmmo);
-		}
+        protected override WeaponState InitState()
+        {
+            return new LoadedWeaponState(this, maxAmmo);
+        }
 
-		protected WeaponState UnloadState ()
-		{
-			return new UnloadedWeaponState (this);
-		}
+        protected WeaponState UnloadState()
+        {
+            return new UnloadedWeaponState(this);
+        }
 
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		AudioSource ReloadSound {
-			get { return GetComponents<AudioSource> () [1]; }
-		}
+        AudioSource ReloadSound
+        {
+            get { return GetComponents<AudioSource>()[1]; }
+        }
 
-		WeaponReloadAnimation WeaponReloadAnimation ()
-		{
-			return GetComponent<WeaponReloadAnimation> ();
-		}
+        WeaponReloadAnimation WeaponReloadAnimation()
+        {
+            return GetComponent<WeaponReloadAnimation>();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
 
-		[SerializeField]
-		protected int maxAmmo = 10;
+        [SerializeField] protected int maxAmmo = 10;
 
-		//-----------------------------------------------------------------------------
-		// Constructors
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Constructors
+        //-----------------------------------------------------------------------------
 
-		protected RechargeableWeapon () : base ()
-		{
-		}
-	}
+        protected RechargeableWeapon()
+        {
+        }
+    }
 }

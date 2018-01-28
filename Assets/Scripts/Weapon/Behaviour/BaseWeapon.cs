@@ -1,179 +1,185 @@
 ﻿using UnityEngine;
 using Fps.Weapon.State;
 using Fps.Weapon.Animation;
+using Util;
 
 namespace Fps.Weapon
 {
-	[RequireComponent (typeof(WeaponRecoilAnimation))]
-	[RequireComponent (typeof(WeaponSwayAnimation))]
-	public abstract class BaseWeapon : MonoBehaviour, IWeapon
-	{
-		//-----------------------------------------------------------------------------
-		// Public Methods
-		//-----------------------------------------------------------------------------
+    [RequireComponent(typeof(WeaponRecoilAnimation))]
+    [RequireComponent(typeof(WeaponSwayAnimation))]
+    public abstract class BaseWeapon : MonoBehaviour, IWeapon
+    {
+        //-----------------------------------------------------------------------------
+        // Public Methods
+        //-----------------------------------------------------------------------------
 
-		public void HitTargetAction (Vector3 position, Vector3 normal)
-		{
-			GameObject _hitEffect = Instantiate (
-				                        HitEffect,
-				                        position,
-				                        Quaternion.LookRotation (normal)
-			                        );
-			Destroy (_hitEffect, 2f);
-		}
+        public void HitTargetAction(GameObject target, float distance, Vector3 position, Vector3 normal)
+        {
+            GameObject _hitEffect = Instantiate(
+                HitEffect,
+                position,
+                Quaternion.LookRotation(normal)
+            );
+            Destroy(_hitEffect, 2f);
 
-		public virtual bool Shoot (Transform origin, out RaycastHit target, LayerMask targetMask)
-		{
-			return State.Shoot (origin, out target, targetMask);
-		}
+            ComponentUtil.tryGet<HittableObject>(target, it => it.Hit(normal, distance, impactForce));
+        }
 
-		public virtual void HitTarget (Vector3 position, Vector3 normal)
-		{
-			State.HitTarget (position, normal);
-		}
+        public virtual bool Shoot(Transform origin, out RaycastHit target, LayerMask targetMask)
+        {
+            return State.Shoot(origin, out target, targetMask);
+        }
 
-		public virtual void PlayShootEffect ()
-		{
-			State.PlayShootEffect ();
-		}
+        public virtual void HitTarget(GameObject target, float distance, Vector3 position, Vector3 normal)
+        {
+            State.HitTarget(target, distance, position, normal);
+        }
 
-		public virtual void Reload ()
-		{
-			State.Reload ();
-		}
+        public virtual void PlayShootEffect()
+        {
+            State.PlayShootEffect();
+        }
 
-		public override string ToString ()
-		{
-			return Name;
-		}
+        public virtual void Reload()
+        {
+            State.Reload();
+        }
 
-		public void Hide ()
-		{
-			model.SetActive (false);
-		}
+        public override string ToString()
+        {
+            return Name;
+        }
 
-		public void Show ()
-		{
-			model.SetActive (true);
-		}
+        public void Hide()
+        {
+            model.SetActive(false);
+        }
 
-		public bool ShootAction (Transform origin, out RaycastHit target, LayerMask targetMask)
-		{
-			return Physics.Raycast (
-				origin.position, 
-				origin.forward, 
-				out target,
-				targetMask
-			);
-		}
+        public void Show()
+        {
+            model.SetActive(true);
+        }
 
-		public void PlayShootEffectAction ()
-		{
-			ShootSound.Play ();
-			muzzleFlash.Stop ();
-			muzzleFlash.Play ();
-			shootSmoke.Play ();
-			WeaponRecoilAnimation ().Play ();
-		}
+        public bool ShootAction(Transform origin, out RaycastHit target, LayerMask targetMask)
+        {
+            return Physics.Raycast(
+                origin.position,
+                origin.forward,
+                out target,
+                targetMask
+            );
+        }
 
-		//-----------------------------------------------------------------------------
-		// Protected Methods
-		//-----------------------------------------------------------------------------
+        public void PlayShootEffectAction()
+        {
+            ShootSound.Play();
+            muzzleFlash.Stop();
+            muzzleFlash.Play();
+            shootSmoke.Play();
+            WeaponRecoilAnimation().Play();
+        }
 
-		protected abstract WeaponState InitState ();
+        //-----------------------------------------------------------------------------
+        // Protected Methods
+        //-----------------------------------------------------------------------------
 
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+        protected abstract WeaponState InitState();
 
-		public string Name {
-			get { return _name; }
-		}
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		public WeaponState State {
-			get {
-				if (currentState == null)
-					currentState = InitState ();
-				return currentState;
-			}
-			set { currentState = value; }
-		}
+        public string Name
+        {
+            get { return _name; }
+        }
 
-		public float Damage {
-			get { return damage; }
-		}
+        public WeaponState State
+        {
+            get
+            {
+                if (currentState == null)
+                    currentState = InitState();
+                return currentState;
+            }
+            set { currentState = value; }
+        }
 
-		public float Range {
-			get { return range; }
-		}
+        public float Damage
+        {
+            get { return damage; }
+        }
 
-		public float FireRate {
-			get { return fireRate; }
-		}
+        public float Range
+        {
+            get { return range; }
+        }
 
-		public GameObject GameObject {
-			get { return this.gameObject; }
-		}
+        public float FireRate
+        {
+            get { return fireRate; }
+        }
 
-		AudioSource ShootSound {
-			get { return GetComponents<AudioSource> () [0]; }
-		}
+        public GameObject GameObject
+        {
+            get { return this.gameObject; }
+        }
 
-		WeaponRecoilAnimation WeaponRecoilAnimation ()
-		{
-			return GetComponent<WeaponRecoilAnimation> ();
-		}
+        AudioSource ShootSound
+        {
+            get { return GetComponents<AudioSource>()[0]; }
+        }
 
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+        WeaponRecoilAnimation WeaponRecoilAnimation()
+        {
+            return GetComponent<WeaponRecoilAnimation>();
+        }
 
-		public int RemainAmmo {
-			get { return State.RemainAmmo; }
-		}
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		GameObject HitEffect {
-			get { return hitEffect; }
-		}
+        public int RemainAmmo
+        {
+            get { return State.RemainAmmo; }
+        }
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        GameObject HitEffect
+        {
+            get { return hitEffect; }
+        }
 
-		[SerializeField]
-		private string _name;
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
 
-		[SerializeField]
-		private GameObject model;
+        [SerializeField] private string _name;
 
-		[SerializeField]
-		private float damage = 25f;
+        [SerializeField] private GameObject model;
 
-		[SerializeField]
-		private float range = 100f;
+        [SerializeField] private float damage = 25f;
 
-		[SerializeField]
-		private float fireRate = 2f;
+        [SerializeField] private float range = 100f;
 
-		[SerializeField]
-		private ParticleSystem muzzleFlash;
+        [SerializeField] private float fireRate = 2f;
 
-		[SerializeField]
-		private ParticleSystem shootSmoke;
+        [SerializeField] [Range(300, 1000)] private float impactForce = 300f;
 
-		[SerializeField]
-		private GameObject hitEffect;
+        [SerializeField] private ParticleSystem muzzleFlash;
 
-		private WeaponState currentState;
+        [SerializeField] private ParticleSystem shootSmoke;
 
-		//-----------------------------------------------------------------------------
-		// Constructors
-		//-----------------------------------------------------------------------------
+        [SerializeField] private GameObject hitEffect;
 
-		protected BaseWeapon ()
-		{
-			_name = this.GetType ().Name;
-		}
-	}
+        private WeaponState currentState;
+
+        //-----------------------------------------------------------------------------
+        // Constructors
+        //-----------------------------------------------------------------------------
+
+        protected BaseWeapon()
+        {
+            _name = GetType().Name;
+        }
+    }
 }
-

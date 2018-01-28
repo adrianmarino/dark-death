@@ -4,63 +4,65 @@ using System.Collections.Generic;
 
 namespace Fps.Player
 {
-	public class PlayerSetup : NetworkBehaviour
-	{
-		//-----------------------------------------------------------------------------
-		// Event Methods
-		//-----------------------------------------------------------------------------
+    public class PlayerSetup : NetworkBehaviour
+    {
+        //-----------------------------------------------------------------------------
+        // Event Methods
+        //-----------------------------------------------------------------------------
 
-		void Start ()
-		{
-			if (isLocalPlayer)
-				Player ().Setup ();
-			else
-				Util.Behaviours.DisableAll (components);
+        void Start()
+        {
+            if (isLocalPlayer)
+                Player().Setup();
+            else
+                Util.Behaviours.DisableAll(components);
 
-			GameManager.SetEnableScenCameraListener (false);
-		}
+            GameManager.SetEnableScenCameraListener(false);
+        }
 
-		public override void OnStartClient ()
-		{
-			GameManager.RegisterPlayer (NetId (), Player ());
-		}
+        public override void OnStartClient()
+        {
+            GameManager.RegisterPlayer(NetId(), Player());
+        }
 
-		void OnDisable ()
-		{
-			if (isLocalPlayer) {
-				Util.Input.ShowCursor ();
-				GameManager.SetEnableScenCameraListener (true);
-			}
-			GameManager.UnregisterPlayer (NetId ());
-		}
+        void OnDisable()
+        {
+            if (isLocalPlayer)
+            {
+                Util.Input.ShowCursor();
+                GameManager.SetEnableScenCameraListener(true);
+            }
 
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+            GameManager.UnregisterPlayer(NetId());
+        }
 
-		GameManager GameManager {
-			get { return GameManager.singleton; }
-		}
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+        GameManager GameManager
+        {
+            get { return GameManager.singleton; }
+        }
 
-		string NetId ()
-		{
-			return GetComponent<NetworkIdentity> ().netId.ToString ();
-		}
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-		PlayerState Player ()
-		{
-			return GetComponent<PlayerState> ();
-		}
+        string NetId()
+        {
+            return GetComponent<NetworkIdentity>().netId.ToString();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        PlayerState Player()
+        {
+            return GetComponent<PlayerState>();
+        }
 
-		[SerializeField]
-		private List<Behaviour> components;
-	}
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
+
+        [SerializeField] private List<Behaviour> components;
+    }
 }

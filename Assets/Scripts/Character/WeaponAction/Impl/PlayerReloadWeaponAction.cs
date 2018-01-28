@@ -2,27 +2,28 @@
 
 namespace Fps.Player
 {
-	public class PlayerReloadWeaponAction : PlayerWeaponAction
-	{
-		//-----------------------------------------------------------------------------
-		// Event Methods
-		//-----------------------------------------------------------------------------
+    public class PlayerReloadWeaponAction : PlayerWeaponAction
+    {
+        //-----------------------------------------------------------------------------
+        // Event Methods
+        //-----------------------------------------------------------------------------
 
-		void Update ()
-		{
-			if (WeaponManager.isReady () && PressReload ()) {
-				Weapon.Reload ();
-				UpdateAmmoPanel ();
-			}
-		}
+        void Update()
+        {
+            if (WeaponManager.isReady() && PressReload())
+            {
+                Weapon.Reload();
+                UpdateAmmoPanel();
+            }
+        }
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-		static bool PressReload ()
-		{
-			return (Util.Input.GetReloadButton () || Input.GetMouseButtonDown (1));
-		}
-	}
+        static bool PressReload()
+        {
+            return (Util.Input.GetReloadButton() || Input.GetMouseButtonDown(1));
+        }
+    }
 }

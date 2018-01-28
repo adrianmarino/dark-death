@@ -5,36 +5,37 @@ using UnityEngine.UI;
 
 namespace Fps.Player
 {
-	[RequireComponent (typeof(WeaponManager))]
-	public abstract class PlayerWeaponAction : NetworkBehaviour
-	{
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+    [RequireComponent(typeof(WeaponManager))]
+    public abstract class PlayerWeaponAction : NetworkBehaviour
+    {
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-		protected void UpdateAmmoPanel ()
-		{
-			ammoPanel.text = 
-				Weapon.RemainAmmo.ToString ().PadLeft (2, '0') + " " + Weapon.Name + " " + Weapon.State;
-		}
+        protected void UpdateAmmoPanel()
+        {
+            ammoPanel.text =
+                Weapon.RemainAmmo.ToString().PadLeft(2, '0') + " " + Weapon.Name + " " + Weapon.State;
+        }
 
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		protected IWeapon Weapon {
-			get { return WeaponManager.CurrentWeapon; }
-		}
+        protected IWeapon Weapon
+        {
+            get { return WeaponManager.CurrentWeapon; }
+        }
 
-		protected WeaponManager WeaponManager {
-			get { return GetComponent<WeaponManager> (); }
-		}
+        protected WeaponManager WeaponManager
+        {
+            get { return GetComponent<WeaponManager>(); }
+        }
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
 
-		[SerializeField]
-		private Text ammoPanel;
-	}
+        [SerializeField] private Text ammoPanel;
+    }
 }

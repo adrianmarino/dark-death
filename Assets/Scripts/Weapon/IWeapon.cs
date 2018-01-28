@@ -3,54 +3,40 @@ using Fps.Weapon.State;
 
 namespace Fps.Weapon
 {
-	public interface IWeapon
-	{
-		//-----------------------------------------------------------------------------
-		// Public Methods
-		//-----------------------------------------------------------------------------
+    public interface IWeapon
+    {
+        //-----------------------------------------------------------------------------
+        // Public Methods
+        //-----------------------------------------------------------------------------
 
-		bool Shoot (Transform origin, out RaycastHit target, LayerMask targetMask);
+        bool Shoot(Transform origin, out RaycastHit target, LayerMask targetMask);
 
-		void HitTarget (Vector3 position, Vector3 normal);
+        void HitTarget(GameObject target, float distance, Vector3 position, Vector3 normal);
 
-		void PlayShootEffect ();
+        void PlayShootEffect();
 
-		void Hide ();
+        void Hide();
 
-		void Show ();
+        void Show();
 
-		void Reload ();
+        void Reload();
 
-		//-----------------------------------------------------------------------------
-		// Properties
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
 
-		int RemainAmmo {
-			get;
-		}
+        int RemainAmmo { get; }
 
-		GameObject GameObject {
-			get;
-		}
+        GameObject GameObject { get; }
 
-		float Damage {
-			get;
-		}
+        float Damage { get; }
 
-		float Range {
-			get;
-		}
+        float Range { get; }
 
-		float FireRate {
-			get;
-		}
+        float FireRate { get; }
 
-		string Name {
-			get;
-		}
+        string Name { get; }
 
-		WeaponState State {
-			get;
-		}
-	}
+        WeaponState State { get; }
+    }
 }

@@ -1,51 +1,41 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Networking;
+using Util;
 
 namespace Fps
 {
     [RequireComponent(typeof(NetworkIdentity))]
+    [RequireComponent(typeof(Rigidbody))]
     public class HittableObject : NetworkBehaviour
     {
         //-----------------------------------------------------------------------------
         // Public Methods
         //-----------------------------------------------------------------------------
 
-        public void Hit(Vector3 normal, float impactForce)
+        public void Hit(Vector3 normal, float distance, float impactForce)
         {
-            Rigidbody().AddForce(-normal * impactForce);
+            StartCoroutine(AsyncHit(normal, distance, impactForce));
         }
 
         //-----------------------------------------------------------------------------
         // Private Methods
         //-----------------------------------------------------------------------------
 
-
-        private Rigidbody Rigidbody()
+        IEnumerator AsyncHit(Vector3 normal, float distance, float impactForce)
         {
-            return gameObject.GetComponent<Rigidbody>();
+            ComponentUtil.tryGet<Rigidbody>(this, it =>
+            {
+                var force = calculateImpactForce(distance, impactForce);
+                Debug.Log($"Hit {name} appling a force of {force} (Force:{impactForce}/Distance:{distance})");
+                it.AddForce(-normal * force);
+            });
+            yield return null;
         }
 
-        //-----------------------------------------------------------------------------
-        // Constants
-        //-----------------------------------------------------------------------------
-
-        private static readonly int MIN_WEIGHT = 1;
-
-        private static readonly int MAX_WEIGHT = 20;
-
-        //-----------------------------------------------------------------------------
-        // Attributes
-        //-----------------------------------------------------------------------------
-
-        [SerializeField] private float weight;
-
-        //-----------------------------------------------------------------------------
-        // Constructors
-        //-----------------------------------------------------------------------------
-
-        public HittableObject()
+        private float calculateImpactForce(double distance, double originalImpactForce)
         {
-            weight = Util.Random.GetNumber(MIN_WEIGHT, 20);
+            return (float) (originalImpactForce / distance);
         }
     }
 }

@@ -5,40 +5,40 @@ using Fps.Weapon.Animation;
 
 namespace Fps.Weapon
 {
-	[RequireComponent (typeof(WeaponReloadAnimation))]
-	public class LoadingWeaponState : WeaponState
-	{
-		public override string ToString ()
-		{
-			return "Loading";
-		}
+    [RequireComponent(typeof(WeaponReloadAnimation))]
+    public class LoadingWeaponState : WeaponState
+    {
+        public override string ToString()
+        {
+            return "Loading";
+        }
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-		private IEnumerator WaitForLoadedState (float time)
-		{
-			weapon.PlayReloadEffectAction ();
-			yield return new WaitForSeconds (time);
-			weapon.GoToLoadedState ();
-		}
+        private IEnumerator WaitForLoadedState(float time)
+        {
+            weapon.PlayReloadEffectAction();
+            yield return new WaitForSeconds(time);
+            weapon.GoToLoadedState();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
 
-		protected RechargeableWeapon weapon;
+        private readonly RechargeableWeapon weapon;
 
-		//-----------------------------------------------------------------------------
-		// Constructors
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Constructors
+        //-----------------------------------------------------------------------------
 
-		public LoadingWeaponState (RechargeableWeapon weapon, float loadingTime)
-		{
-			this.weapon = weapon;
-			Debug.Log ("Loading " + this.weapon + " by " + loadingTime + " seconds");
-			weapon.StartCoroutine (WaitForLoadedState (loadingTime));
-		}
-	}
+        public LoadingWeaponState(RechargeableWeapon weapon, float loadingTime)
+        {
+            this.weapon = weapon;
+            Debug.Log("Loading " + this.weapon + " by " + loadingTime + " seconds");
+            weapon.StartCoroutine(WaitForLoadedState(loadingTime));
+        }
+    }
 }
