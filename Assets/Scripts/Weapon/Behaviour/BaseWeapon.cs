@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Xml;
+using UnityEngine;
 using Fps.Weapon.State;
 using Fps.Weapon.Animation;
 using Util;
@@ -13,7 +15,7 @@ namespace Fps.Weapon
         // Public Methods
         //-----------------------------------------------------------------------------
 
-        public void HitTargetAction(GameObject target, float distance, Vector3 position, Vector3 normal)
+        private IEnumerator AsyncHitEffect(GameObject target, float distance, Vector3 position, Vector3 normal)
         {
             GameObject _hitEffect = Instantiate(
                 HitEffect,
@@ -21,8 +23,15 @@ namespace Fps.Weapon
                 Quaternion.LookRotation(normal)
             );
             Destroy(_hitEffect, 2f);
+            
+            target.GetComponent<HittableObject>()?.Hit(normal, distance, impactForce);
 
-            ComponentUtil.tryGet<HittableObject>(target, it => it.Hit(normal, distance, impactForce));
+            yield return null;
+        }
+
+        public void HitTargetAction(GameObject target, float distance, Vector3 position, Vector3 normal)
+        {
+            StartCoroutine(AsyncHitEffect(target, distance, position, normal));
         }
 
         public virtual bool Shoot(Transform origin, out RaycastHit target, LayerMask targetMask)

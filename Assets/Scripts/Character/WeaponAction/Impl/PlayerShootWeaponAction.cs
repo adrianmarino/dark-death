@@ -72,11 +72,8 @@ namespace Fps.Player
                 if (IsPlayer(target))
                     CmdDamageToOponent(targetCollider.name, Weapon.Damage);
 
-                // When hit somthing, invoke OnHit on server side...                 
-                ComponentUtil.tryGet<NetworkBehaviour>(
-                    targetCollider.gameObject,
-                    it => CmdOnHit(it.gameObject, target.distance, target.point, target.normal)
-                );
+                // When hit somthing, invoke OnHit on server side...                     
+                CmdOnHit(targetCollider.gameObject, target.distance, target.point, target.normal);
             }
         }
 

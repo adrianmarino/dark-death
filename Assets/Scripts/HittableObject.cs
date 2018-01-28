@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Networking;
 using Util;
 
@@ -9,28 +8,23 @@ namespace Fps
     [RequireComponent(typeof(Rigidbody))]
     public class HittableObject : NetworkBehaviour
     {
-        //-----------------------------------------------------------------------------
-        // Public Methods
-        //-----------------------------------------------------------------------------
-
         public void Hit(Vector3 normal, float distance, float impactForce)
         {
-            StartCoroutine(AsyncHit(normal, distance, impactForce));
+            ComponentUtil.tryGet<Rigidbody>(this, it =>
+            {
+                var force = calculateImpactForce(distance, impactForce);
+                it.AddForce(-normal * force);
+                log(distance, impactForce, force);
+            });
         }
 
         //-----------------------------------------------------------------------------
         // Private Methods
         //-----------------------------------------------------------------------------
 
-        IEnumerator AsyncHit(Vector3 normal, float distance, float impactForce)
+        private void log(float distance, float impactForce, float force)
         {
-            ComponentUtil.tryGet<Rigidbody>(this, it =>
-            {
-                var force = calculateImpactForce(distance, impactForce);
-                Debug.Log($"Hit {name} appling a force of {force} (Force:{impactForce}/Distance:{distance})");
-                it.AddForce(-normal * force);
-            });
-            yield return null;
+            Debug.Log($"Hit {name} appling a force of {force} (Force:{impactForce}/Distance:{distance})");
         }
 
         private float calculateImpactForce(double distance, double originalImpactForce)
