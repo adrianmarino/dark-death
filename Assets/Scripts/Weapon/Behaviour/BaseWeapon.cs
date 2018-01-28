@@ -23,8 +23,10 @@ namespace Fps.Weapon
                 Quaternion.LookRotation(normal)
             );
             Destroy(_hitEffect, 2f);
-            
-            target.GetComponent<HittableObject>()?.Hit(normal, distance, impactForce);
+
+            var hittableObject = target.GetComponent<HittableObject>();
+            if (hittableObject != null)
+                hittableObject.Hit(normal, distance, impactForce);
 
             yield return null;
         }

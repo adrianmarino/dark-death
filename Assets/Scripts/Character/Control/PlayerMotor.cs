@@ -44,6 +44,7 @@ namespace Fps.Player
         public void Move(Vector3 velocity)
         {
             this.velocity = velocity;
+            // Debug.Log($"Velocity: {this.velocity}. Angular Velocity: {GetComponent<Rigidbody>().angularVelocity}");
         }
 
         public void Rotate(Vector3 rotation)

@@ -38,12 +38,21 @@ namespace Fps.Player
 
         void UpdateMovement()
         {
-            Vector3 velocity = Util.VelocityVector.create(
-                transform,
-                KeyboardMovementVariation(),
-                Speed
-            );
-            motor.Move(velocity);
+            var variation = KeyboardMovementVariation();
+            if (variation.y == 0 && variation.x == 0)
+            {
+                Vector3 velocity = Util.VelocityVector.create(transform, Vector2.zero, 0);
+                motor.Move(velocity);
+            }
+            else
+            {
+                Vector3 velocity = Util.VelocityVector.create(
+                    transform,
+                    variation,
+                    Speed
+                );
+                motor.Move(velocity);
+            }
         }
 
         void UpdateJump()
