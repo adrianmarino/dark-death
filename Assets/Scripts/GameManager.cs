@@ -3,93 +3,92 @@ using UnityEngine;
 using UnityStandardAssets.ImageEffects;
 using System.Linq;
 using Fps.Player;
+using Component = Util.ComponentUtil;
 
 namespace Fps
 {
-	public class GameManager : MonoBehaviour
-	{
-		//-----------------------------------------------------------------------------
-		// Event Methods
-		//-----------------------------------------------------------------------------
+    public class GameManager : MonoBehaviour
+    {
+        //-----------------------------------------------------------------------------
+        // Event Methods
+        //-----------------------------------------------------------------------------
 
-		void OnGUI ()
-		{
-			GuiUtils.PlayersWindow (
-				players.Values.ToList (),
-				new Rect (5, Screen.height - 155, 88, 120)
-			);
-		}
+        void OnGUI()
+        {
+            GuiUtils.PlayersWindow(
+                players.Values.ToList(),
+                new Rect(5, Screen.height - 155, 88, 120)
+            );
+        }
 
-		void Awake ()
-		{
-			singleton = this;
-			InitSceneCamera ();
-		}
+        void Awake()
+        {
+            singleton = this;
+            InitSceneCamera();
+        }
 
-		//-----------------------------------------------------------------------------
-		// Public Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Public Methods
+        //-----------------------------------------------------------------------------
 
-		public PlayerState GetPlayer (string playerId)
-		{
-			return players [playerId];
-		}
+        public PlayerState GetPlayer(string playerId)
+        {
+            return players[playerId];
+        }
 
-		public void RegisterPlayer (string netId, PlayerState player)
-		{
-			if (player == null)
-				return;
+        public void RegisterPlayer(string netId, PlayerState player)
+        {
+            if (player == null)
+                return;
 
-			player.Name = netId;
-			players.Add (player.Name, player);
-			Debug.Log (player.Name + " Registered");
-		}
+            player.Name = netId;
+            players.Add(player.Name, player);
+            Debug.Log(player.Name + " Registered");
+        }
 
-		public void UnregisterPlayer (string playerId)
-		{
-			if (playerId == "0")
-				return;
+        public void UnregisterPlayer(string playerId)
+        {
+            if (playerId == "0")
+                return;
 
-			players.Remove (playerId);
-			Debug.Log ("Unregister " + playerId);
-		}
+            players.Remove(playerId);
+            Debug.Log("Unregister " + playerId);
+        }
 
-		public void SetEnableScenCameraListener (bool value)
-		{
-			sceneCamera.GetComponent<AudioListener> ().enabled = value;
-		}
+        public void SetEnableScenCameraListener(bool value)
+        {
+            sceneCamera.GetComponent<AudioListener>().enabled = value;
+        }
 
-		//-----------------------------------------------------------------------------
-		// Private Methods
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
-		void InitSceneCamera ()
-		{
-			sceneCamera.GetComponent<Camera> ().depth = sceneCameraDepth;
-			sceneCamera.GetComponent<BlurOptimized> ().enabled = true;
-		}
+        void InitSceneCamera()
+        {
+            Component.tryGet<Camera>(sceneCamera, it => it.depth = sceneCameraDepth);
+            Component.tryGet<BlurOptimized>(sceneCamera, it => it.enabled = true);
+        }
 
-		//-----------------------------------------------------------------------------
-		// Attributes
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Attributes
+        //-----------------------------------------------------------------------------
 
-		[SerializeField]
-		private GameObject sceneCamera;
+        [SerializeField] private GameObject sceneCamera;
 
-		[SerializeField]
-		private int sceneCameraDepth = 1;
+        [SerializeField] private int sceneCameraDepth = 1;
 
-		private Dictionary<string, PlayerState> players;
+        private Dictionary<string, PlayerState> players;
 
-		public static GameManager singleton = null;
+        public static GameManager singleton;
 
-		//-----------------------------------------------------------------------------
-		// Constructors
-		//-----------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
+        // Constructors
+        //-----------------------------------------------------------------------------
 
-		public GameManager ()
-		{
-			players = new Dictionary <string, PlayerState> ();
-		}
-	}
+        public GameManager()
+        {
+            players = new Dictionary<string, PlayerState>();
+        }
+    }
 }
