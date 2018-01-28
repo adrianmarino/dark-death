@@ -17,9 +17,9 @@ sysinfo.txt
 *.exe
 
 
-# ===================================== #
-# Visual Studio / MonoDevelop generated #
-# ===================================== #
+# ====================================================== #
+# Visual Studio / MonoDevelop generated / vscode / rider #
+# ====================================================== #
 [Ee]xported[Oo]bj/
 .vs/
 /*.userprefs
@@ -34,6 +34,8 @@ sysinfo.txt
 .consulo/
 /*.tmp
 /*.svd
+.vscode/
+.idea/
 
 # ============ #
 # OS generated #
