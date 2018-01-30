@@ -43,16 +43,15 @@ namespace Fps
 
             player.Name = netId;
             players.Add(player.Name, player);
-            Debug.Log(player.Name + " Registered");
+            Debug.Log($"{player.Name} Registered");
         }
 
         public void UnregisterPlayer(string playerId)
         {
-            if (playerId == "0")
-                return;
+            if (playerId == "0") return;
 
             players.Remove(playerId);
-            Debug.Log("Unregister " + playerId);
+            Debug.Log($"Unregister {playerId}");
         }
 
         public void SetEnableScenCameraListener(bool value)
