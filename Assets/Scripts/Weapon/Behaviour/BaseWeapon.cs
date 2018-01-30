@@ -24,9 +24,7 @@ namespace Fps.Weapon
             );
             Destroy(_hitEffect, 2f);
 
-            var hittableObject = target.GetComponent<HittableObject>();
-            if (hittableObject != null)
-                hittableObject.Hit(normal, distance, impactForce);
+            ComponentUtil.tryGet<HittableObject>(target, it => it.Hit(normal, distance, impactForce));
 
             yield return null;
         }

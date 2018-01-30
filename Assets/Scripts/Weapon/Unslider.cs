@@ -8,7 +8,7 @@ namespace Fps.Weapon
         {
             RaycastHit hit;
             var ray = new Ray(transform.position, -transform.up);
-            if (!Physics.Raycast(ray, out hit, 10) || Tag(hit) != surfaceTag) return;
+            if (!Physics.Raycast(ray, out hit, 10) || Tag(hit) != surfaceTag || Rigidbody(hit) == null) return;
 
             Rigidbody(hit).isKinematic = true;
             log(hit);
