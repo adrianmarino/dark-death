@@ -26,7 +26,13 @@ namespace Fps
 
         private void log(float distance, float impactForce, float force)
         {
-            Debug.LogFormat("Hit %s appling a force of %f (Force:%f/Distance:%f)", name, impactForce, force, distance);
+            Debug.LogFormat(
+                "Hit {0} appling a force of {1} (Force:{2}/Distance:{3})",
+                name,
+                Math.Round(impactForce, 2),
+                Math.Round(force, 2),
+                Math.Round(distance, 2)
+            );
         }
 
         private float calculateImpactForce(double distance, double originalImpactForce)

@@ -11,17 +11,6 @@ namespace Fps.Weapon
             if (!Physics.Raycast(ray, out hit, 10) || Tag(hit) != surfaceTag || Rigidbody(hit) == null) return;
 
             Rigidbody(hit).isKinematic = true;
-            log(hit);
-        }
-
-        private static void log(RaycastHit hit)
-        {
-            Debug.LogFormat("ColliderTag: {}. isKinematic: {}", Tag(hit), IsKinematic(hit));
-        }
-
-        private static bool IsKinematic(RaycastHit hit)
-        {
-            return Rigidbody(hit).isKinematic;
         }
 
         private static string Tag(RaycastHit hit)
