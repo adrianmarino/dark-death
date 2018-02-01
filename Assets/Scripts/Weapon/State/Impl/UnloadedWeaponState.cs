@@ -7,7 +7,7 @@ namespace Fps.Weapon
     {
         public override bool Shoot(Transform origin, out RaycastHit target, LayerMask targetMask)
         {
-            Debug.Log($"Try shoot {weapon.name} without bullets");
+            Debug.LogFormat("Try shoot {0} without bullets", weapon);
             return base.Shoot(origin, out target, targetMask);
         }
 

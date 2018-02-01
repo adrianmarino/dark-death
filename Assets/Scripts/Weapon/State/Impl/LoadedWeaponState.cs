@@ -11,7 +11,7 @@ namespace Fps.Weapon
 
         public override bool Shoot(Transform origin, out RaycastHit target, LayerMask targetMask)
         {
-            Debug.Log($"{weapon} shoot bullet {++shotCounter}");
+			Debug.LogFormat("{0} shoot bullet {1}", weapon, ++shotCounter);
             return weapon.ShootAction(origin, out target, targetMask);
         }
 
@@ -42,7 +42,9 @@ namespace Fps.Weapon
         // Properties
         //-----------------------------------------------------------------------------
 
-        public override int RemainAmmo => remainAmmo;
+		public override int RemainAmmo {
+			get { return remainAmmo; }
+		}
 
         //-----------------------------------------------------------------------------
         // Attributes
@@ -63,7 +65,7 @@ namespace Fps.Weapon
             this.weapon = weapon;
             remainAmmo = maxAmmo;
             shotCounter = 0;
-            Debug.Log($"{weapon} loaded with {RemainAmmo} bullets");
+            Debug.LogFormat("{0} loaded with {1} bullets", weapon, RemainAmmo);
         }
     }
 }

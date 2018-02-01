@@ -75,7 +75,7 @@ namespace Fps.Player
         void DecreaseHealth(float damage)
         {
             currentHealth -= damage;
-            Debug.Log($"{name} current health: {currentHealth}");
+            Debug.LogFormat("{0} current health: {1}", name, currentHealth);
         }
 
         void SaveActiveStates()
@@ -141,7 +141,7 @@ namespace Fps.Player
             DisableAllBehaviours();
             DisableAllGameObjects();
             WeaponManager.CurrentWeapon.Hide();
-            Debug.Log($"{name} is dead!");
+            Debug.LogFormat("{0} is dead!", name);
             PerformDeadEffect();
         }
 

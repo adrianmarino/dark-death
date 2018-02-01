@@ -37,7 +37,7 @@ namespace Fps.Weapon
         public LoadingWeaponState(RechargeableWeapon weapon, float loadingTime)
         {
             this.weapon = weapon;
-            Debug.Log($"Loading {weapon} by {loadingTime} seconds");
+            Debug.LogFormat("Loading {0} by {1} seconds", weapon, loadingTime);
             weapon.StartCoroutine(WaitForLoadedState(loadingTime));
         }
     }
