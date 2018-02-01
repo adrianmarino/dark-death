@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityStandardAssets.ImageEffects;
 using System.Linq;
 using Fps.Player;
 using Component = Util.ComponentUtil;
@@ -66,7 +65,6 @@ namespace Fps
         void InitSceneCamera()
         {
             Component.tryGet<Camera>(sceneCamera, it => it.depth = sceneCameraDepth);
-            Component.tryGet<BlurOptimized>(sceneCamera, it => it.enabled = true);
         }
 
         //-----------------------------------------------------------------------------
