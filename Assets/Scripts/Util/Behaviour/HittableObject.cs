@@ -1,9 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Networking;
-using Util;
 
-namespace Fps
+namespace Util.Behaviours
 {
     [RequireComponent(typeof(NetworkIdentity))]
     [RequireComponent(typeof(Rigidbody))]
@@ -24,10 +23,11 @@ namespace Fps
         {
             ComponentUtil.tryGet<Rigidbody>(this, it => it.isKinematic = false);
         }
-
-        //-----------------------------------------------------------------------------
-        // Private Methods
-        //-----------------------------------------------------------------------------
+        
+        private float calculateImpactForce(double distance, double originalImpactForce)
+        {
+            return (float) (originalImpactForce / distance);
+        }
 
         private void log(float distance, float impactForce, float force)
         {
@@ -38,11 +38,6 @@ namespace Fps
                 Math.Round(force, 2),
                 Math.Round(distance, 2)
             );
-        }
-
-        private float calculateImpactForce(double distance, double originalImpactForce)
-        {
-            return (float) (originalImpactForce / distance);
         }
     }
 }

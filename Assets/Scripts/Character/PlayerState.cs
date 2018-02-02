@@ -126,7 +126,7 @@ namespace Fps.Player
 
         void DisableAllBehaviours()
         {
-            Util.Behaviours.DisableAll(disableBehaviourOnDeath);
+            Util.BehaviourUtil.DisableAll(disableBehaviourOnDeath);
         }
 
         void DisableAllGameObjects()

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Fps.Weapon
+namespace Util.Behaviours
 {
     public class Unslider : MonoBehaviour
     {

@@ -15,7 +15,7 @@ namespace Fps.Player
             if (isLocalPlayer)
                 Player().Setup();
             else
-                Util.Behaviours.DisableAll(components);
+                Util.BehaviourUtil.DisableAll(components);
 
             GameManager.SetEnableScenCameraListener(false);
         }

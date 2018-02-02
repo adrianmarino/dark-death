@@ -4,6 +4,7 @@ using UnityEngine;
 using Fps.Weapon.State;
 using Fps.Weapon.Animation;
 using Util;
+using Util.Behaviours;
 
 namespace Fps.Weapon
 {
@@ -172,7 +173,7 @@ namespace Fps.Weapon
 
         [SerializeField] private float fireRate = 2f;
 
-        [SerializeField] [Range(300, 1000)] private float impactForce = 300f;
+        [SerializeField] [Range(300, 60000)] private float impactForce = 300f;
 
         [SerializeField] private ParticleSystem muzzleFlash;
 
