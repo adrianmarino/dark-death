@@ -8,11 +8,13 @@ namespace Fps.Weapon
         {
             RaycastHit hit;
             var ray = new Ray(transform.position, -transform.up);
-            if (!Physics.Raycast(ray, out hit, 10) || Tag(hit) != surfaceTag || Rigidbody(hit) == null) return;
+            if (!Physics.Raycast(ray, out hit, raycastLength) || Tag(hit) != surfaceTag || Rigidbody(hit) == null) return;
 
             Rigidbody(hit).isKinematic = true;
         }
 
+        #region private Methods
+        
         private static string Tag(RaycastHit hit)
         {
             return hit.collider.tag;
@@ -22,7 +24,15 @@ namespace Fps.Weapon
         {
             return hit.collider.gameObject.GetComponent<Rigidbody>();
         }
+        
+        #endregion
+
+        #region  Attributes
 
         [SerializeField] private string surfaceTag = "Floor";
+
+        [SerializeField] private float raycastLength = 0.5f;
+
+        #endregion
     }
 }

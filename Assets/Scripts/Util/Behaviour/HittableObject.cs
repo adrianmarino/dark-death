@@ -20,6 +20,11 @@ namespace Fps
             });
         }
 
+        private void OnCollisionExit(Collision other)
+        {
+            ComponentUtil.tryGet<Rigidbody>(this, it => it.isKinematic = false);
+        }
+
         //-----------------------------------------------------------------------------
         // Private Methods
         //-----------------------------------------------------------------------------
