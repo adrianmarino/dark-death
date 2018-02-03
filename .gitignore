@@ -36,6 +36,7 @@ sysinfo.txt
 /*.svd
 .vscode/
 .idea/
+/Assets/Plugins/Editor/
 
 # ============ #
 # OS generated #
