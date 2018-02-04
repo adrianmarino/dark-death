@@ -15,7 +15,9 @@ sysinfo.txt
 /Play_Data/
 *.x86_64
 *.exe
-
+*.meta
+Assets/Plugins.*
+Assets/Plugins/
 
 # ====================================================== #
 # Visual Studio / MonoDevelop generated / vscode / rider #
