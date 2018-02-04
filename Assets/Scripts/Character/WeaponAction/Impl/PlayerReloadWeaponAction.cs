@@ -10,11 +10,10 @@ namespace Fps.Player
 
         void Update()
         {
-            if (WeaponManager.isReady() && PressReload())
-            {
-                Weapon.Reload();
-                UpdateAmmoPanel();
-            }
+            if (!WeaponManager.isReady() || !PressReload() || !isLocalPlayer) return;
+
+            Weapon.Reload();
+            UpdateAmmoPanel();
         }
 
         //-----------------------------------------------------------------------------
