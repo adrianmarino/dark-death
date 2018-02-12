@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using Util;
 using Util.Component.UI;
-using Zios;
 using Button = UnityEngine.UI.Button;
 
 namespace Fps.UI
@@ -26,7 +26,7 @@ namespace Fps.UI
 
         private bool ValidInput()
         {
-            return !roomName.IsEmpty() && !roomPassword.IsEmpty();
+            return !String.IsNullOrEmpty(roomName) && !String.IsNullOrEmpty(roomPassword);
         }
 
         #region Input Fields
