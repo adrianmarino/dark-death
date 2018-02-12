@@ -22,6 +22,7 @@ namespace Fps
 
         void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             singleton = this;
             InitSceneCamera();
         }
