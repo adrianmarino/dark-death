@@ -12,7 +12,12 @@ namespace Fps
                 networkManager.StartMatchMaker();            
         }
 
-        public void CreateRoom(string name, string password, uint size)
+        public void CreateMatch(string name, uint size)
+        {
+            CreateMatch(name, NO_PASSWORD, size);
+        }
+        
+        public void CreateMatch(string name, string password, uint size)
         {
             networkManager.matchMaker.CreateMatch(
                 name,
@@ -33,5 +38,7 @@ namespace Fps
         private NetworkManager networkManager;
 
         #endregion
+        
+        private const string NO_PASSWORD = "";
     }
 }
