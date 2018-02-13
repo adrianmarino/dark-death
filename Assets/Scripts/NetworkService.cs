@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Networking.Match;
 
 namespace Fps
 {
@@ -12,6 +14,39 @@ namespace Fps
                 networkManager.StartMatchMaker();            
         }
 
+        public void SearchMatch(
+            string name, 
+            int pages, 
+            NetworkMatch.DataResponseDelegate<List<MatchInfoSnapshot>> callback
+        )
+        {             
+            networkManager.matchMaker.ListMatches(
+                0, 
+                pages, 
+                name, 
+                false,
+                0,
+                0,
+                callback
+            );
+        }
+
+        public void JoinMatch(MatchInfoSnapshot match, NetworkMatch.DataResponseDelegate<MatchInfo> callback)
+        {
+            networkManager.matchMaker.JoinMatch(
+                match.networkId,
+                NO_PASSWORD,
+                "",
+                "",
+                0,
+                0,
+                (success, info, data) => {
+                    callback(success, info, data);
+                    networkManager.OnMatchJoined(success, info, data);
+                }
+            );
+        }
+        
         public void CreateMatch(string name, uint size)
         {
             CreateMatch(name, NO_PASSWORD, size);
