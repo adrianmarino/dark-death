@@ -31,6 +31,11 @@ namespace Fps
             );
         }
 
+        public void LeaveMatch()
+        {
+            LeaveMatch((success, info) => { });
+        }
+
         public void LeaveMatch(NetworkMatch.BasicResponseDelegate callback)
         {
             var currentMatchInfo = networkManager.matchInfo;

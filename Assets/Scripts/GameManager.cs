@@ -23,8 +23,7 @@ namespace Fps
 
         void Awake()
         {
-            if(SceneManager.GetActiveScene().name == "MainMenu")
-                DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
 
             singleton = this;
             InitSceneCamera();

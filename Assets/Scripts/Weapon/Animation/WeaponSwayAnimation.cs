@@ -10,6 +10,8 @@ namespace Fps.Weapon.Animation
 
 		void Update ()
 		{
+			if (Pause) return;
+
 			transform.localRotation = Quaternion.Slerp (
 				transform.localRotation,
 				MousePoint (),
@@ -30,6 +32,8 @@ namespace Fps.Weapon.Animation
 			);
 		}
 
+		public bool Pause { get; set; }
+
 		//-----------------------------------------------------------------------------
 		// Attributes
 		//-----------------------------------------------------------------------------
@@ -38,8 +42,9 @@ namespace Fps.Weapon.Animation
 
 		private Quaternion mousePoint;
 
-		[SerializeField]
-		private float speed = 1.5f;
+		[SerializeField] private float speed = 1.5f;
+
+		[SerializeField] private bool pause;
 	}
 }
 

@@ -12,11 +12,7 @@ namespace Fps.UI
             playerPauseManager.Pause();
             finishMathcModal.Show(
                 "Do you want finish match?",
-                () => {
-                    NetworkService.Instance.LeaveMatch((success, info) =>
-                    {
-                    });
-                },
+                NetworkService.Instance.LeaveMatch,
                 playerPauseManager.Resume
             );
         }

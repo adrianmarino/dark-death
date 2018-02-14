@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Fps.Weapon;
+using Fps.Weapon.Animation;
+using UnityEngine;
 
 namespace Fps.Player
 {
@@ -7,6 +9,7 @@ namespace Fps.Player
     [RequireComponent(typeof(PlayerState))]
     [RequireComponent(typeof(PlayerShootWeaponAction))]
     [RequireComponent(typeof(PlayerReloadWeaponAction))]
+    [RequireComponent(typeof(WeaponManager))]
     public class PlayerPauseManager : MonoBehaviour
     {
         public void Pause()
@@ -26,6 +29,13 @@ namespace Fps.Player
             GetComponent<PlayerState>().Pause = value;
             GetComponent<PlayerShootWeaponAction>().Pause = value;
             GetComponent<PlayerReloadWeaponAction>().Pause = value;
+            GetCurrentWeaponSwayAnimation().Pause = value;
+        }
+
+        private WeaponSwayAnimation GetCurrentWeaponSwayAnimation()
+        {
+            var currentWeapon = GetComponent<WeaponManager>().CurrentWeapon;
+            return currentWeapon.GameObject.GetComponent<WeaponSwayAnimation>();
         }
     }
 }
