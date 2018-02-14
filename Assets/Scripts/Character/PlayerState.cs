@@ -36,6 +36,8 @@ namespace Fps.Player
 
         void Update()
         {
+            if (Pause) return;
+
             if (!isLocalPlayer)
                 return;
             ShowCurrentHealth();
@@ -190,6 +192,8 @@ namespace Fps.Player
             protected set { dead = value; }
         }
 
+        public bool Pause { get; set; }
+
         //-----------------------------------------------------------------------------
         // Attributes
         //-----------------------------------------------------------------------------
@@ -204,10 +208,12 @@ namespace Fps.Player
 
         [SerializeField] private GameObject deadEffect;
 
+        [SerializeField] private bool pause;
+  
         [SyncVar] private float currentHealth;
 
         [SyncVar] private bool dead;
-
+        
         private Dictionary<Behaviour, bool> behaviourActiveStates = new Dictionary<Behaviour, bool>();
 
         private Dictionary<GameObject, bool> gameObjectActiveStates = new Dictionary<GameObject, bool>();

@@ -31,6 +31,21 @@ namespace Fps
             );
         }
 
+        public void LeaveMatch(NetworkMatch.BasicResponseDelegate callback)
+        {
+            var currentMatchInfo = networkManager.matchInfo;
+            networkManager.matchMaker.DropConnection(
+                currentMatchInfo.networkId,
+                currentMatchInfo.nodeId,
+                0,
+                (success, info) => {
+                    callback(success, info);
+                    networkManager.OnDropConnection(success, info);
+                    networkManager.StopHost();
+                }
+            );
+        }
+        
         public void JoinMatch(MatchInfoSnapshot match, NetworkMatch.DataResponseDelegate<MatchInfo> callback)
         {
             networkManager.matchMaker.JoinMatch(
@@ -73,6 +88,15 @@ namespace Fps
         private NetworkManager networkManager;
 
         #endregion
+
+        public static NetworkService Instance
+        {
+            get
+            {
+                var gameObject = GameObject.Find("NetworkService");
+                return gameObject.GetComponent<NetworkService>();
+            }
+        }
         
         private const string NO_PASSWORD = "";
     }

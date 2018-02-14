@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
-using Util;
 
 namespace Fps.Player
 {
@@ -12,7 +11,8 @@ namespace Fps.Player
 
         void Update()
         {
-            if (WeaponManager.isReady()) UpdateShoot();
+            if (!WeaponManager.isReady() || Pause) return;
+            UpdateShoot();
         }
 
         // On server side

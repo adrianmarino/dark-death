@@ -32,10 +32,19 @@ namespace Fps.Player
             get { return GetComponent<WeaponManager>(); }
         }
 
+        public bool Pause
+        {
+            get { return pause; }
+            set { pause = value; }
+        }
+        
+        
         //-----------------------------------------------------------------------------
         // Attributes
         //-----------------------------------------------------------------------------
 
         [SerializeField] private Text ammoPanel;
+
+        [SerializeField] private bool pause;
     }
 }

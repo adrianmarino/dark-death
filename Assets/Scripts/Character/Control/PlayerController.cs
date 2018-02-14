@@ -22,6 +22,8 @@ namespace Fps.Player
 
         void Update()
         {
+            if (Pause) return;
+
             UpdateLookRotation();
             UpdatePosition();
         }
@@ -109,6 +111,8 @@ namespace Fps.Player
             get { return Util.Input.GetRunButton() ? runSpeed : walkSpeed; }
         }
 
+        public bool Pause { get; set; }
+
         //-----------------------------------------------------------------------------
         // Attributes
         //-----------------------------------------------------------------------------
@@ -127,6 +131,8 @@ namespace Fps.Player
         [SerializeField] private float jointMaxForce = 40f;
 
         [SerializeField] private float floorDistance = 2f;
+        
+        [SerializeField] private bool pause;
 
         private PlayerMotor motor;
 
@@ -137,5 +143,6 @@ namespace Fps.Player
         private bool grounded = true;
 
         private float currentSpeed;
+        
     }
 }

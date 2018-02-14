@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Linq;
 using Fps.Player;
+using UnityEngine.SceneManagement;
 using Component = Util.ComponentUtil;
 
 namespace Fps
@@ -22,7 +23,9 @@ namespace Fps
 
         void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            if(SceneManager.GetActiveScene().name == "MainMenu")
+                DontDestroyOnLoad(gameObject);
+
             singleton = this;
             InitSceneCamera();
         }

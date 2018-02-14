@@ -20,6 +20,9 @@ namespace Fps.Player
         void FixedUpdate()
         {
             ShowHideCursor();
+            
+            if (Pause) return;
+
             UpdatePosition();
             UpdateRotation();
         }
@@ -91,6 +94,20 @@ namespace Fps.Player
             );
             _camera.transform.localEulerAngles = new Vector3(currentCameraRotation, 0f, 0f);
         }
+        
+        //-----------------------------------------------------------------------------
+        // Properties
+        //-----------------------------------------------------------------------------
+
+        public bool Pause
+        {
+            get { return pause; }
+            set
+            {
+                hideCursor = !value;
+                pause = value;
+            }
+        }
 
         //-----------------------------------------------------------------------------
         // Attributes
@@ -101,6 +118,8 @@ namespace Fps.Player
         [SerializeField] private float cameraRotationLimit = 85f;
 
         [SerializeField] private bool hideCursor = true;
+
+        [SerializeField] private bool pause;
 
         private Rigidbody _rigidbody;
 
