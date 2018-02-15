@@ -3,7 +3,7 @@
 namespace Fps.Player
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class PlayerMotor : MonoBehaviour
+    public class PlayerMotor : MonoBehaviour, IPausable
     {
         //-----------------------------------------------------------------------------
         // Event Methods

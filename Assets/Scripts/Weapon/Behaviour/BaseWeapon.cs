@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Xml;
+using Fps.Player;
 using UnityEngine;
 using Fps.Weapon.State;
 using Fps.Weapon.Animation;
@@ -16,6 +17,11 @@ namespace Fps.Weapon
         // Public Methods
         //-----------------------------------------------------------------------------
 
+        public IPausable[] Pausables()
+        {
+            return gameObject.GetComponents<IPausable>();
+        }
+        
         private IEnumerator AsyncHitEffect(GameObject target, float distance, Vector3 position, Vector3 normal)
         {
             GameObject _hitEffect = Instantiate(

@@ -8,7 +8,7 @@ using Fps.Weapon;
 
 namespace Fps.Player
 {
-    public class PlayerState : NetworkBehaviour
+    public class PlayerState : NetworkBehaviour, IPausable
     {
         //-----------------------------------------------------------------------------
         // Event Methods

@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Fps.Player;
+using UnityEngine;
 
 namespace Fps.Weapon.Animation
 {
-	public class WeaponSwayAnimation : MonoBehaviour
+	public class WeaponSwayAnimation : MonoBehaviour, IPausable
 	{
 		//-----------------------------------------------------------------------------
 		// Event Methods

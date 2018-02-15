@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Fps.Player;
+using UnityEngine;
 using Fps.Weapon.State;
 
 namespace Fps.Weapon
@@ -9,6 +10,8 @@ namespace Fps.Weapon
         // Public Methods
         //-----------------------------------------------------------------------------
 
+        IPausable[] Pausables();
+        
         bool Shoot(Transform origin, out RaycastHit target, LayerMask targetMask);
 
         void HitTarget(GameObject target, float distance, Vector3 position, Vector3 normal);

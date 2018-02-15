@@ -6,7 +6,7 @@ namespace Fps.Player
     [RequireComponent(typeof(ConfigurableJoint))]
     [RequireComponent(typeof(PlayerMotor))]
     [RequireComponent(typeof(Headbob))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IPausable
     {
         //-----------------------------------------------------------------------------
         // Event Methods

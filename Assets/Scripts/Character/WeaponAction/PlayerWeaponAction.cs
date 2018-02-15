@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Fps.Player
 {
     [RequireComponent(typeof(WeaponManager))]
-    public abstract class PlayerWeaponAction : NetworkBehaviour
+    public abstract class PlayerWeaponAction : NetworkBehaviour, IPausable
     {
         //-----------------------------------------------------------------------------
         // Private Methods
@@ -37,7 +37,6 @@ namespace Fps.Player
             get { return pause; }
             set { pause = value; }
         }
-        
         
         //-----------------------------------------------------------------------------
         // Attributes

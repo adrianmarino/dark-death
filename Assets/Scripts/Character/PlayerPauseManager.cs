@@ -1,5 +1,8 @@
-﻿using Fps.Weapon;
-using Fps.Weapon.Animation;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Fps.Weapon;
+using ProBuilder2.Common;
 using UnityEngine;
 
 namespace Fps.Player
@@ -14,28 +17,27 @@ namespace Fps.Player
     {
         public void Pause()
         {
-            Pause(true);
-        }
-
-        public void Resume()
-        {
-            Pause(false);
+            pausablesComponents().ForEach(MakePause(true));
         }
         
-        private void Pause(bool value)
+        public void Resume()
         {
-            GetComponent<PlayerController>().Pause = value;
-            GetComponent<PlayerMotor>().Pause = value;
-            GetComponent<PlayerState>().Pause = value;
-            GetComponent<PlayerShootWeaponAction>().Pause = value;
-            GetComponent<PlayerReloadWeaponAction>().Pause = value;
-            GetCurrentWeaponSwayAnimation().Pause = value;
+            pausablesComponents().ForEach(MakePause(false));
         }
 
-        private WeaponSwayAnimation GetCurrentWeaponSwayAnimation()
+        private List<IPausable> pausablesComponents()
         {
-            var currentWeapon = GetComponent<WeaponManager>().CurrentWeapon;
-            return currentWeapon.GameObject.GetComponent<WeaponSwayAnimation>();
+            return GetComponents<IPausable>().Concat(CurrentWeapon().Pausables()).ToList();
+        }
+
+        private IWeapon CurrentWeapon()
+        {
+            return GetComponent<WeaponManager>().CurrentWeapon;
+        }
+        
+        private static Action<IPausable> MakePause(bool value)
+        {
+            return it => it.Pause = value;
         }
     }
 }
