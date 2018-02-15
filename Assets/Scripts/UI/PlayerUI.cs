@@ -1,6 +1,6 @@
 ﻿using Fps.Player;
 using UnityEngine;
-
+    
 namespace Fps.UI
 {
     public class PlayerUI : MonoBehaviour
@@ -10,17 +10,22 @@ namespace Fps.UI
             if (!Input.GetKeyDown(KeyCode.Escape)) return;
 
             playerPauseManager.Pause();
-            finishMathcModal.Show(
-                "Do you want finish match?",
-                NetworkService.Instance.LeaveMatch,
-                playerPauseManager.Resume
-            );
+
+            yesNoModal.Setup()
+                .Question("Do you want finish match?")
+                .OnYes(modal => NetworkService.Instance.LeaveMatch())
+                .OnNo(modal => {
+                    modal.Close();
+                    playerPauseManager.Resume();
+                })
+                .NotClose()
+                .Show();
         }
 
         #region Attributes
 
-        [SerializeField] private YesNoModal finishMathcModal;
-        
+        [SerializeField] private YesNoModal yesNoModal;
+
         [SerializeField] private PlayerPauseManager playerPauseManager;
 
         #endregion
