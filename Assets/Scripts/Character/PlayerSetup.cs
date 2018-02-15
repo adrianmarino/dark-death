@@ -42,7 +42,7 @@ namespace Fps.Player
 
         GameManager GameManager
         {
-            get { return GameManager.singleton; }
+            get { return GameManager.Instance; }
         }
 
         //-----------------------------------------------------------------------------

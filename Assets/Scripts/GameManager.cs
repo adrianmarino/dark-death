@@ -23,9 +23,16 @@ namespace Fps
 
         void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            if (Instance == null)
+                Instance = this;
+            else {
+                // Used when reloading scene to ensure that only exist one GameManager instance.
+                Destroy(gameObject);
+            }
 
-            singleton = this;
+            // Sets this to not be destroyed when reloading scene.
+            DontDestroyOnLoad(gameObject);
+            
             InitSceneCamera();
         }
 
@@ -70,6 +77,8 @@ namespace Fps
             Component.tryGet<Camera>(sceneCamera, it => it.depth = sceneCameraDepth);
         }
 
+        public static GameManager Instance { get; private set; }
+
         //-----------------------------------------------------------------------------
         // Attributes
         //-----------------------------------------------------------------------------
@@ -79,8 +88,6 @@ namespace Fps
         [SerializeField] private int sceneCameraDepth = 1;
 
         private Dictionary<string, PlayerState> players;
-
-        public static GameManager singleton;
 
         //-----------------------------------------------------------------------------
         // Constructors
