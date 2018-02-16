@@ -5,8 +5,8 @@ public class PlayersPanel : MonoBehaviour {
 
 	void OnGUI()
 	{
-		Debug.Log("WRITE PLAYERS!!!" + GameManager.Players());
-		GuiUtils.PlayersWindow(GameManager.Players(), BoxSize());
+		if (Event.current.type == EventType.Repaint)
+			GuiUtils.PlayersWindow(GameManager.Players(), BoxSize());
 	}
 
 	private static GameManager GameManager

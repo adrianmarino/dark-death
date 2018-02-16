@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using Fps.Player;
 using UnityEngine.Networking.Match;
-using UnityEngine.SceneManagement;
 using Util.Component.UI;
 using Component = Util.ComponentUtil;
 
@@ -70,8 +69,21 @@ namespace Fps
         // Private Methods
         //-----------------------------------------------------------------------------
 
-        void Awake()
+        void InitSceneCamera()
         {
+            Component.tryGet<Camera>(sceneCamera, it => it.depth = sceneCameraDepth);
+        }
+ 
+        IEnumerator WaitForSecondsWrapper(float secs)
+        {
+            yield return new WaitForSeconds(secs);
+        }
+       
+        void Awake()
+        {         
+            while (!SceneFadeManager.IsReady)
+                WaitForSecondsWrapper(0.2f);
+
             if (Instance == null)
                 Instance = this;
             else {
@@ -81,14 +93,8 @@ namespace Fps
 
             // Sets this to not be destroyed when reloading scene.
             DontDestroyOnLoad(gameObject);
-            
-            InitSceneCamera();
-            
-        }
 
-        void InitSceneCamera()
-        {
-            Component.tryGet<Camera>(sceneCamera, it => it.depth = sceneCameraDepth);
+            InitSceneCamera();
         }
 
         public static GameManager Instance { get; private set; }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Util.Component.UI
@@ -43,5 +44,12 @@ namespace Util.Component.UI
         }
 
         public static SceneFadeManager Instance { get; private set; }
+
+        public static bool IsReady {
+            get
+            {
+                return Instance != null;
+            }
+        }
     }
 }
