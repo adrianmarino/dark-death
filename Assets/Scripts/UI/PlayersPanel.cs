@@ -5,6 +5,7 @@ public class PlayersPanel : MonoBehaviour {
 
 	void OnGUI()
 	{
+		Debug.Log("WRITE PLAYERS!!!" + GameManager.Players());
 		GuiUtils.PlayersWindow(GameManager.Players(), BoxSize());
 	}
 
@@ -15,7 +16,7 @@ public class PlayersPanel : MonoBehaviour {
 
 	private Rect BoxSize()
 	{
-		return new Rect(5, Screen.height - yOffset, width, height);
+		return new Rect(5, Screen.height + yOffset, width, height);
 	}
 
 	[SerializeField] private float x = 5;

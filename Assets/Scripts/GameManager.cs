@@ -8,9 +8,7 @@ using Util.Component.UI;
 using Component = Util.ComponentUtil;
 
 namespace Fps
-{
-    [RequireComponent(typeof(NetworkService))]
-    [RequireComponent(typeof(PlayerStateRepository))]
+{ 
     public class GameManager : MonoBehaviour
     {
         //-----------------------------------------------------------------------------
