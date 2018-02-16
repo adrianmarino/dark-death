@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Fps
 {
-    public class PlayerStateRepository : MonoBehaviour
+    public class PlayerStateRepository
     {        
         //-----------------------------------------------------------------------------
         // Public Methods
@@ -39,27 +39,12 @@ namespace Fps
             return players.Values.ToList();
         }
 
-        void Awake()
-        {
-            if (Instance == null)
-                Instance = this;
-            else {
-                // Used when reloading scene to ensure that only exist one GameManager instance.
-                Destroy(gameObject);
-            }
-
-            // Sets this to not be destroyed when reloading scene.
-            DontDestroyOnLoad(gameObject);            
-        }
-
         //-----------------------------------------------------------------------------
         // Attributes
         //-----------------------------------------------------------------------------
 
         Dictionary<string, PlayerState> players;
-        
-        public static PlayerStateRepository Instance { get; private set; }
-
+  
         //-----------------------------------------------------------------------------
         // Constructors
         //-----------------------------------------------------------------------------

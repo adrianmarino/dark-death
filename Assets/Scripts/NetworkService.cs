@@ -5,25 +5,8 @@ using UnityEngine.Networking.Match;
 
 namespace Fps
 {
-    public class NetworkService : MonoBehaviour
+    public class NetworkService
     {
-        #region Events
-
-        private void Awake()
-        {
-            if (Instance == null)
-                Instance = this;
-            else {
-                // Used when reloading scene to ensure that only exist one GameManager instance.
-                Destroy(gameObject);
-            }
-
-            // Sets this to not be destroyed when reloading scene.
-            DontDestroyOnLoad(gameObject);
-        }
-        
-        #endregion
-
         public void SearchMatch(
             string name, 
             int pages, 
@@ -109,8 +92,6 @@ namespace Fps
             }
         }
 
-        public static NetworkService Instance { get; private set; }
-        
         private const string NO_PASSWORD = "";
     }
 }

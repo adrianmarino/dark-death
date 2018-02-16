@@ -9,6 +9,8 @@ using Component = Util.ComponentUtil;
 
 namespace Fps
 {
+    [RequireComponent(typeof(NetworkService))]
+    [RequireComponent(typeof(PlayerStateRepository))]
     public class GameManager : MonoBehaviour
     {
         //-----------------------------------------------------------------------------
@@ -17,22 +19,22 @@ namespace Fps
 
         public void RegisterPlayer(string netId, PlayerState playerState)
         {
-            PlayerStateRepository.Instance.Save(netId, playerState);
+            playerStateRepository.Save(netId, playerState);
         }
         
         public void UnregisterPlayer(string netId)
         {
-           PlayerStateRepository.Instance.Remove(netId);
+           playerStateRepository.Remove(netId);
         }
         
         public PlayerState GetPlayer(string netId)
         {
-            return PlayerStateRepository.Instance.FindBy(netId);
+            return playerStateRepository.FindBy(netId);
         }
 
         public List<PlayerState> Players()
         {
-            return PlayerStateRepository.Instance.All();
+            return playerStateRepository.All();
         }
         
         public void SetEnableScenCameraListener(bool value)
@@ -42,12 +44,12 @@ namespace Fps
 
         public void SearchMatch(string name, NetworkMatch.DataResponseDelegate<List<MatchInfoSnapshot>> callback)
         {
-            NetworkService.Instance.SearchMatch(name, 20, callback);
+            networkService.SearchMatch(name, 20, callback);
         }
         
         public void JoinMatch(MatchInfoSnapshot matchInfo, NetworkMatch.DataResponseDelegate<MatchInfo> callback)
         {
-            NetworkService.Instance.JoinMatch(matchInfo, (success, info, data) => {
+            networkService.JoinMatch(matchInfo, (success, info, data) => {
                 if (success)
                     SceneFadeManager.Instance.FadeOut();
                 callback(success, info, data);
@@ -57,13 +59,13 @@ namespace Fps
         public void StartMatch(string matchName, uint maxPlayers)
         {
             SceneFadeManager.Instance.FadeOut();
-            NetworkService.Instance.CreateMatch(matchName, maxPlayers);
+            networkService.CreateMatch(matchName, maxPlayers);
         }
         
         public void CloseMatch()
         {
             SceneFadeManager.Instance.FadeOut();
-            NetworkService.Instance.LeaveMatch();
+            networkService.LeaveMatch();
         }
 
         //-----------------------------------------------------------------------------
@@ -83,8 +85,9 @@ namespace Fps
             DontDestroyOnLoad(gameObject);
             
             InitSceneCamera();
+            
         }
-        
+
         void InitSceneCamera()
         {
             Component.tryGet<Camera>(sceneCamera, it => it.depth = sceneCameraDepth);
@@ -99,5 +102,15 @@ namespace Fps
         [SerializeField] private GameObject sceneCamera;
 
         [SerializeField] private int sceneCameraDepth = 1;
+
+        private readonly NetworkService networkService;
+
+        private readonly PlayerStateRepository playerStateRepository;
+
+        public GameManager()
+        {
+            networkService = new NetworkService();
+            playerStateRepository = new PlayerStateRepository();
+        }
     }
 }
