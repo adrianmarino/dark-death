@@ -1,6 +1,7 @@
 ﻿using Fps.Player;
 using UnityEngine;
-    
+using Util.Component.UI;
+
 namespace Fps.UI
 {
     public class PlayerUI : MonoBehaviour
@@ -13,13 +14,18 @@ namespace Fps.UI
 
             yesNoModal.Setup()
                 .Question("Do you want finish match?")
-                .OnYes(modal => NetworkService.Instance.LeaveMatch())
+                .OnYes(modal =>GameManager.CloseMatch())
                 .OnNo(modal => {
                     modal.Close();
                     playerPauseManager.Resume();
                 })
                 .NotClose()
                 .Show();
+        }
+
+        private static GameManager GameManager
+        {
+            get { return GameManager.Instance; }
         }
 
         #region Attributes

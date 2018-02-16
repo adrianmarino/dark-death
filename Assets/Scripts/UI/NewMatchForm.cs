@@ -16,7 +16,7 @@ namespace Fps.UI
 
         public void OnCreate()
         {
-            networkService.CreateMatch(matchName, (uint)maxPlayers.Value);
+            GameManager.Instance.StartMatch(matchName, (uint)maxPlayers.Value);
         }
 
         public void OnChange()
@@ -42,8 +42,6 @@ namespace Fps.UI
         [SerializeField] private Button createButton;
 
         [SerializeField] private SliderField maxPlayers;
-
-        [SerializeField] private NetworkService networkService;
 
         #endregion
         

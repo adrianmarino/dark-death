@@ -2,7 +2,9 @@
 using UnityEngine;
 using System.Linq;
 using Fps.Player;
+using UnityEngine.Networking.Match;
 using UnityEngine.SceneManagement;
+using Util.Component.UI;
 using Component = Util.ComponentUtil;
 
 namespace Fps
@@ -10,16 +12,63 @@ namespace Fps
     public class GameManager : MonoBehaviour
     {
         //-----------------------------------------------------------------------------
-        // Event Methods
+        // Public Methods
         //-----------------------------------------------------------------------------
 
-        void OnGUI()
+        public void RegisterPlayer(string netId, PlayerState playerState)
         {
-            GuiUtils.PlayersWindow(
-                players.Values.ToList(),
-                new Rect(5, Screen.height - 160, 88, 120)
-            );
+            PlayerStateRepository.Instance.Save(netId, playerState);
         }
+        
+        public void UnregisterPlayer(string netId)
+        {
+           PlayerStateRepository.Instance.Remove(netId);
+        }
+        
+        public PlayerState GetPlayer(string netId)
+        {
+            return PlayerStateRepository.Instance.FindBy(netId);
+        }
+
+        public List<PlayerState> Players()
+        {
+            return PlayerStateRepository.Instance.All();
+        }
+        
+        public void SetEnableScenCameraListener(bool value)
+        {
+            sceneCamera.GetComponent<AudioListener>().enabled = value;
+        }
+
+        public void SearchMatch(string name, NetworkMatch.DataResponseDelegate<List<MatchInfoSnapshot>> callback)
+        {
+            NetworkService.Instance.SearchMatch(name, 20, callback);
+        }
+        
+        public void JoinMatch(MatchInfoSnapshot matchInfo, NetworkMatch.DataResponseDelegate<MatchInfo> callback)
+        {
+            NetworkService.Instance.JoinMatch(matchInfo, (success, info, data) => {
+                if (success)
+                    SceneFadeManager.Instance.FadeOut();
+                callback(success, info, data);
+            });
+        }
+        
+        public void StartMatch(string matchName, uint maxPlayers)
+        {
+            SceneFadeManager.Instance.FadeOut();
+            NetworkService.Instance.CreateMatch(matchName, maxPlayers);
+        }
+        
+        public void CloseMatch()
+        {
+            SceneFadeManager.Instance.FadeOut();
+            NetworkService.Instance.LeaveMatch();
+        }
+
+        //-----------------------------------------------------------------------------
+        // Private Methods
+        //-----------------------------------------------------------------------------
 
         void Awake()
         {
@@ -35,43 +84,7 @@ namespace Fps
             
             InitSceneCamera();
         }
-
-        //-----------------------------------------------------------------------------
-        // Public Methods
-        //-----------------------------------------------------------------------------
-
-        public PlayerState GetPlayer(string playerId)
-        {
-            return players[playerId];
-        }
-
-        public void RegisterPlayer(string netId, PlayerState player)
-        {
-            if (player == null)
-                return;
-
-            player.Name = netId;
-            players.Add(player.Name, player);
-            Debug.LogFormat("{0} Registered", player.Name);
-        }
-
-        public void UnregisterPlayer(string playerId)
-        {
-            if (playerId == "0") return;
-
-            players.Remove(playerId);
-            Debug.LogFormat("Unregister {0}", playerId);
-        }
-
-        public void SetEnableScenCameraListener(bool value)
-        {
-            sceneCamera.GetComponent<AudioListener>().enabled = value;
-        }
-
-        //-----------------------------------------------------------------------------
-        // Private Methods
-        //-----------------------------------------------------------------------------
-
+        
         void InitSceneCamera()
         {
             Component.tryGet<Camera>(sceneCamera, it => it.depth = sceneCameraDepth);
@@ -86,16 +99,5 @@ namespace Fps
         [SerializeField] private GameObject sceneCamera;
 
         [SerializeField] private int sceneCameraDepth = 1;
-
-        private Dictionary<string, PlayerState> players;
-
-        //-----------------------------------------------------------------------------
-        // Constructors
-        //-----------------------------------------------------------------------------
-
-        public GameManager()
-        {
-            players = new Dictionary<string, PlayerState>();
-        }
     }
 }

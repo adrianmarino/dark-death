@@ -20,7 +20,7 @@ namespace Fps.UI
         private void RefreshMatches()
         {
             message("Loading...");
-            networkService.SearchMatch("", 20, OnMatchResults);
+            GameManager.Instance.SearchMatch("", OnMatchResults);
         }
 
         private void OnMatchResults(bool success, string extendedInfo, List<MatchInfoSnapshot> matchesInfo)
@@ -51,7 +51,7 @@ namespace Fps.UI
             
             matchListItem.Intialize(matchInfo, match =>
             {
-                networkService.JoinMatch(match, (success, info, data) =>
+                GameManager.Instance.JoinMatch(match, (success, info, data) =>
                 {
                     if (success)
                         message("Joining to " + matchInfo.name + " match...");
@@ -77,8 +77,6 @@ namespace Fps.UI
         #region Attributes
         
         [SerializeField] private Text statusIndicator;
-
-        [SerializeField] private NetworkService networkService;
 
         [SerializeField] private GameObject matchListItemPrefab;
 
