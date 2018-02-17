@@ -15,7 +15,7 @@ namespace Fps
 				.OrderBy (desc => desc)
 				.Aggregate ((nameA, nameB) => nameA + "\n" + nameB);
 
-			Util.GUI.TextWindow ("Players", content, rect);
+			Util.GUIUtils.TextWindow ("Players", content, rect);
 		}
 	}
 }

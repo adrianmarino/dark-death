@@ -48,20 +48,20 @@ namespace Fps
         {
             networkService.JoinMatch(matchInfo, (success, info, data) => {
                 if (success)
-                    SceneFadeManager.Instance.FadeOut();
+                    SceneTransission.Instance.FadeOut();
                 callback(success, info, data);
             });
         }
         
         public void StartMatch(string matchName, uint maxPlayers)
         {
-            SceneFadeManager.Instance.FadeOut();
+            SceneTransission.Instance.FadeOut();
             networkService.CreateMatch(matchName, maxPlayers);
         }
         
         public void CloseMatch()
         {
-            SceneFadeManager.Instance.FadeOut();
+            SceneTransission.Instance.FadeOut();
             networkService.LeaveMatch();
         }
 
@@ -78,10 +78,11 @@ namespace Fps
         {
             yield return new WaitForSeconds(secs);
         }
-       
+
+        #region Singletion Imppl
         void Awake()
         {         
-            while (!SceneFadeManager.IsReady)
+            while (!SceneTransission.IsReady)
                 WaitForSecondsWrapper(0.2f);
 
             if (Instance == null)
@@ -98,7 +99,8 @@ namespace Fps
         }
 
         public static GameManager Instance { get; private set; }
-
+        #endregion
+       
         //-----------------------------------------------------------------------------
         // Attributes
         //-----------------------------------------------------------------------------
