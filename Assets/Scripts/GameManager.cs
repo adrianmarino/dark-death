@@ -70,6 +70,11 @@ namespace Fps
             Application.Quit();
         }
 
+        public string Version()
+        {
+            return VERSION;
+        }
+
         //-----------------------------------------------------------------------------
         // Private Methods
         //-----------------------------------------------------------------------------
@@ -105,6 +110,8 @@ namespace Fps
 
         public static GameManager Instance { get; private set; }
         #endregion
+
+        private const string VERSION = "v0.1.0";
        
         //-----------------------------------------------------------------------------
         // Attributes
