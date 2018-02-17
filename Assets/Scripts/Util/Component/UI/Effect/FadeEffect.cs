@@ -2,13 +2,8 @@
 
 namespace Util.Component.UI.Fade
 {
-    public abstract class FadeEffect
+    public class FadeEffect
     {
-        public void Start()
-        {
-            while (doesFinish()) NextStep();    
-        }
-
         public void NextStep()
         {
             // fade out/in the alpha value using a direction, a speed and Time.deltaTime to convert the operation to seconds
@@ -26,8 +21,6 @@ namespace Util.Component.UI.Fade
             // draw the texture to fit the entire screen area
             GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), texture);
         }
-
-        public abstract bool doesFinish();
 
         #region Properties
 
@@ -47,21 +40,33 @@ namespace Util.Component.UI.Fade
 
         readonly int drawDepth;		// the texture's order in the draw hierarchy: a low number means it renders on top
 	
-        protected float alpha;	// the texture's alpha value between 0 and 1	
+        float alpha;	// the texture's alpha value between 0 and 1	
 
-        protected int direction;
+        readonly int direction;
 
         #endregion
 
         #region Constructors
 
-        protected FadeEffect(Texture2D texture, float speed, int drawDepth
-        )
+        FadeEffect(Texture2D texture, float speed, int drawDepth, float alpha, int direction)
         {
             this.texture = texture;
             this.speed = speed;
             this.drawDepth = drawDepth;
+            this.alpha = alpha;
+            this.direction = direction;
         }
+
+        public static FadeEffect In(Texture2D texture, float speed, int drawDepth)
+        {
+            return new FadeEffect(texture, speed, drawDepth, 1, -1);
+        }
+        
+        public static FadeEffect Out(Texture2D texture, float speed, int drawDepth)
+        {
+            return new FadeEffect(texture, speed, drawDepth, 0, 1);
+        }
+        
         #endregion
     }
 }

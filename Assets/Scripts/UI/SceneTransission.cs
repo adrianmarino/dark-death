@@ -9,12 +9,12 @@ namespace Util.Component.UI
     {        
         public void FadeIn()
         {
-            effect = new FadeInEffect(texture, speed, drawDepth);
+            effect = FadeEffect.In(texture, speed, drawDepth);
         }
 
         public void FadeOut()
         {
-            effect = new FadeOutEffect(texture, speed, drawDepth);
+            effect = FadeEffect.Out(texture, speed, drawDepth);
         }
 
         void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
@@ -23,7 +23,7 @@ namespace Util.Component.UI
 
         void OnGUI()
         {
-            effect.NextStep();
+           effect.NextStep();
         }
         
         #region OnSceneLoaded Impl
