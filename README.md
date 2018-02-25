@@ -1,4 +1,4 @@
-# Blue Death
+# Dark Death
 
 A rapid multiplayer fps.
 
