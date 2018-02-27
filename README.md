@@ -1,6 +1,6 @@
 # Dark Death
 
-A rapid multiplayer fps.
+A sci-fi multiplayer fps (Linux & Windows).
 
 ## Game play
 
