@@ -7,8 +7,8 @@
     <ProjectGuid>{782B3A76-D52F-4A65-951D-023091B84E10}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Game</RootNamespace>
-    <AssemblyName>Game</AssemblyName>
+    <RootNamespace>DarkDeath</RootNamespace>
+    <AssemblyName>DarkDeath</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -97,92 +97,6 @@
     <Compile Include="..\Assets\Scripts\Weapon\Weapon.cs" />
     <Compile Include="..\Assets\Scripts\Weapon\WeaponFactory.cs" />
     <Compile Include="..\Assets\Scripts\Weapon\WeaponManager.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="..\Assets\Resources\ScreenLogger\Editor\ScreenLoggerEditor.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character.meta" />
-    <Content Include="..\Assets\Scripts\Character\Animation.meta" />
-    <Content Include="..\Assets\Scripts\Character\Animation\Headbob.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\Control.meta" />
-    <Content Include="..\Assets\Scripts\Character\Control\PlayerController.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\Control\PlayerMotor.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\IPausable.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\LocalPayerAccessor.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\PlayerPauseManager.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\PlayerSetup.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\PlayerState.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\WeaponAction.meta" />
-    <Content Include="..\Assets\Scripts\Character\WeaponAction\Impl.meta" />
-    <Content Include="..\Assets\Scripts\Character\WeaponAction\Impl\PlayerReloadWeaponAction.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\WeaponAction\Impl\PlayerShootWeaponAction.cs.meta" />
-    <Content Include="..\Assets\Scripts\Character\WeaponAction\PlayerWeaponAction.cs.meta" />
-    <Content Include="..\Assets\Scripts\GameManager.cs.meta" />
-    <Content Include="..\Assets\Scripts\NetworkService.cs.meta" />
-    <Content Include="..\Assets\Scripts\PlayerStateRepository.cs.meta" />
-    <Content Include="..\Assets\Scripts\UI.meta" />
-    <Content Include="..\Assets\Scripts\UI\Join.meta" />
-    <Content Include="..\Assets\Scripts\UI\Join\JoinMatchForm.cs.meta" />
-    <Content Include="..\Assets\Scripts\UI\Join\MatchListItem.cs.meta" />
-    <Content Include="..\Assets\Scripts\UI\LevelUI.cs.meta" />
-    <Content Include="..\Assets\Scripts\UI\MainMenuUI.cs.meta" />
-    <Content Include="..\Assets\Scripts\UI\NewMatchForm.cs.meta" />
-    <Content Include="..\Assets\Scripts\UI\Player.meta" />
-    <Content Include="..\Assets\Scripts\UI\Player\PlayersPanel.cs.meta" />
-    <Content Include="..\Assets\Scripts\UI\Player\PlayerWindow.cs.meta" />
-    <Content Include="..\Assets\Scripts\UI\SceneTransission.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util.meta" />
-    <Content Include="..\Assets\Scripts\Util\Behaviour.meta" />
-    <Content Include="..\Assets\Scripts\Util\BehaviourUtil.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Behaviour\HittableObject.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Behaviour\RandomBoxSettings.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Behaviour\Unslider.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\CollectionExtensions.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component.meta" />
-    <Content Include="..\Assets\Scripts\Util\ComponentUtil.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\Effect.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\Effect\FadeEffect.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\Panel.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\Panel\Impl.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\Panel\Impl\FPSDisplay.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\Panel\TextPanel.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\SliderField.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\UIHotkeySelect.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\YesNoModal.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\YesNoModal\YesNoModal.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Component\UI\YesNoModal\YesNoModalBuilder.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Console.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\DestroyTimer.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\GameObjects.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\GUIUtils.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Input.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Layer.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\ObjectElement.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\RigidbodyUtil.cs.meta" />
-    <Content Include="..\Assets\Scripts\Util\Vector.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Animation.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Animation\WeaponRecoilAnimation.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Animation\WeaponReloadAnimation.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Animation\WeaponSwayAnimation.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Behaviour.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Behaviour\BaseWeapon.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Behaviour\RechargeableWeapon.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Impl.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Impl\Blaster.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Impl\Pistol.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Impl\Rifle.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Impl\Sniper.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\IWeapon.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\State.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\State\Impl.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\State\Impl\LoadedWeaponState.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\State\Impl\LoadingWeaponState.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\State\Impl\UnloadedWeaponState.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\State\WeaponState.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\Weapon.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\WeaponFactory.cs.meta" />
-    <Content Include="..\Assets\Scripts\Weapon\WeaponManager.cs.meta" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="DOTween, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
