@@ -92,7 +92,7 @@ namespace Fps.Player.Animation
         // Local position where your camera would rest when it's not bobbing.
         [SerializeField] private float transitionSpeed = 20f;
 
-        // Smooths out the transition from moving to not moving.
+        // Smooths out the transition from moving to not mo ving.
         [SerializeField] private float walkSpeed = 4.8f;
 
         [SerializeField] private float runSpeed = 8f;
