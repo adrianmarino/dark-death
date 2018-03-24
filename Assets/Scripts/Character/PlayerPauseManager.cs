@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Fps.Weapon;
-using ProBuilder2.Common;
 using UnityEngine;
 
 namespace Fps.Player
