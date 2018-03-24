@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Fps
 {
-    public class PlayerStateRepository : MonoBehaviour
+    public class PlayerStateRepository
     {        
         //-----------------------------------------------------------------------------
         // Public Methods
@@ -43,7 +43,7 @@ namespace Fps
         // Attributes
         //-----------------------------------------------------------------------------
 
-        Dictionary<string, PlayerState> players;
+        private readonly Dictionary<string, PlayerState> players;
   
         //-----------------------------------------------------------------------------
         // Constructors

@@ -81,11 +81,10 @@ namespace Fps
             Debug.LogFormat("{0} room created for {1} player.", name, size);
         }
 
-
-        private NetworkManager NetworkManager
+        private static NetworkManager NetworkManager
         {
             get {
-                NetworkManager networkManager = NetworkManager.singleton;
+                var networkManager = NetworkManager.singleton;
                 if (networkManager.matchMaker == null)
                     networkManager.StartMatchMaker();
                 return networkManager;
