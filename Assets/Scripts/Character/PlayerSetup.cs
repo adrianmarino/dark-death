@@ -10,7 +10,7 @@ namespace Fps.Player
         // Event Methods
         //-----------------------------------------------------------------------------
 
-        void Start()
+        private void Start()
         {
             if (isLocalPlayer)
                 Player().Setup();
@@ -25,7 +25,7 @@ namespace Fps.Player
             GameManager.RegisterPlayer(NetId(), Player());
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (isLocalPlayer)
             {
@@ -40,7 +40,7 @@ namespace Fps.Player
         // Properties
         //-----------------------------------------------------------------------------
 
-        GameManager GameManager
+        private static GameManager GameManager
         {
             get { return GameManager.Instance; }
         }
@@ -49,12 +49,12 @@ namespace Fps.Player
         // Private Methods
         //-----------------------------------------------------------------------------
 
-        string NetId()
+        private string NetId()
         {
             return GetComponent<NetworkIdentity>().netId.ToString();
         }
 
-        PlayerState Player()
+        private PlayerState Player()
         {
             return GetComponent<PlayerState>();
         }

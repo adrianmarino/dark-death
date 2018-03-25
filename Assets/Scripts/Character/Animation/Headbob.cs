@@ -9,7 +9,7 @@ namespace Fps.Player.Animation
         // Event Methods
         //-----------------------------------------------------------------------------
 
-        void Update()
+        private void Update()
         {
             if (!IsGrounded()) return;
 
@@ -39,12 +39,12 @@ namespace Fps.Player.Animation
         // Private Methods
         //-----------------------------------------------------------------------------
 
-        bool IsGrounded()
+        private bool IsGrounded()
         {
             return Util.ObjectElement.IsGrounded(this, floorDistance);
         }
 
-        Vector3 NextHeadBobMovementPostion(float _timer)
+        private Vector3 NextHeadBobMovementPostion(float _timer)
         {
             return new Vector3(
                 Mathf.Cos(_timer) * bobAmount,
@@ -53,7 +53,7 @@ namespace Fps.Player.Animation
             );
         }
 
-        Vector3 NextStopTransationPosition()
+        private Vector3 NextStopTransationPosition()
         {
             return new Vector3(
                 Mathf.Lerp(Position.x, restPosition.x, transitionSpeed * Time.deltaTime),
@@ -66,13 +66,13 @@ namespace Fps.Player.Animation
         // Properties
         //-----------------------------------------------------------------------------
 
-        Vector3 Position
+        private Vector3 Position
         {
             get { return transform.localPosition; }
             set { transform.localPosition = value; }
         }
 
-        float Speed
+        private float Speed
         {
             get { return Util.Input.GetRunButton() ? runSpeed : walkSpeed; }
         }

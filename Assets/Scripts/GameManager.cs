@@ -34,9 +34,9 @@ namespace Fps
             return playerStateRepository.All();
         }
         
-        public void SetEnableScenCameraListener(bool value)
-        {
-            sceneCamera.GetComponent<AudioListener>().enabled = value;
+        public void SetEnableScenCameraListener(bool value) {
+            var audioListener = sceneCamera.GetComponent<AudioListener>();
+            if(audioListener != null) audioListener.enabled = value;
         }
 
         public void SearchMatch(string name, NetworkMatch.DataResponseDelegate<List<MatchInfoSnapshot>> callback)

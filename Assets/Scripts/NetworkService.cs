@@ -82,7 +82,7 @@ namespace Fps
         }
 
 
-        private NetworkManager NetworkManager
+        private static NetworkManager NetworkManager
         {
             get {
                 NetworkManager networkManager = NetworkManager.singleton;

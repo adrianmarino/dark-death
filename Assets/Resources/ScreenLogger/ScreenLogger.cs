@@ -7,15 +7,13 @@ namespace AClockworkBerry
 
 	public class ScreenLogger : MonoBehaviour
 	{
-		public static bool IsPersistent = true;
-
 		private static ScreenLogger instance;
-		private static bool instantiated = false;
+		private static bool instantiated;
 
-		class LogMessage
+		private class LogMessage
 		{
-			public string Message;
-			public LogType Type;
+			public readonly string Message;
+			public readonly LogType Type;
 
 			public LogMessage (string msg, LogType type)
 			{
@@ -62,23 +60,23 @@ namespace AClockworkBerry
 		public Color WarningColor = Color.yellow;
 		public Color ErrorColor = new Color (1, 0.5f, 0.5f);
 
-		public bool StackTraceMessages = false;
-		public bool StackTraceWarnings = false;
+		public bool StackTraceMessages;
+		public bool StackTraceWarnings;
 		public bool StackTraceErrors = true;
 
 		static Queue<LogMessage> queue = new Queue<LogMessage> ();
 
 		GUIStyle styleContainer, styleText;
-		int padding = 5;
+		private const int padding = 5;
 
-		private bool destroying = false;
+		private bool destroying;
 
 		public static ScreenLogger Instance {
 			get {
 				if (instantiated)
 					return instance;
 
-				instance = GameObject.FindObjectOfType (typeof(ScreenLogger)) as ScreenLogger;
+				instance = FindObjectOfType (typeof(ScreenLogger)) as ScreenLogger;
 
 				// Object not found, we create a new one
 				if (instance == null) {
@@ -105,7 +103,7 @@ namespace AClockworkBerry
 
 		public void Awake ()
 		{
-			ScreenLogger[] obj = GameObject.FindObjectsOfType<ScreenLogger> ();
+			var obj = FindObjectsOfType<ScreenLogger> ();
 
 			if (obj.Length > 1) {
 				Debug.Log ("Destroying ScreenLogger, already exists...");
@@ -117,14 +115,11 @@ namespace AClockworkBerry
 			}
 
 			InitStyles ();
-
-			if (IsPersistent)
-				DontDestroyOnLoad (this);
 		}
 
 		private void InitStyles ()
 		{
-			Texture2D back = new Texture2D (1, 1);
+			var back = new Texture2D (1, 1);
 			BackgroundColor.a = BackgroundOpacity;
 			back.SetPixel (0, 0, BackgroundColor);
 			back.Apply ();
@@ -134,8 +129,7 @@ namespace AClockworkBerry
 			styleContainer.wordWrap = false;
 			styleContainer.padding = new RectOffset (padding, padding, padding, padding);
 
-			styleText = new GUIStyle ();
-			styleText.fontSize = FontSize;
+			styleText = new GUIStyle {fontSize = FontSize};
 		}
 
 		void OnEnable ()
@@ -165,29 +159,29 @@ namespace AClockworkBerry
 #endif
 		}
 
-		void Update ()
+		public void Update ()
 		{
 			if (!ShowInEditor && Application.isEditor)
 				return;
 
-			float InnerHeight = (Screen.height - 2 * Margin) * Height - 2 * padding;
-			int TotalRows = (int)(InnerHeight / styleText.lineHeight);
+			var InnerHeight = (Screen.height - 2 * Margin) * Height - 2 * padding;
+			var TotalRows = (int)(InnerHeight / styleText.lineHeight);
 
 			// Remove overflowing rows
 			while (queue.Count > TotalRows)
 				queue.Dequeue ();
 		}
 
-		void OnGUI ()
+		private void OnGUI ()
 		{
 			if (!ShowLog)
 				return;
 			if (!ShowInEditor && Application.isEditor)
 				return;
 
-			float w = (Screen.width - 2 * Margin) * Width;
-			float h = (Screen.height - 2 * Margin) * Height;
-			float x = 1, y = 1;
+			var w = (Screen.width - 2 * Margin) * Width;
+			var h = (Screen.height - 2 * Margin) * Height;
+			float x, y;
 
 			switch (AnchorPosition) {
 			case LogAnchor.BottomLeft:
@@ -209,11 +203,13 @@ namespace AClockworkBerry
 				x = Margin + (Screen.width - 2 * Margin) * (1 - Width);
 				y = Margin;
 				break;
+				default:
+					throw new ArgumentOutOfRangeException();
 			}
 
 			GUILayout.BeginArea (new Rect (x, y, w, h), styleContainer);
 
-			foreach (LogMessage m in queue) {
+			foreach (var m in queue) {
 				switch (m.Type) {
 				case LogType.Warning:
 					styleText.normal.textColor = WarningColor;
@@ -240,7 +236,7 @@ namespace AClockworkBerry
 			GUILayout.EndArea ();
 		}
 
-		void HandleLog (string message, string stackTrace, LogType type)
+		private void HandleLog (string message, string stackTrace, LogType type)
 		{
 			if (type == LogType.Assert && !LogErrors)
 				return;
@@ -253,9 +249,9 @@ namespace AClockworkBerry
 			if (type == LogType.Warning && !LogWarnings)
 				return;
 
-			string[] lines = message.Split (new char[] { '\n' });
+			var lines = message.Split ('\n');
 
-			foreach (string l in lines)
+			foreach (var l in lines)
 				queue.Enqueue (new LogMessage (l, type));
 
 			if (type == LogType.Assert && !StackTraceErrors)
@@ -269,9 +265,9 @@ namespace AClockworkBerry
 			if (type == LogType.Warning && !StackTraceWarnings)
 				return;
 
-			string[] trace = stackTrace.Split (new char[] { '\n' });
+			var trace = stackTrace.Split ('\n');
 
-			foreach (string t in trace)
+			foreach (var t in trace)
 				if (t.Length != 0)
 					queue.Enqueue (new LogMessage ("  " + t, type));
 		}
@@ -285,7 +281,7 @@ namespace AClockworkBerry
 
 /*
 The MIT License
-
+d
 Copyright © 2016 Screen Logger - Giuseppe Portelli <giuseppe@aclockworkberry.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
