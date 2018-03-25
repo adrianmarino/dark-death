@@ -68,8 +68,8 @@ namespace Fps.Player.Animation
 
         private Vector3 Position
         {
-            get { return transform.localPosition; }
-            set { transform.localPosition = value; }
+            get { return cameraTransform.localPosition; }
+            set { cameraTransform.localPosition = value; }
         }
 
         private float Speed
@@ -102,6 +102,8 @@ namespace Fps.Player.Animation
 
         [SerializeField] private float floorDistance = 1.8f;
 
+        [SerializeField] private Transform cameraTransform;
+        
         // How dramatic the bob is.
         // Increasing this in conjunction with bobSpeed gives a nice effect for sprinting.
         private float timer = TIMER_INITIAL_VALUE;
