@@ -8,10 +8,10 @@ using Input = UnityEngine.Input;
 
 [RequireComponent(typeof(LocalPayerAccessor))]
 public class LevelUI : MonoBehaviour {
-
-	void Start()
+	
+	private void Start()
 	{
-		version.text = GameManager.Instance.Version();
+		version.text = GameManager.Version();
 	}
 
 	private void Update()
@@ -31,7 +31,7 @@ public class LevelUI : MonoBehaviour {
 			.Show();
 	}
 
-	PlayerPauseManager Player
+	private PlayerPauseManager Player
 	{
 		get { return GetComponent<LocalPayerAccessor>().GetComponent<PlayerPauseManager>(); }
 	}

@@ -7,7 +7,7 @@ public class MainMenuUI : MonoBehaviour {
 
 	void Start()
 	{
-		version.text = GameManager.Instance.Version();
+		version.text = GameManager.Version();
 	}
 
 	void Update()
@@ -16,7 +16,7 @@ public class MainMenuUI : MonoBehaviour {
 
 		yesNoModal.Setup()
 			.Question("Do you want to quit the game?")
-			.OnYes(modal => GameManager.Instance.Quit())
+			.OnYes(modal => GameManager.Quit())
 			.Show();
 	}
 

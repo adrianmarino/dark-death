@@ -7,25 +7,24 @@ namespace Util
 {
     public class LocalPayerAccessor : MonoBehaviour
     {
-        public GameObject GameObject
-        {
-            get { return _gameObject == null ? _gameObject = Find() : _gameObject; }
-        }
-
-        public T GetComponent<T>()
+        public new T GetComponent<T>()
         {
             return GameObject.GetComponent<T>();
         }
-        
+     
+        private GameObject GameObject
+        {
+            get { return playerGameObject == null ? playerGameObject = Find() : playerGameObject; }
+        }
+   
         #region Private Merthods
 
-        GameObject Find()
+        private GameObject Find()
         {
-            return GameObject.FindGameObjectsWithTag(tag)
-                .First(IsLocalPlayer());
+            return GameObject.FindGameObjectsWithTag(playerTag).First(IsLocalPlayer());
         }
 
-        static Func<GameObject, bool> IsLocalPlayer()
+        private static Func<GameObject, bool> IsLocalPlayer()
         {
             return it => it.GetComponent<NetworkIdentity>().isLocalPlayer;
         }
@@ -34,9 +33,9 @@ namespace Util
         
         #region Attributes
         
-        GameObject _gameObject;
+        GameObject playerGameObject;
 
-        [SerializeField] string tag = "Player";
+        [SerializeField] private string playerTag = "Player";
         
         #endregion
     }

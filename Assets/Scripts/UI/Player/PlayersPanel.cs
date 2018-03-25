@@ -16,7 +16,7 @@ public class PlayersPanel : MonoBehaviour {
 
 	private Rect BoxSize()
 	{
-		return new Rect(5, Screen.height + yOffset, width, height);
+		return new Rect(x, Screen.height + yOffset, width, height);
 	}
 
 	[SerializeField] private float x = 5;

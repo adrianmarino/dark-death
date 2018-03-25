@@ -65,12 +65,12 @@ namespace Fps
             networkService.LeaveMatch();
         }
 
-        public void Quit()
+        public static void Quit()
         {
             Application.Quit();
         }
 
-        public string Version()
+        public static string Version()
         {
             return VERSION;
         }
@@ -79,18 +79,19 @@ namespace Fps
         // Private Methods
         //-----------------------------------------------------------------------------
 
-        void InitSceneCamera()
+        private void InitSceneCamera()
         {
             Component.tryGet<Camera>(sceneCamera, it => it.depth = sceneCameraDepth);
         }
- 
-        IEnumerator WaitForSecondsWrapper(float secs)
+
+        private static IEnumerator WaitForSecondsWrapper(float secs)
         {
             yield return new WaitForSeconds(secs);
         }
 
         #region Singletion Imppl
-        void Awake()
+
+        public void Awake()
         {         
             while (!SceneTransission.IsReady)
                 WaitForSecondsWrapper(0.2f);
