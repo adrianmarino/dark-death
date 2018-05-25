@@ -10,5 +10,5 @@ You can see the game progress in next youtube playlist.
 
 ## Download
 
-* [dark-death-0.1.0-linux-x86_64|https://drive.google.com/open?id=1T3VS6g-QN_KphToGBD1O00yXUeVLD-qo]
-* [dark-death-0.1.0-windows|https://drive.google.com/open?id=1yzXELeYqOgJkHfULKGlmspXlxlSYrNNF]
+* [dark-death-0.1.0-linux-x86_64](https://drive.google.com/open?id=1T3VS6g-QN_KphToGBD1O00yXUeVLD-qo)
+* [dark-death-0.1.0-windows](https://drive.google.com/open?id=1yzXELeYqOgJkHfULKGlmspXlxlSYrNNF)
