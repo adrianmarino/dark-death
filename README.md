@@ -8,7 +8,7 @@ You can see the game progress in next youtube playlist.
 
 [![Dark Death Progress](http://img.youtube.com/vi/w9zjnGgVsZk/0.jpg)](https://www.youtube.com/playlist?list=PLcUKhWwmWVPHpVO0qTNTxEtt8QSWgM-1q "Click to view Dark Death progress")
 
-## Download
+## Download Builds
 
 ### 0.1.0
 
